@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "chr.h"
 
 #define PRG_ROM_PAGE_SIZE 16384
 
@@ -63,3 +62,6 @@ struct nesRom* loadRom(char* filename);
 
 
 #endif //ALF_NES_TOOLS_ROMPARSER_H
+
+#include "chr.h"
+#include "charOps.h"

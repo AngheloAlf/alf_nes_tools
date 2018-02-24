@@ -33,7 +33,7 @@ int main(int argc, char* argv[]){
             printfInstructions(rom);
         }
         // iterateInstructions(rom);
-        // iterateChrRom(rom);
+        iterateChrRom(rom);
     }
     return 0;
 }

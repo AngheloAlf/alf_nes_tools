@@ -2,7 +2,6 @@
 // Created by anghelo on 23-02-18.
 //
 
-#include "charOps.h"
 #include "romParser.h"
 
 struct nesRomHeader* loadInesHeader(unsigned char* header){
@@ -153,6 +152,9 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
         }
         tiles = generateTilesFromChrRom(chrRom, chrPages);
         chrRomData = generateChrRomData(chrRom, tiles);
+    }
+    else{
+        printf("No chrRom");
     }
 
     /*

@@ -2,5 +2,5 @@ echo make
 make
 if [[ $? == 0 ]]; then
 	echo "main"
-	./main
+	./out/main roms/smb.nes
 fi
