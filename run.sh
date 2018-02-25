@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 echo make
 make
 if [[ $? == 0 ]]; then

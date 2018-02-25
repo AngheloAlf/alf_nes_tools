@@ -15,7 +15,7 @@ void iterateChrRom(struct nesRom* rom){
     // struct tile tiles;
 
     for(size_t i = 0; i < chrPages; i++){
-        for(size_t j = 0; j < CHR_ROM_PAGE_SIZE/16/8; j+=8){
+        for(size_t j = 0; j < CHR_ROM_PAGE_SIZE/16; j+=8){
             // tiles = rom->chrRom->tiles[i][j];
             for(size_t k = 0; k < 8; k++){
                 printfColoredLine(rom->chrRom->tiles[i][j].lines[k]);
@@ -35,10 +35,30 @@ void iterateChrRom(struct nesRom* rom){
                 printfColoredLine(rom->chrRom->tiles[i][j+7].lines[k]);
                 printf("\n");
             }
-            //sleep(2);
+            printf("\n");
+            // sleep(2);
             printf("\n");
         }
     }
+
+
+    /*
+    for(size_t i = 0; i < chrPages; i++){
+        for(size_t j = 0; j < CHR_ROM_PAGE_SIZE/16; j+=2){
+            // tiles = rom->chrRom->tiles[i][j];
+            for(size_t k = 0; k < 8; k++){
+                printfColoredLine(rom->chrRom->tiles[i][j].lines[k]);
+                printfColoredLine(rom->chrRom->tiles[i][j+1].lines[k]);
+                printf("\n");
+            }
+            // sleep(2);
+            if((j+2)%8 == 0){
+                printf("\n");
+                sleep(2);
+            }
+        }
+    }
+    */
 }
 
 
@@ -82,19 +102,17 @@ struct tile** generateTilesFromChrRom(unsigned char** chrRom, size_t chrPages){
 
     for(size_t i = 0; i < chrPages; i++){
         tiles[i] = malloc(sizeof(struct tile) * CHR_ROM_PAGE_SIZE/16);
-        //printf("%i\n", (int)i);
         for(size_t j = 0; j < CHR_ROM_PAGE_SIZE; j += 16){
-            //	printf("\tj: %i - %i\n", (int)j, (int)j/16);
             tiles[i][j/16].lines = malloc(sizeof(struct tileLine*) * 8);
 
-            tiles[i][j/16].lines[0] = generateTileLine(chrRom[i][j], chrRom[i][j+1]);
-            tiles[i][j/16].lines[1] = generateTileLine(chrRom[i][j+2], chrRom[i][j+3]);
-            tiles[i][j/16].lines[2] = generateTileLine(chrRom[i][j+4], chrRom[i][j+5]);
-            tiles[i][j/16].lines[3] = generateTileLine(chrRom[i][j+6], chrRom[i][j+7]);
-            tiles[i][j/16].lines[4] = generateTileLine(chrRom[i][j+8], chrRom[i][j+9]);
-            tiles[i][j/16].lines[5] = generateTileLine(chrRom[i][j+10], chrRom[i][j+11]);
-            tiles[i][j/16].lines[6] = generateTileLine(chrRom[i][j+12], chrRom[i][j+13]);
-            tiles[i][j/16].lines[7] = generateTileLine(chrRom[i][j+14], chrRom[i][j+15]);
+            tiles[i][j/16].lines[0] = generateTileLine(chrRom[i][j], chrRom[i][j+8]);
+            tiles[i][j/16].lines[1] = generateTileLine(chrRom[i][j+1], chrRom[i][j+1+8]);
+            tiles[i][j/16].lines[2] = generateTileLine(chrRom[i][j+2], chrRom[i][j+2+8]);
+            tiles[i][j/16].lines[3] = generateTileLine(chrRom[i][j+3], chrRom[i][j+3+8]);
+            tiles[i][j/16].lines[4] = generateTileLine(chrRom[i][j+4], chrRom[i][j+4+8]);
+            tiles[i][j/16].lines[5] = generateTileLine(chrRom[i][j+5], chrRom[i][j+5+8]);
+            tiles[i][j/16].lines[6] = generateTileLine(chrRom[i][j+6], chrRom[i][j+6+8]);
+            tiles[i][j/16].lines[7] = generateTileLine(chrRom[i][j+7], chrRom[i][j+7+8]);
         }
     }
     return tiles;
