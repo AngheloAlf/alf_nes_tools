@@ -9,6 +9,12 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "romParser.h"
+#include "charOps.h"
+#include "ram.h"
+#include "cpu.h"
+#include "instCallback.h"
+
 
 #define TYPE_ACCUMULATOR    0
 #define TYPE_IMMEDIATE      1
@@ -48,6 +54,7 @@ struct instruction{
         10: Indirect,Y
         11: Implied
     */
+    void (*execute)(struct instruction*, struct nesRegisters*, struct nesRam*);
 
 };
 
@@ -57,7 +64,3 @@ void iterateInstructions(struct nesRom* rom);
 
 
 #endif //ALF_NES_TOOLS_INSTRUCTIONS_H
-
-#include "romParser.h"
-#include "charOps.h"
-#include "instCallback.h"
