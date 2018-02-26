@@ -7,9 +7,22 @@
 
 
 #include <stdio.h>
-#include "romParser.h"
-#include "charOps.h"
-#include "string.h"
+#include <string.h>
+
+
+#define TYPE_ACCUMULATOR    0
+#define TYPE_IMMEDIATE      1
+#define TYPE_ZERO_PAGE      2
+#define TYPE_ZERO_PAGE_X    3
+#define TYPE_ZERO_PAGE_Y    4
+#define TYPE_ABSOLUTE       5
+#define TYPE_ABSOLUTE_X     6
+#define TYPE_ABSOLUTE_Y     7
+#define TYPE_INDIRECT       8
+#define TYPE_INDIRECT_X     9
+#define TYPE_INDIRECT_Y     10
+#define TYPE_IMPLIED        11
+#define TYPE_BRANCH         12
 
 struct instruction{
     // https://wiki.nesdev.com/w/index.php/CPU_unofficial_opcodes
@@ -36,7 +49,6 @@ struct instruction{
         11: Implied
     */
 
-
 };
 
 struct instruction* detectType(unsigned char* inst);
@@ -45,3 +57,7 @@ void iterateInstructions(struct nesRom* rom);
 
 
 #endif //ALF_NES_TOOLS_INSTRUCTIONS_H
+
+#include "romParser.h"
+#include "charOps.h"
+#include "instCallback.h"

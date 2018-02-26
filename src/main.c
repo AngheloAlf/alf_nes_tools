@@ -15,6 +15,7 @@ int main(int argc, char* argv[]){
             printf("\t%i: %s\n", i, argv[i]);
             if(strcmp("-printfInst", argv[i]) == 0){
                 printfInst = 1;
+                printf("\t\tprintfInst = 1\n");
             }
         }
         printf("---Arguments end---\n\n");
@@ -30,10 +31,12 @@ int main(int argc, char* argv[]){
 
     if(rom != NULL){
         if(printfInst){
-            printfInstructions(rom);
+            iterateInstructions(rom);
+        }
+        else{
+            iterateChrRom(rom);
         }
         // iterateInstructions(rom);
-        iterateChrRom(rom);
     }
     return 0;
 }

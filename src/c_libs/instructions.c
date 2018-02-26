@@ -7,30 +7,56 @@
 struct instruction* initInstruction(unsigned char opcode, unsigned char bytesAmount, unsigned char byte1, unsigned char byte2, unsigned char type){
     struct instruction** instData = malloc(sizeof(struct instruction*));
     *instData = malloc(sizeof(struct instruction));
-    //printf("something here?\n");
-    //printf("%i %i %i \n", opcode, byte1, byte2);
-    //printf("(*instData)->opcode = opcode = %i;\n", opcode);
     (*instData)->opcode = opcode;
-    //printf("(*instData)->byte1 = 0;;\n");
     (*instData)->byte1 = 0;
-    //printf("(*instData)->byte2 = 0;;\n");
     (*instData)->byte2 = 0;
     if(bytesAmount > 0){
-        //	printf("(*instData)->byte1 = byte1;;\n");
         (*instData)->byte1 = byte1;
     }
     if(bytesAmount > 1){
-        //	printf("(*instData)->byte2 = byte2;;\n");
         (*instData)->byte2 = byte2;
     }
-    //printf("(*instData)->bytesAmount = bytesAmount;;\n");
     (*instData)->bytesAmount = bytesAmount;
-    //printf("(*instData)->type = type;;\n");
     (*instData)->type = type;
 
-    //printf("or here?\n");
-    // printf("instData address: %p\n", *instData);
     return (*instData);
+}
+
+struct instruction* control_Branching_Opcodes(unsigned char* inst){
+    struct instruction* instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_BRANCH);
+
+    switch(inst[0]){
+        case 0x10:
+            printf("\tBranch on PLus\n");
+            break;
+        case 0x30:
+            printf("\tBranch on MInus\n");
+            break;
+        case 0x50:
+            printf("\tBranch on oVerflow Clear\n");
+            break;
+        case 0x70:
+            printf("\tBranch on oVerflow Set\n");
+            break;
+        case 0x90:
+            printf("\tBranch on Carry Clear\n");
+            break;
+        case 0xB0:
+            printf("\tBranch on Carry Set\n");
+            break;
+        case 0xD0:
+            printf("\tBranch on Not Equal\n");
+            break;
+        case 0xF0:
+            printf("\tBranch on EQual\n");
+            break;
+        default:
+            printf("\tINVALID\n");
+            instData = NULL;
+            break;
+    }
+
+    return instData;
 }
 
 
@@ -39,23 +65,54 @@ struct instruction* controlInstructionOpcodes(unsigned char* inst){
         // error
         return NULL;
     }
-    printfCharAsHex(inst[0]);
-    printfCharAsHex(inst[1]);
-    printfCharAsHex(inst[2]);
-    printf("\n");
+    struct instruction* instData = NULL;
 
-    if(inst[0] == 0x8){
-        //printf("\t::coso::\n");
-        struct instruction* instData = initInstruction(inst[0], 0, inst[1], inst[2], 11);
-        // printf("instData address: %p\n", instData);
-        return instData;
+    if((inst[0] & 0b0001000) == 0b0001000){ // Branching instructions
+        instData =  control_Branching_Opcodes(inst);
+    }
+
+    else if(inst[0] == 0x8){
+        instData = initInstruction(inst[0], 0, inst[1], inst[2], TYPE_IMPLIED);
     }
     if(inst[0] == 0xc0){
-        struct instruction* instData = initInstruction(inst[0], 1, inst[1], inst[2], 1);
-        // printf("instData address: %p\n", instData);
-        return instData;
+        instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_IMMEDIATE);
     }
-    return NULL;
+    return instData;
+}
+
+
+struct instruction* ALU_ORA_Opcode(unsigned char* inst){
+    struct instruction* instData = NULL;
+    switch(inst[0]){
+        case 0x01:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_X); // Indirect,X    ORA ($44,X)   $01  2   6
+            break;
+        case 0x05:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE); // Zero Page     ORA $44       $05  2   3
+            break;
+        case 0x09:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_IMMEDIATE); // Immediate     ORA #$44      $09  2   2
+            break;
+        case 0x0D:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE); // Absolute      ORA $4400     $0D  3   4
+            break;
+        case 0x11:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y); // Indirect,Y    ORA ($44),Y   $11  2   5+
+            break;
+        case 0x15:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X); // Zero Page,X   ORA $44,X     $15  2   4
+            break;
+        case 0x19:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y); // Absolute,Y    ORA $4400,Y   $19  3   4+
+            break;
+        case 0x1D:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X); // Absolute,X    ORA $4400,X   $1D  3   4+
+            break;
+        default:
+            instData = NULL;
+            break;
+    }
+    return instData;
 }
 
 
@@ -64,10 +121,7 @@ struct instruction* ALUOpcodes(unsigned char* inst){
         // Error
         return NULL;
     }
-    if((inst[0] & 0b00000000) == 0b00000000){ // 0x00
-        printf("ORA (bitwise OR with Accumulator)\n");
-    }
-    else if((inst[0] & 0b00100000) == 0b00100000){ // 0x20
+    if((inst[0] & 0b00100000) == 0b00100000){ // 0x20
         printf("AND (bitwise AND with accumulator) \n");
     }
     else if((inst[0] & 0b01000000) == 0b01000000){ // 0x40
@@ -88,6 +142,10 @@ struct instruction* ALUOpcodes(unsigned char* inst){
     else if((inst[0] & 0b11100000) == 0b11100000){ // 0xE0
         printf("SBC (SuBtract with Carry)\n");
     }
+    else if((inst[0] & 0b00000000) == 0b00000000){ // 0x00
+        printf("ORA (bitwise OR with Accumulator)\n");
+        return ALU_ORA_Opcode(inst);
+    }
     else{
         printf("ERROR\n");
     }
@@ -96,21 +154,19 @@ struct instruction* ALUOpcodes(unsigned char* inst){
 
 
 struct instruction* detectType(unsigned char* inst){
-    unsigned char type = inst[0] & 0b11;
-    struct instruction* instData;
-    printf("opcode: %i\ntype: %i\n", (unsigned int)inst[0], (unsigned int)type);
+    unsigned char type = (unsigned char)(inst[0] & 0b11);
+    struct instruction* instData = NULL;
+    // printf("opcode: %i\ntype: %i\n", (unsigned int)inst[0], (unsigned int)type);
+    printf("opcode: $");
+    printfCharAsHex(inst[0]);
+    printf("\n");
     if(type == 0b00){
         printf("\tControl instruction opcode\n");
-
         instData = controlInstructionOpcodes(inst);
-        // printf("instData address: %p\n", instData);
-        return instData;
     }
     else if(type == 0b01){
         printf("\tALU operation opcode\n");
-
         instData = ALUOpcodes(inst);
-        return instData;
 
     }
     else if(type == 0b10){
@@ -119,7 +175,7 @@ struct instruction* detectType(unsigned char* inst){
     else{ // if(type == 0b11)
         printf("\tunoficial opcode\n");
     }
-    return NULL;
+    return instData;
 }
 
 void printfInstructions(struct nesRom* rom){
@@ -169,22 +225,23 @@ void iterateInstructions(struct nesRom* rom){
     struct instruction* instData;
     unsigned int i = 0;
     unsigned int realPrgPageAmount = rom->header->realPrgPageAmount*16*1024;
-    char aux[4] = "\0\0\0\0";
+    char aux[4] = "\0\0\0";
 
     while(i < realPrgPageAmount){
-        printf("while(%i < %i){\n", i, realPrgPageAmount);
-        //inst = newCharFromIndex(rom->prgRom, 3, i);
-        ///strncpy(inst, &(rom->prgRom[i]), 3);
+        // printf("while(%i < %i){\n", i, realPrgPageAmount);
+        // inst = newCharFromIndex(rom->prgRom, 3, i);
+        // strncpy(inst, &(rom->prgRom[i]), 3);
         inst = (unsigned char*)strncpy(aux, (char *)&(rom->prgRom[i]), 3);
-        printf("\t\t%s\n", inst);
-        printf("new opcode: 0x");
-        printfCharAsHex(inst[0]);
-        printf("\n");
+        // printf("\t\t%s\n", inst);
+        //printf("new opcode: 0x");
+        // printfCharAsHex(inst[0]);
+        // printf("\n");
 
         instData = detectType(inst);
         // printf("instData address: %p\n", instData);
+        printf("\n");
         if(instData == NULL){
-            printf("unknow opcode: 0x%x - %i\n", inst[0], inst[0]);
+            printf("\tunknow opcode: 0x%x - %i\n", inst[0], inst[0]);
             printf("\ti: %i\n", i);
             break;
         }

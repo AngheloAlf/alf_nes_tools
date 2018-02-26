@@ -154,21 +154,9 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
         chrRomData = generateChrRomData(chrRom, tiles);
     }
     else{
-        printf("No chrRom");
+        printf("\tno chrRom\n");
     }
 
-    /*
-    unsigned char* chrRom;
-    unsigned int chrRomSize = romHeader->realChrPageAmount * 8192;
-    if(chrRomSize > 0){
-        printf("\tloading %i bytes (%i KiB or %i pages) of chrRom\n", chrRomSize, chrRomSize/1024, chrRomSize/(1024*8));
-        chrRom = malloc(sizeof(unsigned char) * chrRomSize);
-        fread(chrRom, chrRomSize, 1, filePtr);
-    }
-    else{
-        printf("\tno chrRom\n");
-        chrRom = NULL;
-    }*/
 
     // playChoice
     unsigned char* playChoiceInstRom = NULL;
@@ -203,7 +191,7 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
     }
 
     struct nesRom* rom = generateINesRom(romHeader, trainer, prgRomData, chrRomData, playChoiceInstRom, playChoicePRom, title);
-    printf("rom: %p\n", rom);
+    // printf("rom: %p\n", rom);
     return rom;
 }
 
@@ -234,10 +222,20 @@ struct nesRom* loadRom(char* filename){
     struct nesRom* rom;
 
     if(header[0] == 'N' && header[1] == 'E' && header[2] == 'S' && header[3] == 0x1A){
-        printf(".nes format detected\n");
+        printf(".nes (iNES) format detected\n");
         rom = loadINesRom(filePtr, header);
     }
-        /* else if() */ // other formats...
+    else if(header[0] == 'N' && header[1] == 'E' && header[2] == 'S' && header[3] == 'M' && header[4] == 0x1A){
+        printf(".nsf (music) format detected\n");
+        printf("format not implemented yet\n");
+        return NULL;
+    }
+    else if(header[0] == 'U' && header[1] == 'N' && header[2] == 'I' && header[3] == 'F'){
+        printf(".unf (UNIF) format detected\n"); // .unf or .unif
+        printf("format not implemented yet\n");
+        return NULL;
+    }
+    /* else if() */ // other formats...
     else{
         printf("Uncompatible format...\n");
         fclose(filePtr);
@@ -248,7 +246,7 @@ struct nesRom* loadRom(char* filename){
     fclose(filePtr);
 
     printf("%.*s\n", 4, rom->header->consType);
-    printf("%ld\n", fileSize);
+    printf("filesize: %ld\n", fileSize);
 
     return rom;
 }
