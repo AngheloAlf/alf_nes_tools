@@ -368,41 +368,6 @@ struct instruction* controlInstructionOpcodes(unsigned char* inst){
     return instData;
 }
 
-struct instruction* ALU_AND_Opcode(unsigned char* inst){
-    struct instruction* instData = NULL;
-    switch(inst[0]){
-        case 0x21:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_X, opcode_21); // Indirect,X    AND ($44,X)   $21  2   6
-            break;
-        case 0x25:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE, opcode_25); // Zero Page     AND $44       $25  2   3
-            break;
-        case 0x29:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_IMMEDIATE, opcode_29); // Immediate     AND #$44      $29  2   2
-            break;
-        case 0x2D:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, opcode_2D); // Absolute      AND $4400     $2D  3   4
-            break;
-        case 0x31:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, opcode_31); // Indirect,Y    AND ($44),Y   $31  2   5+
-            break;
-        case 0x35:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, opcode_35); // Zero Page,X   AND $44,X     $35  2   4
-            break;
-        case 0x39:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, opcode_39); // Absolute,Y    AND $4400,Y   $39  3   4+
-            break;
-        case 0x3D:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, opcode_3D); // Absolute,X    AND $4400,X   $3D  3   4+
-            break;
-        default:
-            printf("\tINVALID AND\n");
-            instData = NULL;
-            break;
-    }
-    return instData;
-}
-
 struct instruction* ALU_ORA_Opcode(unsigned char* inst){
     struct instruction* instData = NULL;
     switch(inst[0]){
@@ -438,6 +403,134 @@ struct instruction* ALU_ORA_Opcode(unsigned char* inst){
     return instData;
 }
 
+struct instruction* ALU_AND_Opcode(unsigned char* inst){
+    struct instruction* instData = NULL;
+    switch(inst[0]){
+        case 0x21:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_X, opcode_21); // Indirect,X    AND ($44,X)   $21  2   6
+            break;
+        case 0x25:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE, opcode_25); // Zero Page     AND $44       $25  2   3
+            break;
+        case 0x29:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_IMMEDIATE, opcode_29); // Immediate     AND #$44      $29  2   2
+            break;
+        case 0x2D:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, opcode_2D); // Absolute      AND $4400     $2D  3   4
+            break;
+        case 0x31:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, opcode_31); // Indirect,Y    AND ($44),Y   $31  2   5+
+            break;
+        case 0x35:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, opcode_35); // Zero Page,X   AND $44,X     $35  2   4
+            break;
+        case 0x39:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, opcode_39); // Absolute,Y    AND $4400,Y   $39  3   4+
+            break;
+        case 0x3D:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, opcode_3D); // Absolute,X    AND $4400,X   $3D  3   4+
+            break;
+        default:
+            printf("\tINVALID AND\n");
+            instData = NULL;
+            break;
+    }
+    return instData;
+}
+
+struct instruction* ALU_EOR_Opcode(unsigned char* inst){
+    // EOR (bitwise Exclusive OR)
+    //   Affects Flags: S Z
+    // + add 1 cycle if page boundary crossed
+    struct instruction* instData = NULL;
+    switch(inst[0]){
+        case 0x41:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_X, opcode_41); // Indirect,X    EOR ($44,X)   $41  2   6
+            break;
+        case 0x45:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE, opcode_45); // Zero Page     EOR $44       $45  2   3
+            break;
+        case 0x49:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_IMMEDIATE, opcode_49); // Immediate     EOR #$44      $49  2   2
+            break;
+        case 0x4D:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, opcode_4D); // Absolute      EOR $4400     $4D  3   4
+            break;
+        case 0x51:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, opcode_51); // Indirect,Y    EOR ($44),Y   $51  2   5+
+            break;
+        case 0x55:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, opcode_55); // Zero Page,X   EOR $44,X     $55  2   4
+            break;
+        case 0x59:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, opcode_59); // Absolute,Y    EOR $4400,Y   $59  3   4+
+            break;
+        case 0x5D:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, opcode_5D); // Absolute,X    EOR $4400,X   $5D  3   4+
+            break;
+        default:
+            printf("\tINVALID EOR\n");
+            instData = NULL;
+            break;
+    }
+    return instData;
+}
+
+// TODO: this
+struct instruction* ALU_ADC_Opcode(unsigned char* inst){
+    // ADC (ADd with Carry)
+    //   AAffects Flags: S V Z C
+    // + add 1 cycle if page boundary crossed
+    // ADC results are dependant on the setting of the decimal flag. In decimal
+    // mode, addition is carried out on the assumption that the values involved are
+    // packed BCD (Binary Coded Decimal).
+
+    // There is no way to add without carry.
+
+
+    // Immediate     ADC #$44      $69  2   2
+    // Zero Page     ADC $44       $65  2   3
+    // Zero Page,X   ADC $44,X     $75  2   4
+    // Absolute      ADC $4400     $6D  3   4
+    // Absolute,X    ADC $4400,X   $7D  3   4+
+    // Absolute,Y    ADC $4400,Y   $79  3   4+
+    // Indirect,X    ADC ($44,X)   $61  2   6
+    // Indirect,Y    ADC ($44),Y   $71  2   5+
+
+    struct instruction* instData = NULL;
+    switch(inst[0]){
+        case 0x41:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_X, opcode_41); // Indirect,X    EOR ($44,X)   $41  2   6
+            break;
+        case 0x45:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE, opcode_45); // Zero Page     EOR $44       $45  2   3
+            break;
+        case 0x49:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_IMMEDIATE, opcode_49); // Immediate     EOR #$44      $49  2   2
+            break;
+        case 0x4D:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, opcode_4D); // Absolute      EOR $4400     $4D  3   4
+            break;
+        case 0x51:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, opcode_51); // Indirect,Y    EOR ($44),Y   $51  2   5+
+            break;
+        case 0x55:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, opcode_55); // Zero Page,X   EOR $44,X     $55  2   4
+            break;
+        case 0x59:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, opcode_59); // Absolute,Y    EOR $4400,Y   $59  3   4+
+            break;
+        case 0x5D:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, opcode_5D); // Absolute,X    EOR $4400,X   $5D  3   4+
+            break;
+        default:
+            printf("\tINVALID EOR\n");
+            instData = NULL;
+            break;
+    }
+    return instData;
+}
+
 
 struct instruction* ALUOpcodes(unsigned char* inst){
     if((inst[0] & 0b11) != 0b01){
@@ -458,6 +551,7 @@ struct instruction* ALUOpcodes(unsigned char* inst){
             break;
         case 0b01000001: // 0x40
             printf("\tEOR (bitwise Exclusive OR)\n");
+            instData = ALU_EOR_Opcode(inst);
             break;
         case 0b01100001: // 0x60
             printf("\tADC (ADd with Carry) (or NOP)\n");
