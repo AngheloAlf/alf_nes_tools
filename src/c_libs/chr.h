@@ -8,7 +8,7 @@
 #include "charOps.h"
 #include "romParser.h"
 
-#define CHR_ROM_PAGE_SIZE 8192
+#define CHR_ROM_PAGE_SIZE 0x2000
 
 struct pixel{
     unsigned char number;

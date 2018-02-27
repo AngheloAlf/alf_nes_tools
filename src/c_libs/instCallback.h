@@ -10,6 +10,8 @@
 #include "ram.h"
 
 struct instruction;
+struct nesRegisters;
+struct nesRam;
 
 // Control instructions
 void opcode_00(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram);

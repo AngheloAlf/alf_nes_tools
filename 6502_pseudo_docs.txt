@@ -456,7 +456,7 @@ rather than the address-1.
 
 <a name="RTS">&nbsp;</a>
 RTS (ReTurn from Subroutine)
-Affects Flags: none 
+  Affects Flags: none 
 Implied       RTS           $60  1   6
 
 RTS pulls the top two bytes off the stack (low byte first) and transfers

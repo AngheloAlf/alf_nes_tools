@@ -56,9 +56,11 @@ struct instruction{
     */
     void (*execute)(struct instruction*, struct nesRegisters*, struct nesRam*);
 
+    char cicles;
+
 };
 
-struct instruction* detectType(unsigned char* inst);
+struct instruction* detectType(unsigned char* inst, char extraCicles);
 void printfInstructions(struct nesRom* rom);
 void iterateInstructions(struct nesRom* rom);
 

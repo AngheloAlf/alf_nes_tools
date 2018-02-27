@@ -8,1034 +8,1034 @@
 // Control instructions
 
 void opcode_00(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_04(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_08(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_0C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_10(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_14(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_18(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_1C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_20(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_24(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_28(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_2C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_30(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_34(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_38(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_3C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_40(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_44(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_48(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_4C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_50(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_54(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_58(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_5C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_60(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_64(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_68(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_6C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_70(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_74(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_78(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_7C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_80(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_84(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_88(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_8C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_90(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_94(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_98(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_9C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_A0(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_A4(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_A8(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_AC(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_B0(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_B4(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_B8(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_BC(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_C0(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_C4(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_C8(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_CC(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_D0(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_D4(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_D8(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_DC(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_E0(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_E4(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_E8(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_EC(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_F0(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_F4(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_F8(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_FC(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 
 // ALU opcodes
 
 void opcode_01(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_05(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_09(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_0D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_11(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_15(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_19(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_1D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_21(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_25(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_29(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_2D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_31(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_35(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_39(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_3D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_41(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_45(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_49(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_4D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_51(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_55(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_59(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_5D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_61(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_65(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_69(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_6D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_71(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_75(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_79(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_7D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_81(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_85(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_89(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_8D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_91(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_95(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_99(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_9D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_A1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_A5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_A9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_AD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_B1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_B5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_B9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_BD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_C1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_C5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_C9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_CD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_D1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_D5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_D9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_DD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_E1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_E5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_E9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_ED(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_F1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_F5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_F9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_FD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 
 // RMW opcodes
 
 void opcode_02(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_06(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_0A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_0E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_12(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_16(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_1A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_1E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_22(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_26(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_2A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_2E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_32(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_36(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_3A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_3E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_42(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_46(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_4A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_4E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_52(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_56(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_5A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_5E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_62(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_66(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_6A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_6E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_72(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_76(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_7A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_7E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_82(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_86(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_8A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_8E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_92(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_96(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_9A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_9E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_A2(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_A6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_AA(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_AE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_B2(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_B6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_BA(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_BE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_C2(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_C6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_CA(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_CE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_D2(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_D6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_DA(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_DE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_E2(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_E6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_EA(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_EE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_F2(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_F6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_FA(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_FE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 
 // unofficial opcodes
 void opcode_03(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_07(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_0B(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_0F(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_13(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_17(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_1B(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_1F(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_23(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_27(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_2B(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_2F(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_33(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_37(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_3B(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_3F(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_43(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_47(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_4B(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_4F(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_53(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_57(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_5B(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_5F(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_63(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_67(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_6B(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_6F(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_73(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_77(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_7B(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_7F(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_83(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_87(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_8B(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_8F(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_93(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_97(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_9B(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_9F(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_A3(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_A7(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_AB(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_AF(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_B3(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_B7(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_BB(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_BF(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_C3(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_C7(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_CB(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_CF(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_D3(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_D7(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_DB(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_DF(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_E3(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_E7(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_EB(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_EF(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_F3(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_F7(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_FB(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 
 void opcode_FF(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented", instData->opcode);
+    printf("\tinstruction %x not implemented\n\n", instData->opcode);
 }
 

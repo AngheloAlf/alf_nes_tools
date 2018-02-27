@@ -7,6 +7,9 @@
 
 #include <stdlib.h>
 
+#include "ram.h"
+#include "instructions.h"
+
 struct nesRegisters{
     // https://wiki.nesdev.com/w/index.php/CPU_registers
     unsigned char acumulator; // A
@@ -16,5 +19,13 @@ struct nesRegisters{
     unsigned char stack; // S
     unsigned char statusRegister; // P
 };
+
+struct nesRegisters* initRegisters();
+
+// https://wiki.nesdev.com/w/index.php/CPU_power_up_state
+void powerUp(struct nesRegisters* registers, struct nesRam* ram);
+void resetCpu(struct nesRegisters* registers, struct nesRam* ram);
+
+int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, struct nesRom* rom);
 
 #endif //ALF_NES_TOOLS_CPU_H

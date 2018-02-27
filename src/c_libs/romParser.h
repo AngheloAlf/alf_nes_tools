@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define PRG_ROM_PAGE_SIZE 16384
+#define PRG_ROM_PAGE_SIZE 0x4000
 
 struct nesRomHeader{
     unsigned char* header;

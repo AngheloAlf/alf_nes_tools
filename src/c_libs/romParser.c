@@ -101,8 +101,6 @@ struct nesRom* generateINesRom(struct nesRomHeader* header, unsigned char* train
     (*rom)->playChoicePRom = playChoicePRom;
     (*rom)->title = title;
 
-    printf("rom: %p\n", *rom);
-
     return (*rom);
 }
 
@@ -195,6 +193,8 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
         title = NULL;
     }
 
+    printf("\tmapper: %i\n", romHeader->mapperId);
+
     struct nesRom* rom = generateINesRom(romHeader, trainer, prgRomData, chrRomData, playChoiceInstRom, playChoicePRom, title);
     // printf("rom: %p\n", rom);
     return rom;
@@ -250,8 +250,7 @@ struct nesRom* loadRom(char* filename){
     // free(header);
     fclose(filePtr);
 
-    printf("%.*s\n", 4, rom->header->consType);
-    printf("filesize: %ld\n", fileSize);
+    // printf("filesize: %ld\n", fileSize);
 
     return rom;
 }
