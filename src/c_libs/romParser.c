@@ -29,8 +29,10 @@ struct nesRomHeader* loadInesHeader(unsigned char* header){
     romHeader->realPrgPageAmount = romHeader->prgPageAmount;
     romHeader->realChrPageAmount = romHeader->chrPageAmount;
 
+    romHeader->mapperId = (unsigned int)(((romHeader->flags6) & 0b11110000)>>4 | (romHeader->flags7 & 0b11110000));
+    romHeader->subMapper = 0;
+
     if(header[7]){
-        // printf(".nes 1 or 2.0 detected\n");
         unsigned int prgPageAmount = romHeader->prgPageAmount;
         unsigned int aux = (unsigned int)romHeader->flags9 & 0b1111;
         aux <<= 8;
@@ -46,6 +48,9 @@ struct nesRomHeader* loadInesHeader(unsigned char* header){
             romHeader->typeVersion = 2;
             romHeader->realPrgPageAmount = prgPageAmount;
             romHeader->realChrPageAmount = chrPageAmount;
+
+            romHeader->mapperId |= (unsigned int)((romHeader->flags8 & 0b00001111)<<8);
+            romHeader->subMapper = (unsigned char)((romHeader->flags8 & 0b11110000)>>4);
         }
         else if(!header[12] && !header[13] && !header[14] && !header[15]){ // TODO: If byte 7 AND $0C = $00
             printf("iNES 1 detected\n");

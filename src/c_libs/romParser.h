@@ -30,6 +30,9 @@ struct nesRomHeader{
 
     unsigned int realPrgPageAmount;
     unsigned int realChrPageAmount;
+
+    unsigned int mapperId;
+    unsigned char subMapper;
 };
 
 struct nesPrgRom{
