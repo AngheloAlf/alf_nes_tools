@@ -23,7 +23,7 @@
 void charCopy(unsigned char* dst, unsigned char* src, size_t size);
 unsigned char *newCharFromIndex(unsigned char* src, size_t size, size_t start);
 void printfCharAsHex(unsigned char character);
-void printfAsColor(unsigned char character);
+void printfAsColor(unsigned char character, int withNumber);
 
 
 

@@ -5,7 +5,8 @@ int main(int argc, char* argv[]){
     int nothing = 0;
     int printfInst = 0;
     int execute = 0;
-    int iterateChr = 0;
+    int printfChr = 0;
+    int withNumber = 0;
 
     char* defaultFileName = "../roms/smb.nes";
     char* fileName = NULL;
@@ -21,17 +22,24 @@ int main(int argc, char* argv[]){
                 nothing = 1;
                 printf("\t\t\tnothing = 1\n");
             }
+
             else if(strcmp("-execute", argv[i]) == 0){
                 execute = 1;
                 printf("\t\t\texecute = 1\n");
             }
+
             else if(strcmp("-printfInst", argv[i]) == 0){
                 printfInst = 1;
                 printf("\t\t\tprintfInst = 1\n");
             }
-            else if(strcmp("-printfInst", argv[i]) == 0){
-                iterateChr = 1;
-                printf("\t\t\titerateChr = 1\n");
+
+            else if(strcmp("-printfChr", argv[i]) == 0){
+                printfChr = 1;
+                printf("\t\t\tprintfChr = 1\n");
+            }
+            else if(strcmp("-withNumber", argv[i]) == 0){
+                withNumber = 1;
+                printf("\t\t\twithNumber = 1\n");
             }
         }
         printf("---Arguments end---\n\n");
@@ -47,6 +55,10 @@ int main(int argc, char* argv[]){
 
     if(rom == NULL){
     	return 1;
+    }
+
+    if(printfChr){
+        printfChrRom(rom, withNumber);
     }
 
     struct nesRegisters* registers = initRegisters();
@@ -71,9 +83,6 @@ int main(int argc, char* argv[]){
     }
     if(printfInst){
         iterateInstructions(rom);
-    }
-    if(iterateChr){
-        iterateChrRom(rom);
     }
     // iterateInstructions(rom);
 

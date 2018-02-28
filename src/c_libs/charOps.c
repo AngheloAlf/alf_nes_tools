@@ -26,6 +26,12 @@ void printfCharAsHex(unsigned char character){
     printf("%x", character);
 }
 
-void printfAsColor(unsigned char character){
-    printf("\x1b[%im%i" ANSI_COLOR_RESET, character+30, character);
+void printfAsColor(unsigned char character, int withNumber){
+    // printf("\x1b[%im%i" ANSI_COLOR_RESET, character+30, character);
+    if(withNumber){
+        printf("\033[%im%i " ANSI_COLOR_RESET, character + 40, character);
+    }
+    else{
+        printf("\033[%im  " ANSI_COLOR_RESET, character + 40);
+    }
 }
