@@ -1091,6 +1091,117 @@ struct instruction* ALUOpcodes(unsigned char* inst, char extraCicles){
 
 
 // RMW
+struct instruction* RMW_ASL_Opcodes(unsigned char* inst, char extraCicles){
+    // ASL (Arithmetic Shift Left)
+    //   Affects Flags: S Z C
+    // Zero Page     ASL $44       $06  2   5
+    // Accumulator   ASL A         $0A  1   2
+    // Absolute      ASL $4400     $0E  3   6
+    // Zero Page,X   ASL $44,X     $16  2   6
+    // Absolute,X    ASL $4400,X   $1E  3   7
+    //
+    // ASL shifts all bits left one position. 0 is shifted into bit 0 and the
+    // original bit 7 is shifted into the Carry..
+
+    struct instruction* instData = NULL;
+    switch(inst[0]){
+        case 0x06:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE, 5, opcode_06);
+            break;
+        case 0x0A:
+            instData = initInstruction(inst[0], 0, inst[1], inst[2], TYPE_ACCUMULATOR, 2, opcode_0A);
+            break;
+        case 0x0E:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 6, opcode_0E);
+            break;
+        case 0x16:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 6, opcode_16);
+            break;
+        case 0x1E:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 7, opcode_1E);
+            break;
+        default:
+            printf("\tINVALID ASL\n");
+            instData = NULL;
+            break;
+    }
+    return instData;
+}
+
+struct instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCicles){
+    // ROL (ROtate Left)
+    //   Affects Flags: S Z C
+    // Zero Page     ROL $44       $26  2   5
+    // Accumulator   ROL A         $2A  1   2
+    // Zero Page,X   ROL $44,X     $36  2   6
+    // Absolute      ROL $4400     $2E  3   6
+    // Absolute,X    ROL $4400,X   $3E  3   7
+    //
+    // ROL shifts all bits left one position. The Carry is shifted into bit 0 and
+    // the original bit 7 is shifted into the Carry.
+
+    struct instruction* instData = NULL;
+    switch(inst[0]){
+        case 0x26:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE, 5, opcode_0A);
+            break;
+        case 0x2A:
+            instData = initInstruction(inst[0], 0, inst[1], inst[2], TYPE_ACCUMULATOR, 2, opcode_06);
+            break;
+        case 0x36:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 6, opcode_0E);
+            break;
+        case 0x2E:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 6, opcode_16);
+            break;
+        case 0x3E:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 7, opcode_1E);
+            break;
+        default:
+            printf("\tINVALID ROL\n");
+            instData = NULL;
+            break;
+    }
+    return instData;
+}
+
+struct instruction* RMW_LSR_Opcodes(unsigned char* inst, char extraCicles){
+    // LSR (Logical Shift Right)
+    //   Affects Flags: S Z C
+    // Zero Page     LSR $44       $46  2   5
+    // Accumulator   LSR A         $4A  1   2
+    // Absolute      LSR $4400     $4E  3   6
+    // Zero Page,X   LSR $44,X     $56  2   6
+    // Absolute,X    LSR $4400,X   $5E  3   7
+    //
+    // LSR shifts all bits right one position. 0 is shifted into bit 7 and the
+    // original bit 0 is shifted into the Carry.
+
+    struct instruction* instData = NULL;
+    switch(inst[0]){
+        case 0x46:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE, 5, opcode_46);
+            break;
+        case 0x4A:
+            instData = initInstruction(inst[0], 0, inst[1], inst[2], TYPE_ACCUMULATOR, 2, opcode_4A);
+            break;
+        case 0x4E:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 6, opcode_4E);
+            break;
+        case 0x56:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 6, opcode_56);
+            break;
+        case 0x5E:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 7, opcode_5E);
+            break;
+        default:
+            printf("\tINVALID LSR\n");
+            instData = NULL;
+            break;
+    }
+    return instData;
+}
+
 struct instruction* RMW_ROR_Opcodes(unsigned char* inst, char extraCicles){
     // ROR (ROtate Right)
     //   Affects Flags: S Z C
@@ -1249,6 +1360,37 @@ struct instruction* RMW_INC_Opcodes(unsigned char* inst, char extraCicles){
             break;
         default:
             printf("\tINVALID RMW INC OPCODE\n"); 
+            instData = NULL;
+            break;
+    }
+
+    return instData;
+}
+
+struct instruction* RMW_DEC_Opcodes(unsigned char* inst, char extraCicles){
+    // DEC (DECrement memory)
+    //   Affects Flags: S Z
+    // Zero Page     DEC $44       $C6  2   5
+    // Absolute      DEC $4400     $CE  3   6
+    // Zero Page,X   DEC $44,X     $D6  2   6
+    // Absolute,X    DEC $4400,X   $DE  3   7
+
+    struct instruction* instData = NULL;
+    switch(inst[0]){
+        case 0xC6:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE, 5, opcode_C6);
+            break;
+        case 0xCE:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 6, opcode_CE);
+            break;
+        case 0xD6:
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 6, opcode_D6);
+            break;
+        case 0xDE:
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 7, opcode_DE);
+            break;
+        default:
+            printf("\tINVALID RMW DEC OPCODE\n");
             instData = NULL;
             break;
     }
@@ -1426,6 +1568,7 @@ struct instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCicles){
 }
 
 
+
 // RMW
 struct instruction* RMW_Opcodes(unsigned char* inst, char extraCicles){
     if((inst[0] & 0b11) != 0b10){
@@ -1435,7 +1578,19 @@ struct instruction* RMW_Opcodes(unsigned char* inst, char extraCicles){
 
     struct instruction* instData = NULL;
     unsigned char opcode = inst[0];
-    if(((opcode & 0b11100011) == 0b01100010) && ((opcode & 0b00000100) || (~(opcode & 0b00010000) & (opcode & 0b00001000)))){ // y = C + A'B // C = 0000 0100 // B = 0000 1000 // A = 0001 0000
+    if(opcode == 0x06 || opcode == 0x0A || opcode == 0x0E || opcode == 0x16 || opcode == 0x1E){
+        printf("\tASL (Arithmetic Shift Left)\n");
+        instData = RMW_ASL_Opcodes(inst, extraCicles);
+    }
+    else if(opcode == 0x2A || opcode == 0x26 || opcode == 0x2E || opcode == 0x36 || opcode == 0x3E){
+        printf("\tROL (ROtate Left)\n");
+        instData = RMW_ROL_Opcodes(inst, extraCicles);
+    }
+    else if(opcode == 0x4A || opcode == 0x46 || opcode == 0x2E || opcode == 0x56 || opcode == 0x5E){
+        printf("\tLSR (Logical Shift Right)\n");
+        instData = RMW_LSR_Opcodes(inst, extraCicles);
+    }
+    else if(((opcode & 0b11100011) == 0b01100010) && ((opcode & 0b00000100) || (~(opcode & 0b00010000) & (opcode & 0b00001000)))){ // y = C + A'B // C = 0000 0100 // B = 0000 1000 // A = 0001 0000
         printf("\tROR (ROtate Right)\n");
         instData = RMW_ROR_Opcodes(inst, extraCicles);
     }
@@ -1459,6 +1614,10 @@ struct instruction* RMW_Opcodes(unsigned char* inst, char extraCicles){
     else if(opcode == 0xE6 || opcode == 0xEE || opcode == 0xF6 || opcode == 0xFE){
         printf("\tRMW INC Instructions\n");
         instData = RMW_INC_Opcodes(inst, extraCicles);
+    }
+    else if(opcode == 0xC6 || opcode == 0xCE || opcode == 0xD6 || opcode == 0xDE){
+        printf("\tRMW DEC Instructions\n");
+        instData = RMW_DEC_Opcodes(inst, extraCicles);
     }
     else if(opcode == 0xEA || opcode == 0xFA || opcode == 0xDA || opcode == 0x7A || opcode == 0x5A || opcode == 0x3A || opcode == 0x1A || opcode == 0xE2 || opcode == 0xC2 || opcode == 0x82){
         printf("\tRMW NOP Instructions\n");
