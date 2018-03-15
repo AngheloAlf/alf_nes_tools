@@ -21,7 +21,7 @@ return values:
     retVal < 0: error code
 
 errors codes:
-    -1: example
+    -1: not implemented
 
 */
 

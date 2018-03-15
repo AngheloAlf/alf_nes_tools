@@ -47,4 +47,6 @@ void setNegative(struct nesRegisters* registers);
 void clearNegative(struct nesRegisters* registers);
 char getNegative(struct nesRegisters* registers);
 
+void parseZeroNegative(struct nesRegisters* registers, char number);
+
 #endif //ALF_NES_TOOLS_CPU_H

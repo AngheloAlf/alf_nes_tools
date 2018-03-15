@@ -166,3 +166,18 @@ char getNegative(struct nesRegisters* registers){
     return (char)((registers->statusRegister>>7) & 0b00000001);
 }
 
+void parseZeroNegative(struct nesRegisters* registers, char number){
+    if(number == 0){
+        setZero(registers);
+    }
+    else{
+        clearZero(registers);
+    }
+    if(number & 0b10000000){
+        setNegative(registers);
+    }
+    else{
+        clearNegative(registers);
+    }
+}
+

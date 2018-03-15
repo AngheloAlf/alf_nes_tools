@@ -33,6 +33,7 @@
 struct instruction{
     // https://wiki.nesdev.com/w/index.php/CPU_unofficial_opcodes
     // http://www.6502.org/tutorials/6502opcodes.html
+    // http://www.obelisk.me.uk/6502/reference.html
 
     unsigned char opcode;
     unsigned char byte1;

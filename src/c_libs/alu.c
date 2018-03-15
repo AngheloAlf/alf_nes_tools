@@ -5,7 +5,38 @@
 #include "alu.h"
 
 
-int ADC(struct instruction* instData, struct nesRegisters* registers, char number){
+// ORA (bitwise OR with Accumulator)
+int ORA(struct nesRegisters *registers, char number) {
+    char result = registers->accumulator | number;
+
+    parseZeroNegative(registers, result);
+
+    registers->accumulator = result;
+    return 0;
+}
+
+// AND (bitwise AND with accumulator)
+int AND(struct nesRegisters* registers, char number){
+    char result = registers->accumulator & number;
+
+    parseZeroNegative(registers, result);
+
+    registers->accumulator = result;
+    return 0;
+}
+
+// EOR (bitwise Exclusive OR)
+int EOR(struct nesRegisters* registers, char number){
+    char result = registers->accumulator ^ number;
+
+    parseZeroNegative(registers, result);
+
+    registers->accumulator = result;
+    return 0;
+}
+
+// ADC (ADd with Carry)
+int ADC(struct nesRegisters *registers, char number) {
     char carry = getCarry(registers);
     char sum = 0;
     short auxSum = 0;
@@ -19,11 +50,66 @@ int ADC(struct instruction* instData, struct nesRegisters* registers, char numbe
     else{
         clearCarry(registers);
     }
-    if(sum == 0){
-        setZero(registers);
+    if(auxSum > 127 || auxSum < -128){
+        setOverflow(registers);
     }
     else{
-        clearZero(registers);
+        clearOverflow(registers);
+    }
+
+    parseZeroNegative(registers, sum);
+
+    registers->accumulator = sum;
+
+    return 0;
+}
+
+// STA (STore Accumulator)
+int STA(struct nesRegisters* registers, char number){
+
+    return -1;
+}
+
+// LDA (LoaD Accumulator)
+int LDA(struct nesRegisters* registers, char number){
+    char result = number;
+
+    parseZeroNegative(registers, result);
+
+    registers->accumulator = result;
+    return 0;
+}
+
+// CMP (CoMPare accumulator)
+int CMP(struct nesRegisters* registers, char number){
+    char result = registers->accumulator - number;
+
+    if(result >= 0){
+        setCarry(registers);
+    }
+    else{
+        clearCarry(registers);
+    }
+
+    parseZeroNegative(registers, result);
+
+    return 0;
+}
+
+// SBC (SuBtract with Carry)
+int SBC(struct nesRegisters* registers, char number){
+    char carry = getCarry(registers);
+    char sum = 0;
+    short auxSum = 0;
+    sum = registers->accumulator - number - ((char)1 - carry);
+    auxSum = registers->accumulator - number - ((char)1 - carry);
+
+    unsigned short veryAux = (unsigned short)(auxSum & 0x100) - (unsigned short)(sum & 0x100);
+    if(veryAux){
+        setCarry(registers);
+    }
+    else{
+        clearCarry(registers);
     }
     if(auxSum > 127 || auxSum < -128){
         setOverflow(registers);
@@ -31,14 +117,10 @@ int ADC(struct instruction* instData, struct nesRegisters* registers, char numbe
     else{
         clearOverflow(registers);
     }
-    if(sum < 0){
-        setNegative(registers);
-    }
-    else{
-        clearNegative(registers);
-    }
+
+    parseZeroNegative(registers, sum);
 
     registers->accumulator = sum;
-
     return 0;
 }
+

@@ -332,129 +332,234 @@ int opcode_FC(struct instruction* instData, struct nesRegisters* registers, stru
 // ALU opcodes
 
 int opcode_01(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // ORA Indirect X
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = ORA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_05(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // ORA Zero page
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = ORA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_09(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // ORA Immediate
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = ORA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_0D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // ORA Absolute
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = ORA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_11(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // ORA Indirect Y
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = ORA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_15(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // ORA Zero page X
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = ORA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_19(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // ORA Absolute Y
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = ORA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_1D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // ORA Absolute X
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = ORA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_21(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // AND Indirect X
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = AND(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_25(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = AND(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_29(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = AND(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_2D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = AND(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_31(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = AND(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_35(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = AND(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_39(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = AND(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_3D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = AND(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_41(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = EOR(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_45(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = EOR(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_49(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = EOR(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_4D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = EOR(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_51(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = EOR(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_55(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = EOR(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_59(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = EOR(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_5D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = EOR(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_61(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Indirect X
     char number = (char)loadType(instData, registers, ram);
-    int retVal = ADC(instData, registers, number);
+    int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
     }
@@ -464,7 +569,7 @@ int opcode_61(struct instruction* instData, struct nesRegisters* registers, stru
 int opcode_65(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Zero Page
     char number = (char)loadType(instData, registers, ram);
-    int retVal = ADC(instData, registers, number);
+    int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
     }
@@ -474,7 +579,7 @@ int opcode_65(struct instruction* instData, struct nesRegisters* registers, stru
 int opcode_69(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Immediate
     char number = (char)loadType(instData, registers, ram);
-    int retVal = ADC(instData, registers, number);
+    int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
     }
@@ -484,7 +589,7 @@ int opcode_69(struct instruction* instData, struct nesRegisters* registers, stru
 int opcode_6D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Absoulte
     char number = (char)loadType(instData, registers, ram);
-    int retVal = ADC(instData, registers, number);
+    int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
     }
@@ -494,7 +599,7 @@ int opcode_6D(struct instruction* instData, struct nesRegisters* registers, stru
 int opcode_71(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Indirect Y
     char number = (char)loadType(instData, registers, ram);
-    int retVal = ADC(instData, registers, number);
+    int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
     }
@@ -504,7 +609,7 @@ int opcode_71(struct instruction* instData, struct nesRegisters* registers, stru
 int opcode_75(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Zero Page X
     char number = (char)loadType(instData, registers, ram);
-    int retVal = ADC(instData, registers, number);
+    int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
     }
@@ -514,7 +619,7 @@ int opcode_75(struct instruction* instData, struct nesRegisters* registers, stru
 int opcode_79(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Absolute Y
     char number = (char)loadType(instData, registers, ram);
-    int retVal = ADC(instData, registers, number);
+    int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
     }
@@ -524,7 +629,7 @@ int opcode_79(struct instruction* instData, struct nesRegisters* registers, stru
 int opcode_7D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Absolute X
     char number = (char)loadType(instData, registers, ram);
-    int retVal = ADC(instData, registers, number);
+    int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
     }
@@ -532,163 +637,287 @@ int opcode_7D(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_81(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = STA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_85(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = STA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_89(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
+    // Unofficial NOP
     return 0;
 }
 
 int opcode_8D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = STA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_91(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = STA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_95(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = STA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_99(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = STA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_9D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = STA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_A1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = LDA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_A5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = LDA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_A9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = LDA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_AD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = LDA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_B1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = LDA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_B5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = LDA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_B9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = LDA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_BD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = LDA(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_C1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = CMP(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_C5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = CMP(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_C9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = CMP(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_CD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = CMP(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_D1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = CMP(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_D5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = CMP(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_D9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = CMP(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_DD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = CMP(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_E1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = SBC(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_E5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = SBC(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_E9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = SBC(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_ED(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = SBC(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_F1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = SBC(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_F5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = SBC(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_F9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = SBC(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 int opcode_FD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    char number = (char)loadType(instData, registers, ram);
+    int retVal = SBC(registers, number);
+    if(retVal < 0){
+        return retVal;
+    }
+    return instData->cycles;
 }
 
 

@@ -7,7 +7,32 @@
 
 #include "instructions.h"
 
-int ADC(struct instruction* instData, struct nesRegisters* registers, char number);
+/*
+return values:
+    retVal == 0: ok
+    retVal < 0: error code
+
+errors codes:
+    -1: not implemented
+
+*/
+
+// ORA (bitwise OR with Accumulator)
+int ORA(struct nesRegisters *registers, char number);
+// AND (bitwise AND with accumulator)
+int AND(struct nesRegisters* registers, char number);
+// EOR (bitwise Exclusive OR)
+int EOR(struct nesRegisters* registers, char number);
+// ADC (ADd with Carry)
+int ADC(struct nesRegisters *registers, char number);
+// STA (STore Accumulator)
+int STA(struct nesRegisters* registers, char number);
+// LDA (LoaD Accumulator)
+int LDA(struct nesRegisters* registers, char number);
+// CMP (CoMPare accumulator)
+int CMP(struct nesRegisters* registers, char number);
+// SBC (SuBtract with Carry)
+int SBC(struct nesRegisters* registers, char number);
 
 
 #endif //ALF_NES_TOOLS_ALU_H
