@@ -65,18 +65,16 @@ int ADC(struct nesRegisters *registers, char number) {
 }
 
 // STA (STore Accumulator)
-int STA(struct nesRegisters* registers, char number){
-
-    return -1;
+int STA(struct nesRegisters* registers, unsigned short number, struct nesRam* ram){
+    ram->ram[number] = (unsigned char)registers->accumulator;
+    return 0;
 }
 
 // LDA (LoaD Accumulator)
 int LDA(struct nesRegisters* registers, char number){
-    char result = number;
+    parseZeroNegative(registers, number);
 
-    parseZeroNegative(registers, result);
-
-    registers->accumulator = result;
+    registers->accumulator = number;
     return 0;
 }
 

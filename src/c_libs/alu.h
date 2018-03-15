@@ -26,7 +26,7 @@ int EOR(struct nesRegisters* registers, char number);
 // ADC (ADd with Carry)
 int ADC(struct nesRegisters *registers, char number);
 // STA (STore Accumulator)
-int STA(struct nesRegisters* registers, char number);
+int STA(struct nesRegisters* registers, unsigned short number, struct nesRam* ram);
 // LDA (LoaD Accumulator)
 int LDA(struct nesRegisters* registers, char number);
 // CMP (CoMPare accumulator)

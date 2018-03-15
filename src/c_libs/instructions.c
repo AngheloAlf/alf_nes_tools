@@ -1768,7 +1768,7 @@ void iterateInstructions(struct nesRom* rom){
     }
 }
 
-unsigned short loadType(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
+unsigned short loadAddress(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short absolulteAddress = instData->byte2<<8 | instData->byte1;
     unsigned short firstAddress;
     unsigned short secondAddress;
@@ -1783,28 +1783,54 @@ unsigned short loadType(struct instruction* instData, struct nesRegisters* regis
         case TYPE_RELATIVE:
             return instData->byte1;
         case TYPE_ABSOLUTE:
-            return ram->ram[absolulteAddress];
+            return absolulteAddress;
         case TYPE_ZERO_PAGE:
-            return ram->ram[instData->byte1];
+            return instData->byte1;
         case TYPE_INDIRECT:
             return absolulteAddress;
 
         case TYPE_ABSOLUTE_X:
-            return ram->ram[absolulteAddress + registers->indexX];
+            return absolulteAddress + registers->indexX;
         case TYPE_ABSOLUTE_Y:
-            return ram->ram[absolulteAddress + registers->indexY];
+            return absolulteAddress + registers->indexY;
         case TYPE_ZERO_PAGE_X:
-            return ram->ram[instData->byte1 + registers->indexX];
+            return instData->byte1 + registers->indexX;
         case TYPE_ZERO_PAGE_Y:
-            return ram->ram[instData->byte1 + registers->indexY];
+            return instData->byte1 + registers->indexY;
         case TYPE_INDIRECT_X:
             firstAddress = registers->indexX + instData->byte1;
             secondAddress = ram->ram[firstAddress+1]<<8 | ram->ram[firstAddress];
-            return ram->ram[secondAddress];
+            return secondAddress;
         case TYPE_INDIRECT_Y:
             firstAddress = ram->ram[instData->byte1+1]<<8 | ram->ram[instData->byte1];
             secondAddress = firstAddress + (unsigned short)registers->indexY;
-            return ram->ram[secondAddress];
+            return secondAddress;
+
+        default:
+            return 0;
+    }
+}
+
+unsigned short loadTypeFromRam(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
+    unsigned short address = loadAddress(instData, registers, ram);
+
+    switch(instData->type){
+        case TYPE_ACCUMULATOR:
+        case TYPE_IMMEDIATE:
+        case TYPE_IMPLIED:
+        case TYPE_RELATIVE:
+        case TYPE_INDIRECT:
+            return address;
+
+        case TYPE_ABSOLUTE:
+        case TYPE_ZERO_PAGE:
+        case TYPE_ABSOLUTE_X:
+        case TYPE_ABSOLUTE_Y:
+        case TYPE_ZERO_PAGE_X:
+        case TYPE_ZERO_PAGE_Y:
+        case TYPE_INDIRECT_X:
+        case TYPE_INDIRECT_Y:
+            return ram->ram[address];
 
         default:
             return 0;

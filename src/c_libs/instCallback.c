@@ -333,7 +333,7 @@ int opcode_FC(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_01(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ORA Indirect X
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -343,7 +343,7 @@ int opcode_01(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_05(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ORA Zero page
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -353,7 +353,7 @@ int opcode_05(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_09(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ORA Immediate
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -363,7 +363,7 @@ int opcode_09(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_0D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ORA Absolute
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -373,7 +373,7 @@ int opcode_0D(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_11(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ORA Indirect Y
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -383,7 +383,7 @@ int opcode_11(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_15(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ORA Zero page X
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -393,7 +393,7 @@ int opcode_15(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_19(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ORA Absolute Y
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -403,7 +403,7 @@ int opcode_19(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_1D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ORA Absolute X
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -413,7 +413,7 @@ int opcode_1D(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_21(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // AND Indirect X
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
         return retVal;
@@ -422,7 +422,7 @@ int opcode_21(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_25(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
         return retVal;
@@ -431,7 +431,7 @@ int opcode_25(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_29(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
         return retVal;
@@ -440,7 +440,7 @@ int opcode_29(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_2D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
         return retVal;
@@ -449,7 +449,7 @@ int opcode_2D(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_31(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
         return retVal;
@@ -458,7 +458,7 @@ int opcode_31(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_35(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
         return retVal;
@@ -467,7 +467,7 @@ int opcode_35(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_39(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
         return retVal;
@@ -476,7 +476,7 @@ int opcode_39(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_3D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
         return retVal;
@@ -485,7 +485,7 @@ int opcode_3D(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_41(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
         return retVal;
@@ -494,7 +494,7 @@ int opcode_41(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_45(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
         return retVal;
@@ -503,7 +503,7 @@ int opcode_45(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_49(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
         return retVal;
@@ -512,7 +512,7 @@ int opcode_49(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_4D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
         return retVal;
@@ -521,7 +521,7 @@ int opcode_4D(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_51(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
         return retVal;
@@ -530,7 +530,7 @@ int opcode_51(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_55(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
         return retVal;
@@ -539,7 +539,7 @@ int opcode_55(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_59(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
         return retVal;
@@ -548,7 +548,7 @@ int opcode_59(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_5D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
         return retVal;
@@ -558,7 +558,7 @@ int opcode_5D(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_61(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Indirect X
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
@@ -568,7 +568,7 @@ int opcode_61(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_65(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Zero Page
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
@@ -578,7 +578,7 @@ int opcode_65(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_69(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Immediate
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
@@ -588,7 +588,7 @@ int opcode_69(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_6D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Absoulte
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
@@ -598,7 +598,7 @@ int opcode_6D(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_71(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Indirect Y
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
@@ -608,7 +608,7 @@ int opcode_71(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_75(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Zero Page X
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
@@ -618,7 +618,7 @@ int opcode_75(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_79(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Absolute Y
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
@@ -628,7 +628,7 @@ int opcode_79(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_7D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // ADC Absolute X
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = ADC(registers, number);
     if(retVal != 0){
         return retVal;
@@ -637,8 +637,8 @@ int opcode_7D(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_81(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
-    int retVal = STA(registers, number);
+    unsigned short number = loadAddress(instData, registers, ram);
+    int retVal = STA(registers, number, ram);
     if(retVal < 0){
         return retVal;
     }
@@ -646,8 +646,8 @@ int opcode_81(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_85(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
-    int retVal = STA(registers, number);
+    unsigned short number = loadAddress(instData, registers, ram);
+    int retVal = STA(registers, number, ram);
     if(retVal < 0){
         return retVal;
     }
@@ -660,8 +660,8 @@ int opcode_89(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_8D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
-    int retVal = STA(registers, number);
+    unsigned short number = loadAddress(instData, registers, ram);
+    int retVal = STA(registers, number, ram);
     if(retVal < 0){
         return retVal;
     }
@@ -669,8 +669,8 @@ int opcode_8D(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_91(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
-    int retVal = STA(registers, number);
+    unsigned short number = loadAddress(instData, registers, ram);
+    int retVal = STA(registers, number, ram);
     if(retVal < 0){
         return retVal;
     }
@@ -678,8 +678,8 @@ int opcode_91(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_95(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
-    int retVal = STA(registers, number);
+    unsigned short number = loadAddress(instData, registers, ram);
+    int retVal = STA(registers, number, ram);
     if(retVal < 0){
         return retVal;
     }
@@ -687,8 +687,8 @@ int opcode_95(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_99(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
-    int retVal = STA(registers, number);
+    unsigned short number = loadAddress(instData, registers, ram);
+    int retVal = STA(registers, number, ram);
     if(retVal < 0){
         return retVal;
     }
@@ -696,8 +696,8 @@ int opcode_99(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_9D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
-    int retVal = STA(registers, number);
+    unsigned short number = loadAddress(instData, registers, ram);
+    int retVal = STA(registers, number, ram);
     if(retVal < 0){
         return retVal;
     }
@@ -705,7 +705,7 @@ int opcode_9D(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_A1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -714,7 +714,7 @@ int opcode_A1(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_A5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -723,7 +723,7 @@ int opcode_A5(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_A9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -732,7 +732,7 @@ int opcode_A9(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_AD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -741,7 +741,7 @@ int opcode_AD(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_B1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -750,7 +750,7 @@ int opcode_B1(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_B5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -759,7 +759,7 @@ int opcode_B5(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_B9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -768,7 +768,7 @@ int opcode_B9(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_BD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
         return retVal;
@@ -777,7 +777,7 @@ int opcode_BD(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_C1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
         return retVal;
@@ -786,7 +786,7 @@ int opcode_C1(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_C5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
         return retVal;
@@ -795,7 +795,7 @@ int opcode_C5(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_C9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
         return retVal;
@@ -804,7 +804,7 @@ int opcode_C9(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_CD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
         return retVal;
@@ -813,7 +813,7 @@ int opcode_CD(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_D1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
         return retVal;
@@ -822,7 +822,7 @@ int opcode_D1(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_D5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
         return retVal;
@@ -831,7 +831,7 @@ int opcode_D5(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_D9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
         return retVal;
@@ -840,7 +840,7 @@ int opcode_D9(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_DD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
         return retVal;
@@ -849,7 +849,7 @@ int opcode_DD(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_E1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
         return retVal;
@@ -858,7 +858,7 @@ int opcode_E1(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_E5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
         return retVal;
@@ -867,7 +867,7 @@ int opcode_E5(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_E9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
         return retVal;
@@ -876,7 +876,7 @@ int opcode_E9(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_ED(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
         return retVal;
@@ -885,7 +885,7 @@ int opcode_ED(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_F1(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
         return retVal;
@@ -894,7 +894,7 @@ int opcode_F1(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_F5(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
         return retVal;
@@ -903,7 +903,7 @@ int opcode_F5(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_F9(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
         return retVal;
@@ -912,7 +912,7 @@ int opcode_F9(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_FD(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    char number = (char)loadType(instData, registers, ram);
+    char number = (char)loadTypeFromRam(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
         return retVal;
