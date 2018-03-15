@@ -18,6 +18,8 @@ struct nesRegisters{
     unsigned short programCounter; // PC
     unsigned char stack; // S
     unsigned char statusRegister; // P
+
+    unsigned char disablePC;
 };
 
 struct nesRegisters* initRegisters();
@@ -46,6 +48,9 @@ char getOverflow(struct nesRegisters* registers);
 void setNegative(struct nesRegisters* registers);
 void clearNegative(struct nesRegisters* registers);
 char getNegative(struct nesRegisters* registers);
+
+void disablePC(struct nesRegisters* registers);
+void enablePC(struct nesRegisters* registers);
 
 void parseZeroNegative(struct nesRegisters* registers, char number);
 

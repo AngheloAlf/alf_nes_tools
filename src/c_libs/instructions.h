@@ -34,6 +34,7 @@ struct instruction{
     // https://wiki.nesdev.com/w/index.php/CPU_unofficial_opcodes
     // http://www.6502.org/tutorials/6502opcodes.html
     // http://www.obelisk.me.uk/6502/reference.html
+    // http://nesdev.com/undocumented_opcodes.txt
 
     unsigned char opcode;
     unsigned char byte1;
@@ -66,7 +67,7 @@ void printfInstructions(struct nesRom* rom);
 void iterateInstructions(struct nesRom* rom);
 
 unsigned short loadAddress(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram);
-unsigned short loadTypeFromRam(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram);
+unsigned short loadAddressFromRam(struct instruction *instData, struct nesRegisters *registers, struct nesRam *ram);
 
 
 #endif //ALF_NES_TOOLS_INSTRUCTIONS_H
