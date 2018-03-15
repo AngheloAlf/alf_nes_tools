@@ -14,8 +14,8 @@ int opcode_00(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_04(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_08(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -24,8 +24,8 @@ int opcode_08(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_0C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_10(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -34,8 +34,8 @@ int opcode_10(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_14(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_18(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -44,8 +44,8 @@ int opcode_18(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_1C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_20(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -74,8 +74,8 @@ int opcode_30(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_34(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_38(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -84,8 +84,8 @@ int opcode_38(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_3C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_40(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -94,8 +94,8 @@ int opcode_40(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_44(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_48(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -114,8 +114,8 @@ int opcode_50(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_54(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_58(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -124,8 +124,8 @@ int opcode_58(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_5C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_60(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -134,8 +134,8 @@ int opcode_60(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_64(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_68(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -154,8 +154,8 @@ int opcode_70(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_74(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_78(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -164,13 +164,13 @@ int opcode_78(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_7C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_80(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_84(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -274,8 +274,8 @@ int opcode_D0(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_D4(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_D8(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -284,8 +284,8 @@ int opcode_D8(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_DC(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_E0(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -314,8 +314,8 @@ int opcode_F0(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_F4(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_F8(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -324,8 +324,8 @@ int opcode_F8(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_FC(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 
@@ -656,7 +656,7 @@ int opcode_85(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_89(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     // Unofficial NOP
-    return 0;
+    return instData->cycles;
 }
 
 int opcode_8D(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -954,8 +954,8 @@ int opcode_16(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_1A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_1E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -1034,8 +1034,8 @@ int opcode_56(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_5A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_5E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -1074,8 +1074,8 @@ int opcode_76(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_7A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_7E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -1084,8 +1084,8 @@ int opcode_7E(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_82(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_86(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -1164,8 +1164,8 @@ int opcode_BE(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_C2(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_C6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -1194,8 +1194,8 @@ int opcode_D6(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_DA(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_DE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -1204,8 +1204,8 @@ int opcode_DE(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_E2(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_E6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -1214,8 +1214,8 @@ int opcode_E6(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_EA(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // NOP
+    return instData->cycles;
 }
 
 int opcode_EE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -1234,8 +1234,8 @@ int opcode_F6(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_FA(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_FE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
