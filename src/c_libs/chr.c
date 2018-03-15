@@ -15,7 +15,7 @@ void printfChrRom(struct nesRom* rom, int withNumber){
     // struct tile tiles;
 
     for(size_t i = 0; i < chrPages; i++){
-        for(size_t j = 0; j < CHR_ROM_PAGE_SIZE/16; j+=8){
+        for(size_t j = 0; j < CHR_ROM_PAGE_SIZE/16; j+=4){
             // tiles = rom->chrRom->tiles[i][j];
             for(size_t k = 0; k < 8; k++){
                 printfColoredLine(rom->chrRom->tiles[i][j].lines[k], withNumber);
@@ -26,16 +26,16 @@ void printfChrRom(struct nesRom* rom, int withNumber){
                 printf(" ");
                 printfColoredLine(rom->chrRom->tiles[i][j+3].lines[k], withNumber);
                 printf(" ");
-                printfColoredLine(rom->chrRom->tiles[i][j+4].lines[k], withNumber);
+                /*printfColoredLine(rom->chrRom->tiles[i][j+4].lines[k], withNumber);
                 printf(" ");
                 printfColoredLine(rom->chrRom->tiles[i][j+5].lines[k], withNumber);
                 printf(" ");
                 printfColoredLine(rom->chrRom->tiles[i][j+6].lines[k], withNumber);
                 printf(" ");
-                printfColoredLine(rom->chrRom->tiles[i][j+7].lines[k], withNumber);
+                printfColoredLine(rom->chrRom->tiles[i][j+7].lines[k], withNumber);*/
                 printf("\n");
             }
-            printf("\n");
+            // printf("\n");
             // sleep(2);
             printf("\n");
         }

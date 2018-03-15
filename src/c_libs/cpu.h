@@ -12,7 +12,7 @@
 
 struct nesRegisters{
     // https://wiki.nesdev.com/w/index.php/CPU_registers
-    unsigned char acumulator; // A
+    char accumulator; // A
     unsigned char indexX; // X
     unsigned char indexY; // Y
     unsigned short programCounter; // PC
@@ -27,5 +27,24 @@ void powerUp(struct nesRegisters* registers, struct nesRam* ram);
 void resetCpu(struct nesRegisters* registers, struct nesRam* ram);
 
 int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, struct nesRom* rom);
+
+// http://wiki.nesdev.com/w/index.php/CPU_status_flag_behavior
+void setCarry(struct nesRegisters* registers);
+void clearCarry(struct nesRegisters* registers);
+char getCarry(struct nesRegisters* registers);
+void setZero(struct nesRegisters* registers);
+void clearZero(struct nesRegisters* registers);
+char getZero(struct nesRegisters* registers);
+void setInterrupt(struct nesRegisters* registers);
+void clearInterrupt(struct nesRegisters* registers);
+char getInterrupt(struct nesRegisters* registers);
+void setS(struct nesRegisters* registers, char s);
+char getS(struct nesRegisters* registers);
+void setOverflow(struct nesRegisters* registers);
+void clearOverflow(struct nesRegisters* registers);
+char getOverflow(struct nesRegisters* registers);
+void setNegative(struct nesRegisters* registers);
+void clearNegative(struct nesRegisters* registers);
+char getNegative(struct nesRegisters* registers);
 
 #endif //ALF_NES_TOOLS_CPU_H

@@ -4,7 +4,7 @@
 
 #include "instructions.h"
 
-struct instruction* initInstruction(unsigned char opcode, unsigned char bytesAmount, unsigned char byte1, unsigned char byte2, unsigned char type, char cicles, void (*execute)(struct instruction*, struct nesRegisters*, struct nesRam*)){
+struct instruction* initInstruction(unsigned char opcode, unsigned char bytesAmount, unsigned char byte1, unsigned char byte2, unsigned char type, char cicles, int (*execute)(struct instruction*, struct nesRegisters*, struct nesRam*)){
     struct instruction* instData = malloc(sizeof(struct instruction));
 
     instData->opcode = opcode;
@@ -19,7 +19,7 @@ struct instruction* initInstruction(unsigned char opcode, unsigned char bytesAmo
     instData->bytesAmount = bytesAmount;
     instData->type = type;
 
-    instData->cicles = cicles;
+    instData->cycles = cicles;
     instData->execute = execute;
 
     return instData;
@@ -121,35 +121,35 @@ struct instruction* control_Branching_Opcodes(unsigned char* inst, char extraCic
     switch(inst[0]){
         case 0x10:
             printf("\tBranch on PLus\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_BRANCH, 2 + extraCicles, opcode_10);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_10);
             break;
         case 0x30:
             printf("\tBranch on MInus\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_BRANCH, 2 + extraCicles, opcode_30);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_30);
             break;
         case 0x50:
             printf("\tBranch on oVerflow Clear\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_BRANCH, 2 + extraCicles, opcode_50);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_50);
             break;
         case 0x70:
             printf("\tBranch on oVerflow Set\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_BRANCH, 2 + extraCicles, opcode_70);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_70);
             break;
         case 0x90:
             printf("\tBranch on Carry Clear\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_BRANCH, 2 + extraCicles, opcode_90);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_90);
             break;
         case 0xB0:
             printf("\tBranch on Carry Set\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_BRANCH, 2 + extraCicles, opcode_B0);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_B0);
             break;
         case 0xD0:
             printf("\tBranch on Not Equal\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_BRANCH, 2 + extraCicles, opcode_D0);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_D0);
             break;
         case 0xF0:
             printf("\tBranch on EQual\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_BRANCH, 2 + extraCicles, opcode_F0);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_F0);
             break;
         default:
             printf("\tINVALID BRANCH\n");
@@ -1061,11 +1061,11 @@ struct instruction* ALUOpcodes(unsigned char* inst, char extraCicles){
             instData = ALU_EOR_Opcode(inst, extraCicles);
             break;
         case 0b01100001: // 0x60
-            printf("\tADC (ADd with Carry) (or NOP)\n");
+            printf("\tADC (ADd with Carry)\n");
             instData = ALU_ADC_Opcode(inst, extraCicles);
             break;
         case 0b10000001: // 0x80
-            printf("\tSTA (STore Accumulator)\n");
+            printf("\tSTA (STore Accumulator) (or NOP)\n");
             instData = ALU_STA_Opcode(inst, extraCicles);
             break;
         case 0b10100001: // 0xA0
@@ -1143,19 +1143,19 @@ struct instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCicles){
     struct instruction* instData = NULL;
     switch(inst[0]){
         case 0x26:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE, 5, opcode_0A);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE, 5, opcode_26);
             break;
         case 0x2A:
-            instData = initInstruction(inst[0], 0, inst[1], inst[2], TYPE_ACCUMULATOR, 2, opcode_06);
+            instData = initInstruction(inst[0], 0, inst[1], inst[2], TYPE_ACCUMULATOR, 2, opcode_2A);
             break;
         case 0x36:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 6, opcode_0E);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 6, opcode_36);
             break;
         case 0x2E:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 6, opcode_16);
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 6, opcode_2E);
             break;
         case 0x3E:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 7, opcode_1E);
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 7, opcode_3E);
             break;
         default:
             printf("\tINVALID ROL\n");
@@ -1219,7 +1219,7 @@ struct instruction* RMW_ROR_Opcodes(unsigned char* inst, char extraCicles){
             instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 6, opcode_6E); // Absolute      ROR $4400     $6E  3   6
             break;
         case 0x76:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 6, opcode_66); // Zero Page,X   ROR $44,X     $76  2   6
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 6, opcode_76); // Zero Page,X   ROR $44,X     $76  2   6
             break;
         case 0x7E:
             instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 7, opcode_7E); // Absolute,X    ROR $4400,X   $7E  3   7
@@ -1423,7 +1423,7 @@ struct instruction* RMW_NOP_Opcodes(unsigned char* inst, char extraCicles){
                 break;
             case 0xE2:
                 printf("\tRMW IMMEDIATE NOP Opcode\n");
-                instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_IMMEDIATE, 2, opcode_A2); 
+                instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_IMMEDIATE, 2, opcode_E2);
                 break;
             case 0x1A:
                 printf("\tRMW IMPLIED NOP Opcode\n");
@@ -1766,5 +1766,47 @@ void iterateInstructions(struct nesRom* rom){
         }
         new_start = j - PRG_ROM_PAGE_SIZE;
     }
-    return;
+}
+
+unsigned short loadType(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
+    unsigned short absolulteAddress = instData->byte2<<8 | instData->byte1;
+    unsigned short firstAddress;
+    unsigned short secondAddress;
+    switch(instData->type){
+        case TYPE_ACCUMULATOR:
+            return 0; // Es asi.
+        case TYPE_IMMEDIATE:
+            return instData->byte1;
+        case TYPE_IMPLIED:
+            return 0; // Es asi
+
+        case TYPE_RELATIVE:
+            return instData->byte1;
+        case TYPE_ABSOLUTE:
+            return ram->ram[absolulteAddress];
+        case TYPE_ZERO_PAGE:
+            return ram->ram[instData->byte1];
+        case TYPE_INDIRECT:
+            return absolulteAddress;
+
+        case TYPE_ABSOLUTE_X:
+            return ram->ram[absolulteAddress + registers->indexX];
+        case TYPE_ABSOLUTE_Y:
+            return ram->ram[absolulteAddress + registers->indexY];
+        case TYPE_ZERO_PAGE_X:
+            return ram->ram[instData->byte1 + registers->indexX];
+        case TYPE_ZERO_PAGE_Y:
+            return ram->ram[instData->byte1 + registers->indexY];
+        case TYPE_INDIRECT_X:
+            firstAddress = registers->indexX + instData->byte1;
+            secondAddress = ram->ram[firstAddress+1]<<8 | ram->ram[firstAddress];
+            return ram->ram[secondAddress];
+        case TYPE_INDIRECT_Y:
+            firstAddress = ram->ram[instData->byte1+1]<<8 | ram->ram[instData->byte1];
+            secondAddress = firstAddress + (unsigned short)registers->indexY;
+            return ram->ram[secondAddress];
+
+        default:
+            return 0;
+    }
 }

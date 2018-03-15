@@ -62,6 +62,19 @@ int main(int argc, char* argv[]){
     }
 
     struct nesRegisters* registers = initRegisters();
+    /*
+    unsigned char* asd = malloc(sizeof(unsigned char)*3);
+    asd[0] = 0x69;
+    asd[1] = 64*2;
+    asd[2] = 0x00;
+    struct instruction* instData = detectType(asd, 0);
+    opcode_69(instData, registers, NULL);
+    opcode_69(instData, registers, NULL);
+    opcode_69(instData, registers, NULL);
+    opcode_69(instData, registers, NULL);
+    printf("%hhu\n", getCarry(registers));
+    */
+
     struct nesRam* ram = initRam();
 
     powerUp(registers, ram);

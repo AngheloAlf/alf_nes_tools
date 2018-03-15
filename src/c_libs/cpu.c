@@ -7,7 +7,7 @@
 struct nesRegisters* initRegisters(){
     struct nesRegisters* registers = malloc(sizeof(struct nesRegisters));
 
-    registers->acumulator = 0x0; // A
+    registers->accumulator = 0x0; // A
     registers->indexX = 0x0; // X
     registers->indexY = 0x0; // Y
     registers->programCounter = 0x0; // PC
@@ -20,7 +20,7 @@ struct nesRegisters* initRegisters(){
 // https://wiki.nesdev.com/w/index.php/CPU_power_up_state
 void powerUp(struct nesRegisters* registers, struct nesRam* ram){
 	registers->statusRegister = 0x34; // P = $34[1] (IRQ disabled)[2]
-	registers->acumulator = 0x0; // A, X, Y = 0
+	registers->accumulator = 0x0; // A, X, Y = 0
 	registers->indexX = 0x0; // A, X, Y = 0
 	registers->indexY = 0x0; // A, X, Y = 0
     // registers->programCounter = ;
@@ -105,3 +105,64 @@ int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, stru
 	}
     return 0;
 }
+
+
+// http://wiki.nesdev.com/w/index.php/CPU_status_flag_behavior
+void setCarry(struct nesRegisters* registers){
+    registers->statusRegister |= 0b00000001;
+}
+void clearCarry(struct nesRegisters* registers){
+    registers->statusRegister &= 0b11111110;
+}
+char getCarry(struct nesRegisters* registers){
+    return (char)(registers->statusRegister & 0b00000001);
+}
+
+void setZero(struct nesRegisters* registers){
+    registers->statusRegister |= 0b00000010;
+}
+void clearZero(struct nesRegisters* registers){
+    registers->statusRegister &= 0b11111101;
+}
+char getZero(struct nesRegisters* registers){
+    return (char)((registers->statusRegister>>1) & 0b00000001);
+}
+
+void setInterrupt(struct nesRegisters* registers){
+    registers->statusRegister |= 0b00000100;
+}
+void clearInterrupt(struct nesRegisters* registers){
+    registers->statusRegister &= 0b11111011;
+}
+char getInterrupt(struct nesRegisters* registers){
+    return (char)((registers->statusRegister>>2) & 0b00000001);
+}
+
+void setS(struct nesRegisters* registers, char s){
+    s = (char)(s & 0b00000011)<<4;
+    registers->statusRegister |= s;
+}
+char getS(struct nesRegisters* registers){
+    return (char)((registers->statusRegister>>4) & 0b00000011);
+}
+
+void setOverflow(struct nesRegisters* registers){
+    registers->statusRegister |= 0b01000000;
+}
+void clearOverflow(struct nesRegisters* registers){
+    registers->statusRegister &= 0b10111111;
+}
+char getOverflow(struct nesRegisters* registers){
+    return (char)((registers->statusRegister>>6) & 0b00000001);
+}
+
+void setNegative(struct nesRegisters* registers){
+    registers->statusRegister |= 0b10000000;
+}
+void clearNegative(struct nesRegisters* registers){
+    registers->statusRegister &= 0b01111111;
+}
+char getNegative(struct nesRegisters* registers){
+    return (char)((registers->statusRegister>>7) & 0b00000001);
+}
+
