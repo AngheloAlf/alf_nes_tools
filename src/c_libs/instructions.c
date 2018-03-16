@@ -1811,7 +1811,7 @@ unsigned short loadAddress(struct instruction* instData, struct nesRegisters* re
     }
 }
 
-unsigned short loadAddressFromRam(struct instruction *instData, struct nesRegisters *registers, struct nesRam *ram){
+unsigned char loadNumberFromRamOrArg(struct instruction *instData, struct nesRegisters *registers, struct nesRam *ram){
     unsigned short address = loadAddress(instData, registers, ram);
 
     switch(instData->type){
@@ -1820,7 +1820,7 @@ unsigned short loadAddressFromRam(struct instruction *instData, struct nesRegist
         case TYPE_IMPLIED:
         case TYPE_RELATIVE:
         case TYPE_INDIRECT:
-            return address;
+            return (unsigned char)address;
 
         case TYPE_ABSOLUTE:
         case TYPE_ZERO_PAGE:
