@@ -74,14 +74,14 @@ struct tileLine* generateTileLine(unsigned char lineA, unsigned char lineB){
     struct tileLine* tileline = malloc(sizeof(struct tileLine));
     tileline->pixels = malloc(sizeof(struct pixel*) * 8);
 
-    unsigned char pixel1Color = (unsigned char)(((lineA & 0b10000000) >> 7) + (((lineB & 0b10000000) >> 7) << 1));
-    unsigned char pixel2Color = (unsigned char)(((lineA & 0b01000000) >> 6) + (((lineB & 0b01000000) >> 6) << 1));
-    unsigned char pixel3Color = (unsigned char)(((lineA & 0b00100000) >> 5) + (((lineB & 0b00100000) >> 5) << 1));
-    unsigned char pixel4Color = (unsigned char)(((lineA & 0b00010000) >> 4) + (((lineB & 0b00010000) >> 4) << 1));
-    unsigned char pixel5Color = (unsigned char)(((lineA & 0b00001000) >> 3) + (((lineB & 0b00001000) >> 3) << 1));
-    unsigned char pixel6Color = (unsigned char)(((lineA & 0b00000100) >> 2) + (((lineB & 0b00000100) >> 2) << 1));
-    unsigned char pixel7Color = (unsigned char)(((lineA & 0b00000010) >> 1) + (((lineB & 0b00000010) >> 1) << 1));
-    unsigned char pixel8Color = (unsigned char)(((lineA & 0b00000001) >> 0) + (((lineB & 0b00000001) >> 0) << 1));
+    unsigned char pixel1Color = (unsigned char)(((lineA & 0b10000000) >> 7) + ((lineB & 0b10000000) >> 6));
+    unsigned char pixel2Color = (unsigned char)(((lineA & 0b01000000) >> 6) + ((lineB & 0b01000000) >> 5));
+    unsigned char pixel3Color = (unsigned char)(((lineA & 0b00100000) >> 5) + ((lineB & 0b00100000) >> 4));
+    unsigned char pixel4Color = (unsigned char)(((lineA & 0b00010000) >> 4) + ((lineB & 0b00010000) >> 3));
+    unsigned char pixel5Color = (unsigned char)(((lineA & 0b00001000) >> 3) + ((lineB & 0b00001000) >> 2));
+    unsigned char pixel6Color = (unsigned char)(((lineA & 0b00000100) >> 2) + ((lineB & 0b00000100) >> 1));
+    unsigned char pixel7Color = (unsigned char)(((lineA & 0b00000010) >> 1) + ((lineB & 0b00000010) >> 0));
+    unsigned char pixel8Color = (unsigned char)(((lineA & 0b00000001) >> 0) + ((lineB & 0b00000001) << 1));
 
     tileline->pixels[0] = generatePixel(pixel1Color, 0, 0, 0, 0);
     tileline->pixels[1] = generatePixel(pixel2Color, 0, 0, 0, 0);

@@ -1015,8 +1015,8 @@ int opcode_36(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_3A(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    // Unofficial NOP
+    return instData->cycles;
 }
 
 int opcode_3E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
