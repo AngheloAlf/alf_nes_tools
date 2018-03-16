@@ -1799,10 +1799,10 @@ unsigned short loadAddress(struct instruction* instData, struct nesRegisters* re
             return instData->byte1 + registers->indexY;
         case TYPE_INDIRECT_X:
             firstAddress = registers->indexX + instData->byte1;
-            secondAddress = ram->ram[firstAddress+1]<<8 | ram->ram[firstAddress];
+            secondAddress = loadFromRam(ram, (unsigned short)(firstAddress+1))<<8 | loadFromRam(ram, firstAddress);
             return secondAddress;
         case TYPE_INDIRECT_Y:
-            firstAddress = ram->ram[instData->byte1+1]<<8 | ram->ram[instData->byte1];
+            firstAddress = loadFromRam(ram, (unsigned short)(instData->byte1+1)<<8) | loadFromRam(ram, instData->byte1);
             secondAddress = firstAddress + (unsigned short)registers->indexY;
             return secondAddress;
 
@@ -1830,7 +1830,7 @@ unsigned char loadNumberFromRamOrArg(struct instruction *instData, struct nesReg
         case TYPE_ZERO_PAGE_Y:
         case TYPE_INDIRECT_X:
         case TYPE_INDIRECT_Y:
-            return ram->ram[address];
+            return loadFromRam(ram, address);
 
         default:
             return 0;

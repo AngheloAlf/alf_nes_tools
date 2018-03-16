@@ -48,18 +48,25 @@ struct nesRam{
 		If a mapper doesn't fix $FFFA-$FFFF to some known bank (typically, along with the rest of the bank containing them, e.g. $C000-$FFFF for a 16KiB banking mapper) or use some sort of reset detection, the vectors need to be stored in all banks. 
 	*/
     unsigned char* ram;
+
+    unsigned char* readOnlyRam;
+    unsigned char writeOnReadOnly;
 };
 
 struct nesRam* initRam();
 void freeRam(struct nesRam* ram);
 
-void setFirst16KbRom(struct nesRam* ram, unsigned char* romPage);
-void setLast16KbRom(struct nesRam* ram, unsigned char* romPage);
+void setFirst16KbRom(struct nesRam* ram, const unsigned char* romPage);
+void setLast16KbRom(struct nesRam* ram, const unsigned char* romPage);
 
 unsigned short getNMIVector(struct nesRam* ram);
 unsigned short getResetVector(struct nesRam* ram);
 unsigned short getIRQBRKVector(struct nesRam* ram);
 
 int parseRomToRam(struct nesRam* ram, struct nesRom* rom);
+
+unsigned char loadFromRam(struct nesRam* ram, unsigned short address);
+char storeIntoRam(struct nesRam* ram, unsigned short address, unsigned char number);
+char storeIntoRamWithoutReadOnly(struct nesRam* ram, unsigned short address, unsigned char number);
 
 #endif //ALF_NES_TOOLS_RAM_H

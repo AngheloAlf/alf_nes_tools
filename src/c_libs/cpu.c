@@ -21,7 +21,7 @@ struct nesRegisters* initRegisters(){
 
 // https://wiki.nesdev.com/w/index.php/CPU_power_up_state
 void powerUp(struct nesRegisters* registers, struct nesRam* ram){
-	registers->statusRegister = 0x34; // P = $34[1] (IRQ disabled)[2]
+	registers->statusRegister = 0x34; // P = $34[1] (IRQ disabled)
 	registers->accumulator = 0x0; // A, X, Y = 0
 	registers->indexX = 0x0; // A, X, Y = 0
 	registers->indexY = 0x0; // A, X, Y = 0
@@ -29,10 +29,10 @@ void powerUp(struct nesRegisters* registers, struct nesRam* ram){
 	registers->stack = 0xFD; // S = $FD
     // registers->statusRegister = ;
 
-    ram->ram[0x4017] = 0x0; // $4017 = $00 (frame irq enabled)
-    ram->ram[0x4015] = 0x0; // $4015 = $00 (all channels disabled)
-    for(size_t i = 0x4000; i <= 0x400F; i++){ // $4000-$400F = $00
-    	ram->ram[i] = 0x0; // (not sure about $4010-$4013)
+    storeIntoRam(ram, 0x4017, 0x0); // $4017 = $00 (frame irq enabled)
+    storeIntoRam(ram, 0x4015, 0x0); // $4015 = $00 (all channels disabled)
+    for(unsigned short i = 0x4000; i <= 0x400F; i++){ // $4000-$400F = $00
+    	storeIntoRam(ram, i, 0x0); // (not sure about $4010-$4013)
     }
     // All 15 bits of noise channel LFSR = $0000. The first time the LFSR is clocked from the all-0s state, it will shift in a 1.
 
@@ -52,15 +52,15 @@ void resetCpu(struct nesRegisters* registers, struct nesRam* ram){
 }
 
 int getInstsFromRam(unsigned char* inst, unsigned short programCounter, struct nesRam* ram){
-	inst[0] = ram->ram[programCounter];
+	inst[0] = loadFromRam(ram, programCounter);
 	if(programCounter+1 >= RAM_SIZE){
-		return -1;
+		return -3;
 	}
 	if(programCounter+2 >= RAM_SIZE){
-		return -2;
+		return -4;
 	}
-	inst[1] = ram->ram[programCounter+1];
-	inst[2] = ram->ram[programCounter+2];
+	inst[1] = loadFromRam(ram, (unsigned short)(programCounter+1));
+	inst[2] = loadFromRam(ram, (unsigned short)(programCounter+2));
 	return 0;
 }
 

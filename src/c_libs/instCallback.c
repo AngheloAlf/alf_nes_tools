@@ -220,7 +220,10 @@ int opcode_80(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_84(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    ram->ram[address] = registers->indexY;
+    char retVal = storeIntoRam(ram, address, registers->indexY);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -231,7 +234,10 @@ int opcode_88(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_8C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    ram->ram[address] = registers->indexY;
+    char retVal = storeIntoRam(ram, address, registers->indexY);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -242,7 +248,10 @@ int opcode_90(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_94(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    ram->ram[address] = registers->indexY;
+    char retVal = storeIntoRam(ram, address, registers->indexY);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -255,7 +264,10 @@ int opcode_98(struct instruction* instData, struct nesRegisters* registers, stru
 int opcode_9C(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
     unsigned char result = registers->indexY & (unsigned char)((address>>8) + 1);
-    ram->ram[address] = result;
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1043,7 +1055,12 @@ int opcode_02(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_06(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    ram->ram[address] = ASL(registers, ram->ram[address]);
+    unsigned char result = ASL(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1054,7 +1071,12 @@ int opcode_0A(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_0E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    ram->ram[address] = ASL(registers, ram->ram[address]);
+    unsigned char result = ASL(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1067,7 +1089,12 @@ int opcode_12(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_16(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    ram->ram[address] = ASL(registers, ram->ram[address]);
+    unsigned char result = ASL(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1078,7 +1105,12 @@ int opcode_1A(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_1E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    ram->ram[address] = ASL(registers, ram->ram[address]);
+    unsigned char result = ASL(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1091,8 +1123,12 @@ int opcode_22(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_26(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = ROL(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = ROL(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1103,8 +1139,12 @@ int opcode_2A(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_2E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = ROL(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = ROL(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1117,8 +1157,12 @@ int opcode_32(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_36(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = ROL(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = ROL(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1129,8 +1173,12 @@ int opcode_3A(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_3E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = ROL(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = ROL(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1143,8 +1191,12 @@ int opcode_42(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_46(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = LSR(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = LSR(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1155,8 +1207,12 @@ int opcode_4A(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_4E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = LSR(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = LSR(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1169,8 +1225,12 @@ int opcode_52(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_56(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = LSR(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = LSR(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1181,8 +1241,12 @@ int opcode_5A(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_5E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = LSR(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = LSR(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1195,8 +1259,12 @@ int opcode_62(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_66(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = ROR(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = ROR(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1207,8 +1275,12 @@ int opcode_6A(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_6E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = ROR(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = ROR(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1221,8 +1293,12 @@ int opcode_72(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_76(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = ROR(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = ROR(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1233,8 +1309,12 @@ int opcode_7A(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_7E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char result = ROR(registers, ram->ram[address]);
-    ram->ram[address] = result;
+    unsigned char result = ROR(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1245,7 +1325,11 @@ int opcode_82(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_86(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    ram->ram[address] = registers->indexX;
+
+    char retVal = storeIntoRam(ram, address,registers->indexX);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1257,7 +1341,11 @@ int opcode_8A(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_8E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    ram->ram[address] = registers->indexX;
+
+    char retVal = storeIntoRam(ram, address, registers->indexX);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1270,7 +1358,11 @@ int opcode_92(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_96(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    ram->ram[address] = registers->indexX;
+
+    char retVal = storeIntoRam(ram, address, registers->indexX);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1282,7 +1374,11 @@ int opcode_9A(struct instruction* instData, struct nesRegisters* registers, stru
 int opcode_9E(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
     unsigned char result = registers->indexX & (unsigned char)((address>>8) + 1);
-    ram->ram[address] = result;
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1342,8 +1438,12 @@ int opcode_C2(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_C6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char number = DEC(registers, ram->ram[address]);
-    ram->ram[address] = number;
+    unsigned char result = DEC(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1354,8 +1454,12 @@ int opcode_CA(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_CE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char number = DEC(registers, ram->ram[address]);
-    ram->ram[address] = number;
+    unsigned char result = DEC(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1368,8 +1472,12 @@ int opcode_D2(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_D6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char number = DEC(registers, ram->ram[address]);
-    ram->ram[address] = number;
+    unsigned char result = DEC(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1380,8 +1488,12 @@ int opcode_DA(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_DE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char number = DEC(registers, ram->ram[address]);
-    ram->ram[address] = number;
+    unsigned char result = DEC(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1392,8 +1504,12 @@ int opcode_E2(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_E6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char number = INC(registers, ram->ram[address]);
-    ram->ram[address] = number;
+    unsigned char result = INC(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1404,8 +1520,12 @@ int opcode_EA(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_EE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char number = INC(registers, ram->ram[address]);
-    ram->ram[address] = number;
+    unsigned char result = INC(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1418,8 +1538,12 @@ int opcode_F2(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_F6(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char number = INC(registers, ram->ram[address]);
-    ram->ram[address] = number;
+    unsigned char result = INC(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 
@@ -1430,8 +1554,12 @@ int opcode_FA(struct instruction* instData, struct nesRegisters* registers, stru
 
 int opcode_FE(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
-    unsigned char number = INC(registers, ram->ram[address]);
-    ram->ram[address] = number;
+    unsigned char result = INC(registers, loadFromRam(ram, address));
+
+    char retVal = storeIntoRam(ram, address, result);
+    if(retVal < 0){
+        return retVal;
+    }
     return instData->cycles;
 }
 

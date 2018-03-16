@@ -14,6 +14,9 @@ return values:
 
 errors codes:
     -1: not implemented
+    -2: writeOnReadOnly
+    -3:
+    -4:
 
 */
 
