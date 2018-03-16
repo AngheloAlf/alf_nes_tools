@@ -37,6 +37,10 @@ int EOR(struct nesRegisters* registers, char number){
 
 // ADC (ADd with Carry)
 int ADC(struct nesRegisters *registers, char number) {
+    // TODO: Implement BCD (Decimal mode)
+    if(getDecimal(registers)){
+        return -1;
+    }
     char carry = getCarry(registers);
     char sum = 0;
     short auxSum = 0;
@@ -96,6 +100,10 @@ int CMP(struct nesRegisters* registers, char number){
 
 // SBC (SuBtract with Carry)
 int SBC(struct nesRegisters* registers, char number){
+    // TODO: Implement BCD (Decimal mode)
+    if(getDecimal(registers)){
+        return -1;
+    }
     char carry = getCarry(registers);
     char sum = 0;
     short auxSum = 0;

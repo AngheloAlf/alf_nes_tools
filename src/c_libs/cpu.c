@@ -12,7 +12,7 @@ struct nesRegisters* initRegisters(){
     registers->indexY = 0x0; // Y
     registers->programCounter = 0x0; // PC
     registers->stack = 0x0; // S
-    registers->statusRegister = 0x0; // P
+    registers->statusRegister = 0b00100000; // P
 
     registers->disablePC = 0;
 
@@ -146,12 +146,24 @@ char getInterrupt(struct nesRegisters* registers){
     return (char)((registers->statusRegister>>2) & 0b00000001);
 }
 
-void setS(struct nesRegisters* registers, char s){
-    s = (char)(s & 0b00000011)<<4;
-    registers->statusRegister |= s;
+void setDecimal(struct nesRegisters* registers){
+    registers->statusRegister |= 0b00001000;
+}
+void clearDecimal(struct nesRegisters* registers){
+    registers->statusRegister &= 0b11110111;
+}
+char getDecimal(struct nesRegisters* registers){
+    return (char)((registers->statusRegister>>3) & 0b00000001);
+}
+
+void setS(struct nesRegisters* registers){
+    registers->statusRegister |= 0b00010000;
+}
+void clearS(struct nesRegisters* registers){
+    registers->statusRegister &= 0b11101111;
 }
 char getS(struct nesRegisters* registers){
-    return (char)((registers->statusRegister>>4) & 0b00000011);
+    return (char)((registers->statusRegister>>4) & 0b00000001);
 }
 
 void setOverflow(struct nesRegisters* registers){
