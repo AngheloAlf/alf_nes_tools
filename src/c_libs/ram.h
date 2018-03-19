@@ -51,6 +51,8 @@ struct nesRam{
 
     unsigned char* readOnlyRam;
     unsigned char writeOnReadOnly;
+    unsigned short wroAddress; // write on read only address
+    unsigned char wroValue; // write on read only value
 };
 
 struct nesRam* initRam();

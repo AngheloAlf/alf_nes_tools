@@ -26,7 +26,7 @@ struct instruction* initInstruction(unsigned char opcode, unsigned char bytesAmo
 }
 
 
-struct instruction* control_BRK_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_BRK_Opcodes(unsigned char* inst, char extraCycles){
     // BRK (BReaK)
     //   Affects Flags: B
     // Implied       BRK           $00  1   7
@@ -49,7 +49,7 @@ struct instruction* control_BRK_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_STACK_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_STACK_Opcodes(unsigned char* inst, char extraCycles){
     // Stack Instructions
     // These instructions are implied mode, have a length of one byte and require
     // machine cycles as indicated. The "PuLl" operations are known as "POP" on most
@@ -88,7 +88,7 @@ struct instruction* control_STACK_Opcodes(unsigned char* inst, char extraCicles)
     return instData;
 }
 
-struct instruction* control_Branching_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_Branching_Opcodes(unsigned char* inst, char extraCycles){
     // Branch Instructions
     //   Affect Flags: none
     // All branches are relative mode and have a length of two bytes. Syntax is "Bxx
@@ -121,35 +121,35 @@ struct instruction* control_Branching_Opcodes(unsigned char* inst, char extraCic
     switch(inst[0]){
         case 0x10:
             printf("\tBranch on PLus\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_10);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, (char)2 + extraCycles, opcode_10);
             break;
         case 0x30:
             printf("\tBranch on MInus\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_30);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, (char)2 + extraCycles, opcode_30);
             break;
         case 0x50:
             printf("\tBranch on oVerflow Clear\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_50);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, (char)2 + extraCycles, opcode_50);
             break;
         case 0x70:
             printf("\tBranch on oVerflow Set\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_70);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, (char)2 + extraCycles, opcode_70);
             break;
         case 0x90:
             printf("\tBranch on Carry Clear\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_90);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, (char)2 + extraCycles, opcode_90);
             break;
         case 0xB0:
             printf("\tBranch on Carry Set\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_B0);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, (char)2 + extraCycles, opcode_B0);
             break;
         case 0xD0:
             printf("\tBranch on Not Equal\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_D0);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, (char)2 + extraCycles, opcode_D0);
             break;
         case 0xF0:
             printf("\tBranch on EQual\n");
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, 2 + extraCicles, opcode_F0);
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_RELATIVE, (char)2 + extraCycles, opcode_F0);
             break;
         default:
             printf("\tINVALID BRANCH\n");
@@ -160,7 +160,7 @@ struct instruction* control_Branching_Opcodes(unsigned char* inst, char extraCic
     return instData;
 }
 
-struct instruction* control_BIT_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_BIT_Opcodes(unsigned char* inst, char extraCycles){
     // BIT (test BITs)
     //   Affects Flags: N V Z
     // Zero Page     BIT $44       $24  2   3
@@ -192,7 +192,7 @@ struct instruction* control_BIT_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_Flag_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_Flag_Opcodes(unsigned char* inst, char extraCycles){
     // Flag (Processor Status) Instructions
     //   Affect Flags: as noted
     // These instructions are implied mode, have a length of one byte and require
@@ -269,7 +269,7 @@ struct instruction* control_Flag_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_RTI_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_RTI_Opcodes(unsigned char* inst, char extraCycles){
     // RTI (ReTurn from Interrupt)
     //   Affects Flags: all 
     // Implied       RTI           $40  1   6
@@ -292,7 +292,7 @@ struct instruction* control_RTI_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_JSR_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_JSR_Opcodes(unsigned char* inst, char extraCycles){
     // JSR (Jump to SubRoutine)
     //   Affects Flags: none
     // Absolute      JSR $5597     $20  3   6
@@ -315,7 +315,7 @@ struct instruction* control_JSR_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_JMP_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_JMP_Opcodes(unsigned char* inst, char extraCycles){
     // JMP (JuMP)
     //   Affects Flags: none
     // Absolute      JMP $5597     $4C  3   3
@@ -349,7 +349,7 @@ struct instruction* control_JMP_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_RTS_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_RTS_Opcodes(unsigned char* inst, char extraCycles){
     // RTS (ReTurn from Subroutine)
     //   Affects Flags: none 
     // Implied       RTS           $60  1   6
@@ -372,7 +372,7 @@ struct instruction* control_RTS_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_register_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_register_Opcodes(unsigned char* inst, char extraCycles){
     // Register Instructions
     //   Affect Flags: S Z
     // These instructions are implied mode, have a length of one byte and require
@@ -409,7 +409,7 @@ struct instruction* control_register_Opcodes(unsigned char* inst, char extraCicl
     return instData;
 }
 
-struct instruction* control_LDY_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_LDY_Opcodes(unsigned char* inst, char extraCycles){
     // LDY (LoaD Y register)
     //   Affects Flags: S Z
     // + add 1 cycle if page boundary crossed
@@ -429,7 +429,7 @@ struct instruction* control_LDY_Opcodes(unsigned char* inst, char extraCicles){
             instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 4, opcode_B4); // Zero Page,X   LDY $44,X     $B4  2   4
             break;
         case 0xBC:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ZERO_PAGE_X, 4 + extraCicles, opcode_BC); // Absolute,X    LDY $4400,X   $BC  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ZERO_PAGE_X, (char)4 + extraCycles, opcode_BC); // Absolute,X    LDY $4400,X   $BC  3   4+
             break;
         default:
             printf("\tINVALID Control LDY Opcode\n");
@@ -440,7 +440,7 @@ struct instruction* control_LDY_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_STY_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_STY_Opcodes(unsigned char* inst, char extraCycles){
     // STY (STore Y register)
     //   Affects Flags: none
     // Zero Page     STY $44       $84  2   3
@@ -467,7 +467,7 @@ struct instruction* control_STY_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_SHY_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_SHY_Opcodes(unsigned char* inst, char extraCycles){
     // http://nesdev.com/undocumented_opcodes.txt
     // SHY ()
     //   Affects Flags: None
@@ -489,7 +489,7 @@ struct instruction* control_SHY_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_CPY_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_CPY_Opcodes(unsigned char* inst, char extraCycles){
     // CPY (ComPare Y register)
     //   Affects Flags: S Z C
     // Immediate     CPY #$44      $C0  2   2
@@ -518,7 +518,7 @@ struct instruction* control_CPY_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_CPX_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_CPX_Opcodes(unsigned char* inst, char extraCycles){
     // CPX (ComPare X register)
     //   Affects Flags: S Z C
     // Immediate     CPX #$44      $E0  2   2
@@ -547,7 +547,7 @@ struct instruction* control_CPX_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* control_NOP_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* control_NOP_Opcodes(unsigned char* inst, char extraCycles){
     struct instruction* instData = NULL;
     unsigned char opcode = inst[0];
 
@@ -639,7 +639,7 @@ struct instruction* control_NOP_Opcodes(unsigned char* inst, char extraCicles){
 }
 
 //CONTROL
-struct instruction* controlInstructionOpcodes(unsigned char* inst, char extraCicles){
+struct instruction* controlInstructionOpcodes(unsigned char* inst, char extraCycles){
     if((inst[0] & 0b11) != 0b00){
         // error
         return NULL;
@@ -648,66 +648,66 @@ struct instruction* controlInstructionOpcodes(unsigned char* inst, char extraCic
 
     if((inst[0] & 0b00011111) == 0b00010000){ // Branching instructions
         printf("\tcontrol Branching Instructions\n");
-        instData = control_Branching_Opcodes(inst, extraCicles);
+        instData = control_Branching_Opcodes(inst, extraCycles);
     }
     else if(((inst[0] & 0b00011111) == 0b00011000) && (inst[0] != 0x98)){ // Flag instructions
         printf("\tcontrol Flag Instructions\n");
-        instData = control_Flag_Opcodes(inst, extraCicles);
+        instData = control_Flag_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x08 || inst[0] == 0x28 || inst[0] == 0x48 || inst[0] == 0x68){
         printf("\tcontrol Stack Instructions\n");
-        instData = control_STACK_Opcodes(inst, extraCicles);
+        instData = control_STACK_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x88 || inst[0] == 0x98 || inst[0] == 0xA8 || inst[0] == 0xC8 || inst[0] == 0xE8){
         printf("\tcontrol Register Instructions\n");
-        instData = control_register_Opcodes(inst, extraCicles);
+        instData = control_register_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0xA0 || inst[0] == 0xA4 || inst[0] == 0xAC || inst[0] == 0xB4 || inst[0] == 0xBC){
         printf("\tControl LDY Instructions)\n");
-        instData = control_LDY_Opcodes(inst, extraCicles);
+        instData = control_LDY_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x20){
         printf("\tControl JSR Instructions)\n");
-        instData = control_JSR_Opcodes(inst, extraCicles);
+        instData = control_JSR_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x60){
         printf("\tControl RTS Instructions)\n");
-        instData = control_RTS_Opcodes(inst, extraCicles);
+        instData = control_RTS_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x00){
         printf("\tControl BRK Instructions)\n");
-        instData = control_BRK_Opcodes(inst, extraCicles);
+        instData = control_BRK_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x24 || inst[0] == 0x2C){
         printf("\tControl BIT Instructions)\n");
-        instData = control_BIT_Opcodes(inst, extraCicles);
+        instData = control_BIT_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x40){
         printf("\tControl RTI Instructions)\n");
-        instData = control_RTI_Opcodes(inst, extraCicles);
+        instData = control_RTI_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x4C || inst[0] == 0x6C){
         printf("\tControl JMP Instructions)\n");
-        instData = control_JMP_Opcodes(inst, extraCicles);
+        instData = control_JMP_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x84 || inst[0] == 0x8C || inst[0] == 0x94){
         printf("\tControl STY Instructions)\n");
-        instData = control_STY_Opcodes(inst, extraCicles);
+        instData = control_STY_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x9C){
         printf("\tControl undocumented SHY Instructions)\n");
-        instData = control_SHY_Opcodes(inst, extraCicles);
+        instData = control_SHY_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0xC0 || inst[0] == 0xC4 || inst[0] == 0xCC){
         printf("\tControl CPY Instructions)\n");
-        instData = control_CPY_Opcodes(inst, extraCicles);
+        instData = control_CPY_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0xE0 || inst[0] == 0xE4 || inst[0] == 0xEC){
         printf("\tControl CPX Instructions)\n");
-        instData = control_CPX_Opcodes(inst, extraCicles);
+        instData = control_CPX_Opcodes(inst, extraCycles);
     }
     else{
-        instData = control_NOP_Opcodes(inst, extraCicles);
+        instData = control_NOP_Opcodes(inst, extraCycles);
     }
     return instData;
 }
@@ -715,7 +715,7 @@ struct instruction* controlInstructionOpcodes(unsigned char* inst, char extraCic
 
 
 //ALU
-struct instruction* ALU_ORA_Opcode(unsigned char* inst, char extraCicles){
+struct instruction* ALU_ORA_Opcode(unsigned char* inst, char extraCycles){
     struct instruction* instData = NULL;
     switch(inst[0]){
         case 0x01:
@@ -731,16 +731,16 @@ struct instruction* ALU_ORA_Opcode(unsigned char* inst, char extraCicles){
             instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 4, opcode_0D); // Absolute      ORA $4400     $0D  3   4
             break;
         case 0x11:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, 5 + extraCicles, opcode_11); // Indirect,Y    ORA ($44),Y   $11  2   5+
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, (char)5 + extraCycles, opcode_11); // Indirect,Y    ORA ($44),Y   $11  2   5+
             break;
         case 0x15:
             instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 4, opcode_15); // Zero Page,X   ORA $44,X     $15  2   4
             break;
         case 0x19:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, 4 + extraCicles, opcode_19); // Absolute,Y    ORA $4400,Y   $19  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, (char)4 + extraCycles, opcode_19); // Absolute,Y    ORA $4400,Y   $19  3   4+
             break;
         case 0x1D:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 4 + extraCicles, opcode_1D); // Absolute,X    ORA $4400,X   $1D  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, (char)4 + extraCycles, opcode_1D); // Absolute,X    ORA $4400,X   $1D  3   4+
             break;
         default:
             printf("\tINVALID ORA\n");
@@ -750,7 +750,7 @@ struct instruction* ALU_ORA_Opcode(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* ALU_AND_Opcode(unsigned char* inst, char extraCicles){
+struct instruction* ALU_AND_Opcode(unsigned char* inst, char extraCycles){
     struct instruction* instData = NULL;
     switch(inst[0]){
         case 0x21:
@@ -766,16 +766,16 @@ struct instruction* ALU_AND_Opcode(unsigned char* inst, char extraCicles){
             instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 4, opcode_2D); // Absolute      AND $4400     $2D  3   4
             break;
         case 0x31:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, 5 + extraCicles, opcode_31); // Indirect,Y    AND ($44),Y   $31  2   5+
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, (char)5 + extraCycles, opcode_31); // Indirect,Y    AND ($44),Y   $31  2   5+
             break;
         case 0x35:
             instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 4, opcode_35); // Zero Page,X   AND $44,X     $35  2   4
             break;
         case 0x39:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, 4 + extraCicles, opcode_39); // Absolute,Y    AND $4400,Y   $39  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, (char)4 + extraCycles, opcode_39); // Absolute,Y    AND $4400,Y   $39  3   4+
             break;
         case 0x3D:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 4 + extraCicles, opcode_3D); // Absolute,X    AND $4400,X   $3D  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, (char)4 + extraCycles, opcode_3D); // Absolute,X    AND $4400,X   $3D  3   4+
             break;
         default:
             printf("\tINVALID AND\n");
@@ -785,7 +785,7 @@ struct instruction* ALU_AND_Opcode(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* ALU_EOR_Opcode(unsigned char* inst, char extraCicles){
+struct instruction* ALU_EOR_Opcode(unsigned char* inst, char extraCycles){
     // EOR (bitwise Exclusive OR)
     //   Affects Flags: S Z
     // + add 1 cycle if page boundary crossed
@@ -804,16 +804,16 @@ struct instruction* ALU_EOR_Opcode(unsigned char* inst, char extraCicles){
             instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 4, opcode_4D); // Absolute      EOR $4400     $4D  3   4
             break;
         case 0x51:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, 5 + extraCicles, opcode_51); // Indirect,Y    EOR ($44),Y   $51  2   5+
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, (char)5 + extraCycles, opcode_51); // Indirect,Y    EOR ($44),Y   $51  2   5+
             break;
         case 0x55:
             instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 4, opcode_55); // Zero Page,X   EOR $44,X     $55  2   4
             break;
         case 0x59:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, 4 + extraCicles, opcode_59); // Absolute,Y    EOR $4400,Y   $59  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, (char)4 + extraCycles, opcode_59); // Absolute,Y    EOR $4400,Y   $59  3   4+
             break;
         case 0x5D:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 4 + extraCicles, opcode_5D); // Absolute,X    EOR $4400,X   $5D  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, (char)4 + extraCycles, opcode_5D); // Absolute,X    EOR $4400,X   $5D  3   4+
             break;
         default:
             printf("\tINVALID EOR\n");
@@ -823,7 +823,7 @@ struct instruction* ALU_EOR_Opcode(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCicles){
+struct instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCycles){
     // ADC (ADd with Carry)
     //   AAffects Flags: S V Z C
     // + add 1 cycle if page boundary crossed
@@ -848,16 +848,16 @@ struct instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCicles){
             instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 4, opcode_6D); // Absolute      ADC $4400     $6D  3   4
             break;
         case 0x71:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, 5 + extraCicles, opcode_71); // Indirect,Y    ADC ($44),Y   $71  2   5+
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, (char)5 + extraCycles, opcode_71); // Indirect,Y    ADC ($44),Y   $71  2   5+
             break;
         case 0x75:
             instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 4, opcode_75); // Zero Page,X   ADC $44,X     $75  2   4
             break;
         case 0x79:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, 4 + extraCicles, opcode_79); // Absolute,Y    ADC $4400,Y   $79  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, (char)4 + extraCycles, opcode_79); // Absolute,Y    ADC $4400,Y   $79  3   4+
             break;
         case 0x7D:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 4 + extraCicles, opcode_7D); // Absolute,X    ADC $4400,X   $7D  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, (char)4 + extraCycles, opcode_7D); // Absolute,X    ADC $4400,X   $7D  3   4+
             break;
         default:
             printf("\tINVALID ADC\n");
@@ -867,7 +867,7 @@ struct instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* ALU_STA_Opcode(unsigned char* inst, char extraCicles){
+struct instruction* ALU_STA_Opcode(unsigned char* inst, char extraCycles){
     // STA (STore Accumulator) 
     //   Affects Flags: none
 
@@ -905,7 +905,7 @@ struct instruction* ALU_STA_Opcode(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* ALU_LDA_Opcode(unsigned char* inst, char extraCicles){
+struct instruction* ALU_LDA_Opcode(unsigned char* inst, char extraCycles){
     // LDA (LoaD Accumulator)>
     //   Affects Flags: S Z
 
@@ -926,16 +926,16 @@ struct instruction* ALU_LDA_Opcode(unsigned char* inst, char extraCicles){
             instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 4, opcode_AD); // Absolute      LDA $4400     $AD  3   4
             break;
         case 0xB1:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, 5 + extraCicles, opcode_B1); // Indirect,Y    LDA ($44),Y   $B1  2   5+
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, (char)5 + extraCycles, opcode_B1); // Indirect,Y    LDA ($44),Y   $B1  2   5+
             break;
         case 0xB5:
             instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 4, opcode_B5); // Zero Page,X   LDA $44,X     $B5  2   4
             break;
         case 0xB9:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, 4 + extraCicles, opcode_B9); // Absolute,Y    LDA $4400,Y   $B9  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, (char)4 + extraCycles, opcode_B9); // Absolute,Y    LDA $4400,Y   $B9  3   4+
             break;
         case 0xBD:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 4 + extraCicles, opcode_BD); // Absolute,X    LDA $4400,X   $BD  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, (char)4 + extraCycles, opcode_BD); // Absolute,X    LDA $4400,X   $BD  3   4+
             break;
         default:
             printf("\tINVALID LDA\n");
@@ -945,7 +945,7 @@ struct instruction* ALU_LDA_Opcode(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCicles){
+struct instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCycles){
     // CMP (CoMPare accumulator) 
     //   Affects Flags: S Z C
     // + add 1 cycle if page boundary crossed
@@ -971,16 +971,16 @@ struct instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCicles){
             instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 4, opcode_CD); // Absolute      CMP $4400     $CD  3   4
             break;
         case 0xD1:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, 5 + extraCicles, opcode_D1); // Indirect,Y    CMP ($44),Y   $D1  2   5+   $B1  2   5+
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, (char)5 + extraCycles, opcode_D1); // Indirect,Y    CMP ($44),Y   $D1  2   5+   $B1  2   5+
             break;
         case 0xD5:
             instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 4, opcode_D5); // Zero Page,X   CMP $44,X     $D5  2   4
             break;
         case 0xD9:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, 4 + extraCicles, opcode_D9); // Absolute,Y    CMP $4400,Y   $D9  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, (char)4 + extraCycles, opcode_D9); // Absolute,Y    CMP $4400,Y   $D9  3   4+
             break;
         case 0xDD:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 4 + extraCicles, opcode_DD); // Absolute,X    CMP $4400,X   $DD  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, (char)4 + extraCycles, opcode_DD); // Absolute,X    CMP $4400,X   $DD  3   4+
             break;
         default:
             printf("\tINVALID CMP\n");
@@ -990,7 +990,7 @@ struct instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* ALU_SBC_Opcode(unsigned char* inst, char extraCicles){
+struct instruction* ALU_SBC_Opcode(unsigned char* inst, char extraCycles){
     // SBC (SuBtract with Carry)
     //   Affects Flags: S V Z C
     // + add 1 cycle if page boundary crossed
@@ -1017,16 +1017,16 @@ struct instruction* ALU_SBC_Opcode(unsigned char* inst, char extraCicles){
             instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 4, opcode_ED); // Absolute      SBC $4400     $ED  3   4
             break;
         case 0xF1:
-            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, 5 + extraCicles, opcode_F1); // Indirect,Y    SBC ($44),Y   $F1  2   5+
+            instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_INDIRECT_Y, (char)5 + extraCycles, opcode_F1); // Indirect,Y    SBC ($44),Y   $F1  2   5+
             break;
         case 0xF5:
             instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_ZERO_PAGE_X, 4, opcode_F5); // Zero Page,X   SBC $44,X     $F5  2   4
             break;
         case 0xF9:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, 4 + extraCicles, opcode_F9); // Absolute,Y    SBC $4400,Y   $F9  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, (char)4 + extraCycles, opcode_F9); // Absolute,Y    SBC $4400,Y   $F9  3   4+
             break;
         case 0xFD:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, 4 + extraCicles, opcode_FD); // Absolute,X    SBC $4400,X   $FD  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_X, (char)4 + extraCycles, opcode_FD); // Absolute,X    SBC $4400,X   $FD  3   4+
             break;
         default:
             printf("\tINVALID SBC\n");
@@ -1039,7 +1039,7 @@ struct instruction* ALU_SBC_Opcode(unsigned char* inst, char extraCicles){
 
 
 // ALU
-struct instruction* ALUOpcodes(unsigned char* inst, char extraCicles){
+struct instruction* ALUOpcodes(unsigned char* inst, char extraCycles){
     if((inst[0] & 0b11) != 0b01){
         // Error
         return NULL;
@@ -1050,35 +1050,35 @@ struct instruction* ALUOpcodes(unsigned char* inst, char extraCicles){
     switch(type){
         case 0b00000001: // 0x00
             printf("\tORA (bitwise OR with Accumulator)\n");
-            instData = ALU_ORA_Opcode(inst, extraCicles);
+            instData = ALU_ORA_Opcode(inst, extraCycles);
             break;
         case 0b00100001:  // 0x20
             printf("\tAND (bitwise AND with accumulator)\n");
-            instData = ALU_AND_Opcode(inst, extraCicles);
+            instData = ALU_AND_Opcode(inst, extraCycles);
             break;
         case 0b01000001: // 0x40
             printf("\tEOR (bitwise Exclusive OR)\n");
-            instData = ALU_EOR_Opcode(inst, extraCicles);
+            instData = ALU_EOR_Opcode(inst, extraCycles);
             break;
         case 0b01100001: // 0x60
             printf("\tADC (ADd with Carry)\n");
-            instData = ALU_ADC_Opcode(inst, extraCicles);
+            instData = ALU_ADC_Opcode(inst, extraCycles);
             break;
         case 0b10000001: // 0x80
             printf("\tSTA (STore Accumulator) (or NOP)\n");
-            instData = ALU_STA_Opcode(inst, extraCicles);
+            instData = ALU_STA_Opcode(inst, extraCycles);
             break;
         case 0b10100001: // 0xA0
             printf("\tLDA (LoaD Accumulator)\n");
-            instData = ALU_LDA_Opcode(inst, extraCicles);
+            instData = ALU_LDA_Opcode(inst, extraCycles);
             break;
         case 0b11000001: // 0xC0
             printf("\tCMP (CoMPare accumulator)\n");
-            instData = ALU_CMP_Opcode(inst, extraCicles);
+            instData = ALU_CMP_Opcode(inst, extraCycles);
             break;
         case 0b11100001: // 0xE0
             printf("\tSBC (SuBtract with Carry)\n");
-            instData = ALU_SBC_Opcode(inst, extraCicles);
+            instData = ALU_SBC_Opcode(inst, extraCycles);
             break;
         default:
             printf("\tERROR\n");
@@ -1091,7 +1091,7 @@ struct instruction* ALUOpcodes(unsigned char* inst, char extraCicles){
 
 
 // RMW
-struct instruction* RMW_ASL_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_ASL_Opcodes(unsigned char* inst, char extraCycles){
     // ASL (Arithmetic Shift Left)
     //   Affects Flags: S Z C
     // Zero Page     ASL $44       $06  2   5
@@ -1128,7 +1128,7 @@ struct instruction* RMW_ASL_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCycles){
     // ROL (ROtate Left)
     //   Affects Flags: S Z C
     // Zero Page     ROL $44       $26  2   5
@@ -1165,7 +1165,7 @@ struct instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_LSR_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_LSR_Opcodes(unsigned char* inst, char extraCycles){
     // LSR (Logical Shift Right)
     //   Affects Flags: S Z C
     // Zero Page     LSR $44       $46  2   5
@@ -1202,7 +1202,7 @@ struct instruction* RMW_LSR_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_ROR_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_ROR_Opcodes(unsigned char* inst, char extraCycles){
     // ROR (ROtate Right)
     //   Affects Flags: S Z C
     // ROR shifts all bits right one position. The Carry is shifted into bit 7
@@ -1232,7 +1232,7 @@ struct instruction* RMW_ROR_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_LDX_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_LDX_Opcodes(unsigned char* inst, char extraCycles){
     // LDX (LoaD X register)
     //   Affects Flags: S Z
     // + add 1 cycle if page boundary crossed
@@ -1251,7 +1251,7 @@ struct instruction* RMW_LDX_Opcodes(unsigned char* inst, char extraCicles){
             instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE, 4, opcode_AE); // Absolute      LDX $4400     $AE  3   4
             break;
         case 0xBE:
-            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, 4 + extraCicles, opcode_BE); // Absolute,Y    LDX $4400,Y   $BE  3   4+
+            instData = initInstruction(inst[0], 2, inst[1], inst[2], TYPE_ABSOLUTE_Y, (char)4 + extraCycles, opcode_BE); // Absolute,Y    LDX $4400,Y   $BE  3   4+
             break;
         default:
             printf("\tINVALID LDX\n");
@@ -1261,7 +1261,7 @@ struct instruction* RMW_LDX_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_STX_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_STX_Opcodes(unsigned char* inst, char extraCycles){
     // STX (STore X register)
     //   Affects Flags: none 
 
@@ -1284,7 +1284,7 @@ struct instruction* RMW_STX_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_STACK_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_STACK_Opcodes(unsigned char* inst, char extraCycles){
     // Stack Instructions
     // These instructions are implied mode, have a length of one byte and require
     // machine cycles as indicated. The "PuLl" operations are known as "POP" on most
@@ -1311,7 +1311,7 @@ struct instruction* RMW_STACK_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_register_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_register_Opcodes(unsigned char* inst, char extraCycles){
     // Register Instructions
     //   Affect Flags: S Z
     // These instructions are implied mode, have a length of one byte and require
@@ -1340,7 +1340,7 @@ struct instruction* RMW_register_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_INC_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_INC_Opcodes(unsigned char* inst, char extraCycles){
     // INC (INCrement memory)
     //   Affects Flags: S Z
 
@@ -1367,7 +1367,7 @@ struct instruction* RMW_INC_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_DEC_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_DEC_Opcodes(unsigned char* inst, char extraCycles){
     // DEC (DECrement memory)
     //   Affects Flags: S Z
     // Zero Page     DEC $44       $C6  2   5
@@ -1398,7 +1398,7 @@ struct instruction* RMW_DEC_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_NOP_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_NOP_Opcodes(unsigned char* inst, char extraCycles){
     struct instruction* instData = NULL;
     unsigned char opcode = inst[0];
 
@@ -1459,7 +1459,7 @@ struct instruction* RMW_NOP_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_STP_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_STP_Opcodes(unsigned char* inst, char extraCycles){
     // http://nesdev.com/undocumented_opcodes.txt
     // STP (KIL (JAM) [HLT])
     // =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
@@ -1539,7 +1539,7 @@ struct instruction* RMW_STP_Opcodes(unsigned char* inst, char extraCicles){
     return instData;
 }
 
-struct instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCycles){
     // SXA (SHX) [XAS]
     // =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
     // AND X register with the high byte of the target address of the argument
@@ -1570,7 +1570,7 @@ struct instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCicles){
 
 
 // RMW
-struct instruction* RMW_Opcodes(unsigned char* inst, char extraCicles){
+struct instruction* RMW_Opcodes(unsigned char* inst, char extraCycles){
     if((inst[0] & 0b11) != 0b10){
         // ERROR
         return NULL;
@@ -1580,56 +1580,56 @@ struct instruction* RMW_Opcodes(unsigned char* inst, char extraCicles){
     unsigned char opcode = inst[0];
     if(opcode == 0x06 || opcode == 0x0A || opcode == 0x0E || opcode == 0x16 || opcode == 0x1E){
         printf("\tASL (Arithmetic Shift Left)\n");
-        instData = RMW_ASL_Opcodes(inst, extraCicles);
+        instData = RMW_ASL_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x2A || opcode == 0x26 || opcode == 0x2E || opcode == 0x36 || opcode == 0x3E){
         printf("\tROL (ROtate Left)\n");
-        instData = RMW_ROL_Opcodes(inst, extraCicles);
+        instData = RMW_ROL_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x4A || opcode == 0x46 || opcode == 0x2E || opcode == 0x56 || opcode == 0x5E){
         printf("\tLSR (Logical Shift Right)\n");
-        instData = RMW_LSR_Opcodes(inst, extraCicles);
+        instData = RMW_LSR_Opcodes(inst, extraCycles);
     }
     else if(((opcode & 0b11100011) == 0b01100010) && ((opcode & 0b00000100) || (~(opcode & 0b00010000) & (opcode & 0b00001000)))){ // y = C + A'B // C = 0000 0100 // B = 0000 1000 // A = 0001 0000
         printf("\tROR (ROtate Right)\n");
-        instData = RMW_ROR_Opcodes(inst, extraCicles);
+        instData = RMW_ROR_Opcodes(inst, extraCycles);
     }
     else if(((opcode & 0b11100011) == 0b10100010) && (((opcode & 0b00000100) == 0b00000100) | (~((opcode & 0b00010000) == 0b00010000) & ~((opcode & 0b0001000) == 0b00001000)))){
         printf("\tLDX (LoaD X register)\n");
-        instData = RMW_LDX_Opcodes(inst, extraCicles);
+        instData = RMW_LDX_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x86 || opcode == 0x8E || opcode == 0x96){
         printf("\tSTX (STore X register)\n");
-        instData = RMW_STX_Opcodes(inst, extraCicles);
+        instData = RMW_STX_Opcodes(inst, extraCycles);
     }
     // else if()
     else if(opcode == 0x9A || opcode == 0xBA){
         printf("\tRMW Stack Instructions\n");
-        instData = RMW_STACK_Opcodes(inst, extraCicles);
+        instData = RMW_STACK_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x8A || opcode == 0xAA || opcode == 0xCA){
         printf("\tRMW Register Instructions\n");
-        instData = RMW_register_Opcodes(inst, extraCicles);
+        instData = RMW_register_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0xE6 || opcode == 0xEE || opcode == 0xF6 || opcode == 0xFE){
         printf("\tRMW INC Instructions\n");
-        instData = RMW_INC_Opcodes(inst, extraCicles);
+        instData = RMW_INC_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0xC6 || opcode == 0xCE || opcode == 0xD6 || opcode == 0xDE){
         printf("\tRMW DEC Instructions\n");
-        instData = RMW_DEC_Opcodes(inst, extraCicles);
+        instData = RMW_DEC_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0xEA || opcode == 0xFA || opcode == 0xDA || opcode == 0x7A || opcode == 0x5A || opcode == 0x3A || opcode == 0x1A || opcode == 0xE2 || opcode == 0xC2 || opcode == 0x82){
         printf("\tRMW NOP Instructions\n");
-        instData = RMW_NOP_Opcodes(inst, extraCicles);
+        instData = RMW_NOP_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x02 || opcode == 0x12 || opcode == 0x22 || opcode == 0x32 || opcode == 0x42 || opcode == 0x52 || opcode == 0x62 || opcode == 0x72 || opcode == 0x92 || opcode == 0xB2 || opcode == 0xD2 || opcode == 0xF2){
         printf("\tRMW STP Instructions\n");
-        instData = RMW_STP_Opcodes(inst, extraCicles);
+        instData = RMW_STP_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x9E){
         printf("\tRMW SHX Instructions\n");
-        instData = RMW_SHX_Opcodes(inst, extraCicles);
+        instData = RMW_SHX_Opcodes(inst, extraCycles);
     }
     else{
         printf("\t\tERROR\n\n");
@@ -1640,7 +1640,7 @@ struct instruction* RMW_Opcodes(unsigned char* inst, char extraCicles){
 
 
 
-struct instruction* detectType(unsigned char* inst, char extraCicles){
+struct instruction* detectType(unsigned char* inst, char extraCycles){
     unsigned char type = (unsigned char)(inst[0] & 0b11);
     struct instruction* instData = NULL;
     // printf("opcode: %i\ntype: %i\n", (unsigned int)inst[0], (unsigned int)type);
@@ -1649,16 +1649,16 @@ struct instruction* detectType(unsigned char* inst, char extraCicles){
     printf("\n");
     if(type == 0b00){
         printf("\tControl instruction opcode\n");
-        instData = controlInstructionOpcodes(inst, extraCicles);
+        instData = controlInstructionOpcodes(inst, extraCycles);
     }
     else if(type == 0b01){
         printf("\tALU operation opcode\n");
-        instData = ALUOpcodes(inst, extraCicles);
+        instData = ALUOpcodes(inst, extraCycles);
 
     }
     else if(type == 0b10){
         printf("\tread-modify-write (RMW) and data movement instructions opcode\n");
-        instData = RMW_Opcodes(inst, extraCicles);
+        instData = RMW_Opcodes(inst, extraCycles);
     }
     else{ // if(type == 0b11)
         printf("\tunoficial opcode\n");
@@ -1717,12 +1717,12 @@ void iterateInstructions(struct nesRom* rom){
     size_t new_start = 0;
     size_t j = 0;
 
-    char extraCicles = 0;
+    char extraCycles = 0;
 
     for(size_t i = 0; i < realPrgPageAmount; i++){
         for(j = new_start; j < PRG_ROM_PAGE_SIZE; j++){
             if(j+1 >= PRG_ROM_PAGE_SIZE){
-                extraCicles = 1;
+                extraCycles = 1;
 
                 inst = malloc(sizeof(unsigned char) * 3);
                 inst[0] = rom->prgRom->prgRom[i][j];
@@ -1736,11 +1736,11 @@ void iterateInstructions(struct nesRom* rom){
                 }
             }
             else{
-                extraCicles = 0;
+                extraCycles = 0;
                 inst = (unsigned char*)strncpy(aux, (char *)&(rom->prgRom->prgRom[i][j]), 3);
             }
             
-            instData = detectType(inst, extraCicles);
+            instData = detectType(inst, extraCycles);
 
             printf("\n");
             if(instData == NULL){

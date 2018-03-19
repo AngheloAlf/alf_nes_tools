@@ -77,6 +77,8 @@ int main(int argc, char* argv[]){
 
     struct nesRam* ram = initRam();
 
+    // storeIntoRam(ram, 0x2007, 0x6f);
+
     powerUp(registers, ram);
     errorRet = parseRomToRam(ram, rom);
     if(errorRet != 0){

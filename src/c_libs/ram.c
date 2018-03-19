@@ -66,22 +66,45 @@ int parseRomToRam(struct nesRam* ram, struct nesRom* rom){
 	return 0;
 }
 
+void mirrorRam(struct nesRam* ram, unsigned short address, unsigned char number){
+    if(address >= 0x0 && address <= 0x07FF){ // System memory mirror
+        for(unsigned short i = 0x0800; address + i <= 0x1FFF; i+=0x0800){
+            ram->ram[address + i] = number;
+        }
+    }
+
+    if(address >= 0x2000 && address <= 0x2007){ // PPU i/o registers
+        for(unsigned short i = 0x0008; address + i <= 0x3FFF; i+=0x8){
+            ram->ram[address + i] = number;
+        }
+    }
+}
+
 unsigned char loadFromRam(struct nesRam* ram, unsigned short address){
     return ram->ram[address];
 }
-char storeIntoRam(struct nesRam* ram, unsigned short address, unsigned char number){
-    if(ram->readOnlyRam[address]){
+char _storeIntoRam(struct nesRam* ram, unsigned short address, unsigned char number, char writeOnReadOnly){
+    if(writeOnReadOnly | !ram->readOnlyRam[address]){
+        ram->ram[address] = number;
+        ram->writeOnReadOnly = 0;
+        ram->wroAddress = 0;
+        ram->wroValue = 0;
+
+        mirrorRam(ram, address, number);
+    }
+    else{
         ram->writeOnReadOnly = 1;
+        ram->wroAddress = address;
+        ram->wroValue = number;
+    }
+    if(ram->readOnlyRam[address]){
         return -2;
     }
-    ram->writeOnReadOnly = 0;
-    ram->ram[address] = number;
     return 0;
 }
+char storeIntoRam(struct nesRam* ram, unsigned short address, unsigned char number){
+    return _storeIntoRam(ram, address, number, 0);
+}
 char storeIntoRamWithoutReadOnly(struct nesRam* ram, unsigned short address, unsigned char number){
-    ram->ram[address] = number;
-    if(ram->readOnlyRam[address]){
-        return -2;
-    }
-    return 0;
+    return _storeIntoRam(ram, address, number, 1);
 }
