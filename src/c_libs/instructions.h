@@ -11,9 +11,9 @@
 
 #include "romParser.h"
 #include "charOps.h"
-#include "ram.h"
 #include "cpu.h"
 #include "instCallback.h"
+#include "ram.h"
 
 
 #define TYPE_ACCUMULATOR    0
@@ -35,6 +35,7 @@ struct instruction{
     // http://www.6502.org/tutorials/6502opcodes.html
     // http://www.obelisk.me.uk/6502/reference.html
     // http://nesdev.com/undocumented_opcodes.txt
+    // http://www.emulator101.com/6502-addressing-modes.html
 
     unsigned char opcode;
     unsigned char byte1;

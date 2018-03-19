@@ -1819,10 +1819,10 @@ unsigned char loadNumberFromRamOrArg(struct instruction *instData, struct nesReg
         case TYPE_IMMEDIATE:
         case TYPE_IMPLIED:
         case TYPE_RELATIVE:
-        case TYPE_INDIRECT:
+        case TYPE_ABSOLUTE:
             return (unsigned char)address;
 
-        case TYPE_ABSOLUTE:
+        case TYPE_INDIRECT:
         case TYPE_ZERO_PAGE:
         case TYPE_ABSOLUTE_X:
         case TYPE_ABSOLUTE_Y:

@@ -7,8 +7,8 @@
 
 #include <stdlib.h>
 
-#include "ram.h"
 #include "instructions.h"
+#include "ram.h"
 
 struct nesRegisters{
     // https://wiki.nesdev.com/w/index.php/CPU_registers
@@ -20,6 +20,7 @@ struct nesRegisters{
     unsigned char statusRegister; // P
 
     unsigned char disablePC;
+    unsigned char jumping;
 };
 
 struct nesRegisters* initRegisters();
@@ -57,5 +58,8 @@ void disablePC(struct nesRegisters* registers);
 void enablePC(struct nesRegisters* registers);
 
 void parseZeroNegative(struct nesRegisters* registers, char number);
+
+void pushStack(struct nesRegisters* registers, struct nesRam* ram, unsigned char value);
+unsigned char pullStack(struct nesRegisters* registers, struct nesRam* ram);
 
 #endif //ALF_NES_TOOLS_CPU_H

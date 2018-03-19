@@ -42,8 +42,8 @@ void powerUp(struct nesRegisters* registers, struct nesRam* ram){
 
 void resetCpu(struct nesRegisters* registers, struct nesRam* ram){
     // A, X, Y were not affected
-    registers->stack += 3; // S was decremented by 3 (but nothing was written to the stack)
-    // The I (IRQ disable) flag was set to true (status ORed with $04)
+    // registers->stack += 3; // S was decremented by 3 (but nothing was written to the stack)
+    registers->statusRegister |= 0x04; // The I (IRQ disable) flag was set to true (status ORed with $04)
     // The internal memory was unchanged
     // APU mode in $4017 was unchanged
     // APU was silenced ($4015 = 0)
@@ -208,3 +208,11 @@ void parseZeroNegative(struct nesRegisters* registers, char number){
     }
 }
 
+void pushStack(struct nesRegisters* registers, struct nesRam* ram, unsigned char value){
+    storeIntoRam(ram, (unsigned short)0x0100 + registers->stack, value);
+    registers->stack -= 1;
+}
+unsigned char pullStack(struct nesRegisters* registers, struct nesRam* ram){
+    registers->stack += 1;
+    return loadFromRam(ram, (unsigned short)0x0100 + registers->stack);
+}
