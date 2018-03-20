@@ -30,6 +30,22 @@
 #define TYPE_IMPLIED        11
 #define TYPE_RELATIVE       12
 
+
+#define SIZE_ACCUMULATOR    0
+#define SIZE_IMMEDIATE      1
+#define SIZE_ZERO_PAGE      1
+#define SIZE_ZERO_PAGE_X    1
+#define SIZE_ZERO_PAGE_Y    1
+#define SIZE_ABSOLUTE       2
+#define SIZE_ABSOLUTE_X     2
+#define SIZE_ABSOLUTE_Y     2
+#define SIZE_INDIRECT       2
+#define SIZE_INDIRECT_X     1
+#define SIZE_INDIRECT_Y     1
+#define SIZE_IMPLIED        0
+#define SIZE_RELATIVE       1
+
+
 struct instruction{
     // https://wiki.nesdev.com/w/index.php/CPU_unofficial_opcodes
     // http://www.6502.org/tutorials/6502opcodes.html
