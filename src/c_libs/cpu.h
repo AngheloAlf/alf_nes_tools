@@ -21,6 +21,7 @@ struct nesRegisters{
 
     unsigned char disablePC;
     unsigned char jumping;
+    unsigned char jumpingSubroutine;
 };
 
 struct nesRegisters* initRegisters();

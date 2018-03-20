@@ -39,7 +39,7 @@ struct instruction* control_BRK_Opcodes(unsigned char* inst, char extraCycles){
     struct instruction* instData = NULL;
     if(inst[0] == 0x00){
         printf("\tBRK (BReaK)\n");
-        instData = initInstruction(inst[0], 0, inst[1], inst[2], TYPE_IMPLIED, 7, opcode_00);
+        instData = initInstruction(inst[0], 1, inst[1], inst[2], TYPE_IMPLIED, 7, opcode_00);
     }
     else{
         printf("\tINVALID Control BRK Opcode\n");

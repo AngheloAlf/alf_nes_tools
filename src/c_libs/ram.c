@@ -31,25 +31,25 @@ void setLast16KbRom(struct nesRam* ram, const unsigned char* romPage){
 	}
 }
 
+unsigned short loadVector(struct nesRam* ram, unsigned short first, unsigned short second){
+    unsigned short upper = ((unsigned short)(loadFromRam(ram, second))<<8);
+    unsigned short lower = loadFromRam(ram, first);
+    return upper | lower;
+}
+
 unsigned short getNMIVector(struct nesRam* ram){
 	// $FFFA-$FFFB = NMI vector
-	unsigned short upper = ((unsigned short)loadFromRam(ram, 0xFFFA))<<8;
-	unsigned short lower = loadFromRam(ram, 0xFFFB);
-	return upper | lower;
+    return loadVector(ram, 0xFFFA, 0xFFFB);
 }
 
 unsigned short getResetVector(struct nesRam* ram){
 	// $FFFC-$FFFD = Reset vector
-	unsigned short upper = ((unsigned short)loadFromRam(ram, 0xFFFC))<<8;
-	unsigned short lower = loadFromRam(ram, 0xFFFD);
-	return upper | lower;
+    return loadVector(ram, 0xFFFC, 0xFFFD);
 }
 
 unsigned short getIRQBRKVector(struct nesRam* ram){
 	// $FFFE-$FFFF = IRQ/BRK vector
-	unsigned short upper = ((unsigned short)loadFromRam(ram, 0xFFFE))<<8;
-	unsigned short lower = loadFromRam(ram, 0xFFFF);
-	return upper | lower;
+    return loadVector(ram, 0xFFFE, 0xFFFF);
 }
 
 int parseRomToRam(struct nesRam* ram, struct nesRom* rom){

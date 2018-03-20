@@ -10,9 +10,17 @@
 // Control instructions
 
 int opcode_00(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    // setS(registers);
-    return 0;
+    unsigned short programCounter = (unsigned short)(registers->programCounter + 2);
+    pushStack(registers, ram, (unsigned char)(programCounter>>8));
+    pushStack(registers, ram, (unsigned char)(programCounter & 0x00FF));
+
+    pushStack(registers, ram, (unsigned char)(registers->statusRegister | 0x30));
+
+    registers->programCounter = getIRQBRKVector(ram);
+
+    registers->jumping = 1;
+    registers->jumpingSubroutine += 1;
+    return instData->cycles;
 }
 
 int opcode_04(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -55,8 +63,14 @@ int opcode_1C(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_20(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    unsigned short programCounter = (unsigned short)(registers->programCounter + 2);
+    pushStack(registers, ram, (unsigned char)(programCounter>>8));
+    pushStack(registers, ram, (unsigned char)(programCounter & 0x00FF));
+    registers->programCounter = loadAddress(instData, registers, ram);
+
+    registers->jumping = 1;
+    registers->jumpingSubroutine += 1;
+    return instData->cycles;
 }
 
 int opcode_24(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -143,8 +157,16 @@ int opcode_3C(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_40(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    registers->statusRegister = pullStack(registers, ram);
+
+    unsigned short low = (unsigned short)pullStack(registers, ram);
+    unsigned short high = (unsigned short)(pullStack(registers, ram)<<8);
+    registers->programCounter = high | low;
+
+    registers->jumping = 1;
+    registers->jumpingSubroutine -= 1;
+
+    return instData->cycles;
 }
 
 int opcode_44(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
@@ -188,8 +210,13 @@ int opcode_5C(struct instruction* instData, struct nesRegisters* registers, stru
 }
 
 int opcode_60(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
-    printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    unsigned short low = (unsigned short)pullStack(registers, ram);
+    unsigned short high = ((unsigned short)pullStack(registers, ram))<<8;
+    registers->programCounter = (unsigned short)((high | low) + 1);
+
+    registers->jumping = 1;
+    registers->jumpingSubroutine -= 1;
+    return instData->cycles;
 }
 
 int opcode_64(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){

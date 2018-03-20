@@ -15,6 +15,8 @@ struct nesRegisters* initRegisters(){
     registers->statusRegister = 0b00100000; // P
 
     registers->disablePC = 0;
+    registers->jumping = 0;
+    registers->jumpingSubroutine = 0;
 
     return registers;
 }
