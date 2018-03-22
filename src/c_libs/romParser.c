@@ -32,34 +32,29 @@ struct nesRomHeader* loadInesHeader(unsigned char* header){
     romHeader->mapperId = (unsigned int)(((romHeader->flags6) & 0b11110000)>>4 | (romHeader->flags7 & 0b11110000));
     romHeader->subMapper = 0;
 
-    if(header[7]){
-        unsigned int prgPageAmount = romHeader->prgPageAmount;
-        unsigned int aux = (unsigned int)romHeader->flags9 & 0b1111;
-        aux <<= 8;
-        prgPageAmount += aux;
 
-        unsigned int chrPageAmount = romHeader->chrPageAmount;
-        aux = (unsigned int)romHeader->flags9 & 0b11110000;
-        aux <<= 4;
-        chrPageAmount += aux;
+    unsigned int prgPageAmount = romHeader->prgPageAmount;
+    unsigned int aux = (unsigned int)romHeader->flags9 & 0b1111;
+    aux <<= 8;
+    prgPageAmount += aux;
 
-        if(prgPageAmount*16384 + chrPageAmount*8192 < fileSize){ // TODO: If byte 7 AND $0C = $08,
-            printf("NES 2.0 detected\n");
-            romHeader->typeVersion = 2;
-            romHeader->realPrgPageAmount = prgPageAmount;
-            romHeader->realChrPageAmount = chrPageAmount;
+    unsigned int chrPageAmount = romHeader->chrPageAmount;
+    aux = (unsigned int)romHeader->flags9 & 0b11110000;
+    aux <<= 4;
+    chrPageAmount += aux;
 
-            romHeader->mapperId |= (unsigned int)((romHeader->flags8 & 0b00001111)<<8);
-            romHeader->subMapper = (unsigned char)((romHeader->flags8 & 0b11110000)>>4);
-        }
-        else if(!header[12] && !header[13] && !header[14] && !header[15]){ // TODO: If byte 7 AND $0C = $00
-            printf("iNES 1 detected\n");
-            romHeader->typeVersion = 1;
-        }
-        else{
-            printf("Problems detecting .nes version. Assuming iNES 1\n");
-            romHeader->typeVersion = 1;
-        }
+    if(((romHeader->flags7 & 0x0C) == 0x08) && (prgPageAmount*PRG_ROM_PAGE_SIZE + chrPageAmount*CHR_ROM_PAGE_SIZE < fileSize)){
+        printf("NES 2.0 detected\n");
+        romHeader->typeVersion = 2;
+        romHeader->realPrgPageAmount = prgPageAmount;
+        romHeader->realChrPageAmount = chrPageAmount;
+
+        romHeader->mapperId |= (unsigned int)((romHeader->flags8 & 0b00001111)<<8);
+        romHeader->subMapper = (unsigned char)((romHeader->flags8 & 0b11110000)>>4);
+    }
+    else if(((romHeader->flags7 & 0x0C) == 0x00) && !header[12] && !header[13] && !header[14] && !header[15]){ // TODO: If byte 7 AND $0C = $00
+        printf("iNES 1 detected\n");
+        romHeader->typeVersion = 1;
     }
     else{
         printf("archaic iNES detected\n");
@@ -85,23 +80,22 @@ struct nesChrRom* generateChrRomData(unsigned char** chrRom, struct tile** tiles
 }
 
 struct nesRom* generateINesRom(struct nesRomHeader* header, unsigned char* trainer, struct nesPrgRom* prgRomData, struct nesChrRom* chrRomData, unsigned char* playChoiceInstRom, unsigned char* playChoicePRom, unsigned char* title){
-    struct nesRom** rom = malloc(sizeof(struct nesRom*));
-    *rom = malloc(sizeof(struct nesRom));
+    struct nesRom* rom = malloc(sizeof(struct nesRom));
 
     if(header == NULL){
         // ERROR
         return NULL;
     }
-    (*rom)->header = header;
+    rom->header = header;
 
-    (*rom)->trainer = trainer;
-    (*rom)->prgRom = prgRomData;
-    (*rom)->chrRom = chrRomData;
-    (*rom)->playChoiceInstRom = playChoiceInstRom;
-    (*rom)->playChoicePRom = playChoicePRom;
-    (*rom)->title = title;
+    rom->trainer = trainer;
+    rom->prgRom = prgRomData;
+    rom->chrRom = chrRomData;
+    rom->playChoiceInstRom = playChoiceInstRom;
+    rom->playChoicePRom = playChoicePRom;
+    rom->title = title;
 
-    return (*rom);
+    return rom;
 }
 
 struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
@@ -130,6 +124,7 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
     if(prgPages > 0){
         unsigned char** prgRom = malloc(sizeof(unsigned char*) * prgPages);
         printf("\tloading %i bytes (%i KiB or %i pages) of prgRom\n", (int)prgPages*PRG_ROM_PAGE_SIZE, (int)prgPages*PRG_ROM_PAGE_SIZE/1024, (int)prgPages);
+        // fread(prgRom, PRG_ROM_PAGE_SIZE, prgPages, filePtr);
         for(size_t i = 0; i < prgPages; i++){
             prgRom[i] = malloc(sizeof(unsigned char) * PRG_ROM_PAGE_SIZE);
             fread(prgRom[i], PRG_ROM_PAGE_SIZE, 1, filePtr);
@@ -149,6 +144,7 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
         struct tile** tiles = NULL;
         unsigned char** chrRom = malloc(sizeof(unsigned char*) * chrPages);
         printf("\tloading %i bytes (%i KiB or %i pages) of chrRom\n", (int)chrPages*CHR_ROM_PAGE_SIZE, (int)chrPages*CHR_ROM_PAGE_SIZE/1024, (int)chrPages);
+        // fread(chrRom, CHR_ROM_PAGE_SIZE, chrPages, filePtr);
         for(size_t i = 0; i < chrPages; i++){
             chrRom[i] = malloc(sizeof(unsigned char) * CHR_ROM_PAGE_SIZE);
             fread(chrRom[i], CHR_ROM_PAGE_SIZE, 1, filePtr);

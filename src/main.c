@@ -62,22 +62,7 @@ int main(int argc, char* argv[]){
     }
 
     struct nesRegisters* registers = initRegisters();
-    /*
-    unsigned char* asd = malloc(sizeof(unsigned char)*3);
-    asd[0] = 0x69;
-    asd[1] = 64*2;
-    asd[2] = 0x00;
-    struct instruction* instData = detectType(asd, 0);
-    opcode_69(instData, registers, NULL);
-    opcode_69(instData, registers, NULL);
-    opcode_69(instData, registers, NULL);
-    opcode_69(instData, registers, NULL);
-    printf("%hhu\n", getCarry(registers));
-    */
-
     struct nesRam* ram = initRam();
-
-    // storeIntoRam(ram, 0x2007, 0x6f);
 
     powerUp(registers, ram);
     errorRet = parseRomToRam(ram, rom);
@@ -94,12 +79,14 @@ int main(int argc, char* argv[]){
     }
     
     if(execute){
-        executeInstructions(registers, ram, rom);
+        int retVal = executeInstructions(registers, ram, rom);
+        if(retVal < 0){
+            return retVal;
+        }
     }
     if(printfInst){
         iterateInstructions(rom);
     }
-    // iterateInstructions(rom);
 
     return 0;
 }

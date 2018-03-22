@@ -69,6 +69,6 @@ int parseRomToRam(struct nesRam* ram, struct nesRom* rom);
 
 unsigned char loadFromRam(struct nesRam* ram, unsigned short address);
 char storeIntoRam(struct nesRam* ram, unsigned short address, unsigned char number);
-char storeIntoRamWithoutReadOnly(struct nesRam* ram, unsigned short address, unsigned char number);
+char storeIntoRamAndSetReadOnly(struct nesRam *ram, unsigned short address, unsigned char number);
 
 #endif //ALF_NES_TOOLS_RAM_H

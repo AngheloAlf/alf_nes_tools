@@ -10,6 +10,20 @@
 #include "instructions.h"
 #include "ram.h"
 
+// possible joysticks libs:
+// - https://github.com/wgois/OIS
+// - https://github.com/Tasssadar/libenjoy
+
+// master clock (CLK):
+// - NTSC:
+//   -> CPU divide CLK by 12
+//   -> PPU divide CLK by 4
+//   -> 3 PPU ticks per CPU cycle
+// - PAL:
+//   -> CPU divide CLK by 16
+//   -> PPU divide CLK by 5
+//   -> 3.2 PPU ticks per CPU cycle
+
 struct nesRegisters{
     // https://wiki.nesdev.com/w/index.php/CPU_registers
     char accumulator; // A

@@ -76,7 +76,6 @@ struct instruction{
     int (*execute)(struct instruction*, struct nesRegisters*, struct nesRam*);
 
     char cycles;
-
 };
 
 struct instruction* detectType(unsigned char* inst, char extraCicles);
@@ -86,5 +85,7 @@ void iterateInstructions(struct nesRom* rom);
 unsigned short loadAddress(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram);
 unsigned char loadNumberFromRamOrArg(struct instruction *instData, struct nesRegisters *registers, struct nesRam *ram);
 
+void printfOpcodeSyntax(struct instruction* instData);
+void printfInstruction(struct instruction* instData);
 
 #endif //ALF_NES_TOOLS_INSTRUCTIONS_H

@@ -38,7 +38,7 @@ struct instruction* control_BRK_Opcodes(unsigned char* inst, char extraCycles){
 
     struct instruction* instData = NULL;
     if(inst[0] == 0x00){
-        printf("\tBRK (BReaK)\n");
+        // printf("\tBRK (BReaK)\n");
         instData = initInstruction(inst, 1, TYPE_IMPLIED, 7, opcode_00);
     }
     else{
@@ -54,7 +54,7 @@ struct instruction* control_STACK_Opcodes(unsigned char* inst, char extraCycles)
     // These instructions are implied mode, have a length of one byte and require
     // machine cycles as indicated. The "PuLl" operations are known as "POP" on most
     // other microprocessors. With the 6502, the stack is always on page one
-    // ($100-$1FF) and works top down. 
+    // ($100-$1FF) and works top down.
     // MNEMONIC                        HEX TIM
     // PHP (PusH Processor status)     $08  3
     // PLP (PuLl Processor status)     $28  4
@@ -64,19 +64,19 @@ struct instruction* control_STACK_Opcodes(unsigned char* inst, char extraCycles)
 
     switch(inst[0]){
         case 0x08:
-            printf("\tPHP (PusH Processor status)\n");
+            // printf("\tPHP (PusH Processor status)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 3, opcode_08);
             break;
         case 0x28:
-            printf("\tPLP (PuLl Processor status)\n");
+            //printf("\tPLP (PuLl Processor status)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 4, opcode_28);
             break;
         case 0x48:
-            printf("\tPHA (PusH Accumulator)\n");
+            //printf("\tPHA (PusH Accumulator)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 3, opcode_48);
             break;
         case 0x68:
-            printf("\tPLA (PuLl Accumulator)\n");
+            // printf("\tPLA (PuLl Accumulator)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 4, opcode_68);
             break;
         default:
@@ -96,7 +96,7 @@ struct instruction* control_Branching_Opcodes(unsigned char* inst, char extraCyc
     // displacements.
     // Branches are dependant on the status of the flag bits when the op code is
     // encountered. A branch not taken requires two machine cycles. Add one if the
-    // branch is taken and add one more if the branch crosses a page boundary. 
+    // branch is taken and add one more if the branch crosses a page boundary.
     // MNEMONIC                       HEX
     // BPL (Branch on PLus)           $10
     // BMI (Branch on MInus)          $30
@@ -120,35 +120,35 @@ struct instruction* control_Branching_Opcodes(unsigned char* inst, char extraCyc
 
     switch(inst[0]){
         case 0x10:
-            printf("\tBranch on PLus\n");
+            // printf("\tBranch on PLus\n");
             instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_10);
             break;
         case 0x30:
-            printf("\tBranch on MInus\n");
+            // printf("\tBranch on MInus\n");
             instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_30);
             break;
         case 0x50:
-            printf("\tBranch on oVerflow Clear\n");
+            // printf("\tBranch on oVerflow Clear\n");
             instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_50);
             break;
         case 0x70:
-            printf("\tBranch on oVerflow Set\n");
+            // printf("\tBranch on oVerflow Set\n");
             instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_70);
             break;
         case 0x90:
-            printf("\tBranch on Carry Clear\n");
+            // printf("\tBranch on Carry Clear\n");
             instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_90);
             break;
         case 0xB0:
-            printf("\tBranch on Carry Set\n");
+            // printf("\tBranch on Carry Set\n");
             instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_B0);
             break;
         case 0xD0:
-            printf("\tBranch on Not Equal\n");
+            // printf("\tBranch on Not Equal\n");
             instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_D0);
             break;
         case 0xF0:
-            printf("\tBranch on EQual\n");
+            // printf("\tBranch on EQual\n");
             instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_F0);
             break;
         default:
@@ -233,31 +233,31 @@ struct instruction* control_Flag_Opcodes(unsigned char* inst, char extraCycles){
 
     switch(inst[0]){
         case 0x18:
-            printf("\tCLC (CLear Carry) \n");
+            // printf("\tCLC (CLear Carry) \n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_18); // CLC (CLear Carry)              $18
             break;
         case 0x38:
-            printf("\tSEC (SEt Carry)\n");
+            // printf("\tSEC (SEt Carry)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_38); // SEC (SEt Carry)                $38
             break;
         case 0x58:
-            printf("\tCLI (CLear Interrupt)\n");
+            // printf("\tCLI (CLear Interrupt)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_58); // CLI (CLear Interrupt)          $58
             break;
         case 0x78:
-            printf("\tSEI (SEt Interrupt)\n");
+            // printf("\tSEI (SEt Interrupt)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_78); // SEI (SEt Interrupt)            $78
             break;
         case 0xB8:
-            printf("\tCLV (CLear oVerflow)\n");
+            // printf("\tCLV (CLear oVerflow)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_B8); // CLV (CLear oVerflow)           $B8
             break;
         case 0xD8:
-            printf("\tCLD (CLear Decimal)\n");
+            // printf("\tCLD (CLear Decimal)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_D8); // CLD (CLear Decimal)            $D8
             break;
         case 0xF8:
-            printf("\tSED (SEt Decimal)\n");
+            // printf("\tSED (SEt Decimal)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_F8); // SED (SEt Decimal)              $F8
             break;
         default:
@@ -271,7 +271,7 @@ struct instruction* control_Flag_Opcodes(unsigned char* inst, char extraCycles){
 
 struct instruction* control_RTI_Opcodes(unsigned char* inst, char extraCycles){
     // RTI (ReTurn from Interrupt)
-    //   Affects Flags: all 
+    //   Affects Flags: all
     // Implied       RTI           $40  1   6
 
     // RTI retrieves the Processor Status Word (flags) and the Program Counter
@@ -281,7 +281,7 @@ struct instruction* control_RTI_Opcodes(unsigned char* inst, char extraCycles){
 
     struct instruction* instData = NULL;
     if(inst[0] == 0x40){
-        printf("\tRTI (ReTurn from Interrupt)\n");
+        // printf("\tRTI (ReTurn from Interrupt)\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 6, opcode_40);
     }
     else{
@@ -304,7 +304,7 @@ struct instruction* control_JSR_Opcodes(unsigned char* inst, char extraCycles){
 
     struct instruction* instData = NULL;
     if(inst[0] == 0x20){
-        printf("\tJSR (Jump to SubRoutine)\n");
+        // printf("\tJSR (Jump to SubRoutine)\n");
         instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 6, opcode_20);
     }
     else{
@@ -351,7 +351,7 @@ struct instruction* control_JMP_Opcodes(unsigned char* inst, char extraCycles){
 
 struct instruction* control_RTS_Opcodes(unsigned char* inst, char extraCycles){
     // RTS (ReTurn from Subroutine)
-    //   Affects Flags: none 
+    //   Affects Flags: none
     // Implied       RTS           $60  1   6
 
     // RTS pulls the top two bytes off the stack (low byte first) and transfers
@@ -361,7 +361,7 @@ struct instruction* control_RTS_Opcodes(unsigned char* inst, char extraCycles){
 
     struct instruction* instData = NULL;
     if(inst[0] == 0x60){
-        printf("\tRTS (ReTurn from Subroutine)\n");
+        // printf("\tRTS (ReTurn from Subroutine)\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 6, opcode_60);
     }
     else{
@@ -381,23 +381,23 @@ struct instruction* control_register_Opcodes(unsigned char* inst, char extraCycl
     struct instruction* instData = NULL;
     switch(inst[0]){
         case 0x88:
-            printf("\tDEY (DEcrement Y)\n");
+            // printf("\tDEY (DEcrement Y)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_88); // DEY (DEcrement Y)        $88
             break;
         case 0x98:
-            printf("\tTYA (Transfer Y to A)\n");
+            // printf("\tTYA (Transfer Y to A)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_98); // TYA (Transfer Y to A)    $98
             break;
         case 0xA8:
-            printf("\tTAY (Transfer A to Y) \n");
+            // printf("\tTAY (Transfer A to Y) \n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_A8); // TAY (Transfer A to Y)    $A8
             break;
         case 0xC8:
-            printf("\tINY (INcrement Y)\n"); // INY (INcrement Y)        $C8
+            // printf("\tINY (INcrement Y)\n"); // INY (INcrement Y)        $C8
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_C8);
             break;
         case 0xE8:
-            printf("\tINX (INcrement X)\n"); // INX (INcrement X)        $E8
+            // printf("\tINX (INcrement X)\n"); // INX (INcrement X)        $E8
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_E8);
             break;
         default:
@@ -554,11 +554,11 @@ struct instruction* control_NOP_Opcodes(unsigned char* inst, char extraCycles){
     if((opcode & 0b11) == 0b00){
         // Control opcode NOP
         if(opcode == 0x80){
-            printf("\tIMMEDIATE NOP\n");
+            // printf("\tIMMEDIATE NOP\n");
             instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_80);
         }
         else if(((opcode & 0b10011111) == 0b00000100) && ((opcode & 0b01000000) | ~(opcode & 0b00100000))){
-            printf("\tZERO PAGE NOP\n");
+            // printf("\tZERO PAGE NOP\n");
             if(opcode == 0x04){
                 instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 2, opcode_04);
             }
@@ -573,11 +573,11 @@ struct instruction* control_NOP_Opcodes(unsigned char* inst, char extraCycles){
             }
         }
         else if(opcode == 0x0C){
-            printf("\tABSOLUTE NOP\n");
+            // printf("\tABSOLUTE NOP\n");
             instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 2, opcode_0C);
         }
         else if(((opcode & 0b00011111) == 0b00010100) && (~(opcode & 0b10000000) | (opcode & 0b01000000))){
-            printf("\tZERO PAGE X NOP\n");
+            // printf("\tZERO PAGE X NOP\n");
             if(opcode == 0x14){
                 instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 2, opcode_14);
             }
@@ -625,7 +625,7 @@ struct instruction* control_NOP_Opcodes(unsigned char* inst, char extraCycles){
             }
         }
         else{
-            printf("\tINVALID CONTROL NOP\n");
+            // printf("\tINVALID CONTROL NOP\n");
             instData = NULL;
         }
     }
@@ -647,63 +647,63 @@ struct instruction* controlInstructionOpcodes(unsigned char* inst, char extraCyc
     struct instruction* instData = NULL;
 
     if((inst[0] & 0b00011111) == 0b00010000){ // Branching instructions
-        printf("\tcontrol Branching Instructions\n");
+        // printf("\tcontrol Branching Instructions\n");
         instData = control_Branching_Opcodes(inst, extraCycles);
     }
     else if(((inst[0] & 0b00011111) == 0b00011000) && (inst[0] != 0x98)){ // Flag instructions
-        printf("\tcontrol Flag Instructions\n");
+        // printf("\tcontrol Flag Instructions\n");
         instData = control_Flag_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x08 || inst[0] == 0x28 || inst[0] == 0x48 || inst[0] == 0x68){
-        printf("\tcontrol Stack Instructions\n");
+        // printf("\tcontrol Stack Instructions\n");
         instData = control_STACK_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x88 || inst[0] == 0x98 || inst[0] == 0xA8 || inst[0] == 0xC8 || inst[0] == 0xE8){
-        printf("\tcontrol Register Instructions\n");
+        // printf("\tcontrol Register Instructions\n");
         instData = control_register_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0xA0 || inst[0] == 0xA4 || inst[0] == 0xAC || inst[0] == 0xB4 || inst[0] == 0xBC){
-        printf("\tControl LDY Instructions)\n");
+        // printf("\tControl LDY Instructions)\n");
         instData = control_LDY_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x20){
-        printf("\tControl JSR Instructions)\n");
+        // printf("\tControl JSR Instructions)\n");
         instData = control_JSR_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x60){
-        printf("\tControl RTS Instructions)\n");
+        // printf("\tControl RTS Instructions)\n");
         instData = control_RTS_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x00){
-        printf("\tControl BRK Instructions)\n");
+        // printf("\tControl BRK Instructions)\n");
         instData = control_BRK_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x24 || inst[0] == 0x2C){
-        printf("\tControl BIT Instructions)\n");
+        // printf("\tControl BIT Instructions)\n");
         instData = control_BIT_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x40){
-        printf("\tControl RTI Instructions)\n");
+        // printf("\tControl RTI Instructions)\n");
         instData = control_RTI_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x4C || inst[0] == 0x6C){
-        printf("\tControl JMP Instructions)\n");
+        // printf("\tControl JMP Instructions)\n");
         instData = control_JMP_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x84 || inst[0] == 0x8C || inst[0] == 0x94){
-        printf("\tControl STY Instructions)\n");
+        // printf("\tControl STY Instructions)\n");
         instData = control_STY_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0x9C){
-        printf("\tControl undocumented SHY Instructions)\n");
+        // printf("\tControl undocumented SHY Instructions)\n");
         instData = control_SHY_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0xC0 || inst[0] == 0xC4 || inst[0] == 0xCC){
-        printf("\tControl CPY Instructions)\n");
+        // printf("\tControl CPY Instructions)\n");
         instData = control_CPY_Opcodes(inst, extraCycles);
     }
     else if(inst[0] == 0xE0 || inst[0] == 0xE4 || inst[0] == 0xEC){
-        printf("\tControl CPX Instructions)\n");
+        // printf("\tControl CPX Instructions)\n");
         instData = control_CPX_Opcodes(inst, extraCycles);
     }
     else{
@@ -868,7 +868,7 @@ struct instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCycles){
 }
 
 struct instruction* ALU_STA_Opcode(unsigned char* inst, char extraCycles){
-    // STA (STore Accumulator) 
+    // STA (STore Accumulator)
     //   Affects Flags: none
 
     struct instruction* instData = NULL;
@@ -946,7 +946,7 @@ struct instruction* ALU_LDA_Opcode(unsigned char* inst, char extraCycles){
 }
 
 struct instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCycles){
-    // CMP (CoMPare accumulator) 
+    // CMP (CoMPare accumulator)
     //   Affects Flags: S Z C
     // + add 1 cycle if page boundary crossed
 
@@ -1049,35 +1049,35 @@ struct instruction* ALUOpcodes(unsigned char* inst, char extraCycles){
 
     switch(type){
         case 0b00000001: // 0x00
-            printf("\tORA (bitwise OR with Accumulator)\n");
+            // printf("\tORA (bitwise OR with Accumulator)\n");
             instData = ALU_ORA_Opcode(inst, extraCycles);
             break;
         case 0b00100001:  // 0x20
-            printf("\tAND (bitwise AND with accumulator)\n");
+            // printf("\tAND (bitwise AND with accumulator)\n");
             instData = ALU_AND_Opcode(inst, extraCycles);
             break;
         case 0b01000001: // 0x40
-            printf("\tEOR (bitwise Exclusive OR)\n");
+            // printf("\tEOR (bitwise Exclusive OR)\n");
             instData = ALU_EOR_Opcode(inst, extraCycles);
             break;
         case 0b01100001: // 0x60
-            printf("\tADC (ADd with Carry)\n");
+            // printf("\tADC (ADd with Carry)\n");
             instData = ALU_ADC_Opcode(inst, extraCycles);
             break;
         case 0b10000001: // 0x80
-            printf("\tSTA (STore Accumulator) (or NOP)\n");
+            // printf("\tSTA (STore Accumulator) (or NOP)\n");
             instData = ALU_STA_Opcode(inst, extraCycles);
             break;
         case 0b10100001: // 0xA0
-            printf("\tLDA (LoaD Accumulator)\n");
+            // printf("\tLDA (LoaD Accumulator)\n");
             instData = ALU_LDA_Opcode(inst, extraCycles);
             break;
         case 0b11000001: // 0xC0
-            printf("\tCMP (CoMPare accumulator)\n");
+            // printf("\tCMP (CoMPare accumulator)\n");
             instData = ALU_CMP_Opcode(inst, extraCycles);
             break;
         case 0b11100001: // 0xE0
-            printf("\tSBC (SuBtract with Carry)\n");
+            // printf("\tSBC (SuBtract with Carry)\n");
             instData = ALU_SBC_Opcode(inst, extraCycles);
             break;
         default:
@@ -1263,7 +1263,7 @@ struct instruction* RMW_LDX_Opcodes(unsigned char* inst, char extraCycles){
 
 struct instruction* RMW_STX_Opcodes(unsigned char* inst, char extraCycles){
     // STX (STore X register)
-    //   Affects Flags: none 
+    //   Affects Flags: none
 
     struct instruction* instData = NULL;
     switch(inst[0]){
@@ -1295,11 +1295,11 @@ struct instruction* RMW_STACK_Opcodes(unsigned char* inst, char extraCycles){
 
     switch(inst[0]){
         case 0x9A:
-            printf("\tTXS (Transfer X to Stack ptr)\n");
+            // printf("\tTXS (Transfer X to Stack ptr)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_9A); // TXS (Transfer X to Stack ptr)   $9A  2
             break;
         case 0xBA:
-            printf("\tTSX (Transfer Stack ptr to X)\n");
+            // printf("\tTSX (Transfer Stack ptr to X)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_BA); // TSX (Transfer Stack ptr to X)   $BA  2
             break;
         default:
@@ -1320,19 +1320,19 @@ struct instruction* RMW_register_Opcodes(unsigned char* inst, char extraCycles){
     struct instruction* instData = NULL;
     switch(inst[0]){
         case 0x8A:
-            printf("\tTXA (Transfer X to A)\n"); 
+            // printf("\tTXA (Transfer X to A)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_8A); // TXA (Transfer X to A)    $8A
             break;
         case 0xAA:
-            printf("\tTAX (Transfer A to X)\n"); 
+            // printf("\tTAX (Transfer A to X)\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_AA); // TAX (Transfer A to X)    $AA
             break;
         case 0xCA:
-            printf("\tDEX (DEcrement X))\n"); 
+            // printf("\tDEX (DEcrement X))\n");
             instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_CA); // DEX (DEcrement X)        $CA
             break;
         default:
-            printf("\tINVALID RMW REGISTER OPCODE\n"); 
+            printf("\tINVALID RMW REGISTER OPCODE\n");
             instData = NULL;
             break;
     }
@@ -1359,7 +1359,7 @@ struct instruction* RMW_INC_Opcodes(unsigned char* inst, char extraCycles){
             instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, 7, opcode_FE); // Absolute,X    INC $4400,X   $FE  3   7
             break;
         default:
-            printf("\tINVALID RMW INC OPCODE\n"); 
+            printf("\tINVALID RMW INC OPCODE\n");
             instData = NULL;
             break;
     }
@@ -1407,46 +1407,46 @@ struct instruction* RMW_NOP_Opcodes(unsigned char* inst, char extraCycles){
         //   Affects Flags: none
         // NOP is used to reserve space for future modifications or effectively REM
         // out existing code.
-        printf("\tofficial NOP\n");
+        // printf("\tofficial NOP\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_EA); // Implied       NOP           $EA  1   2
     }
 
     else{
         switch(opcode){
             case 0x82:
-                printf("\tRMW IMMEDIATE NOP Opcode\n");
+                // printf("\tRMW IMMEDIATE NOP Opcode\n");
                 instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_82);
                 break;
             case 0xC2:
-                printf("\tRMW IMMEDIATE NOP Opcode\n");
+                // printf("\tRMW IMMEDIATE NOP Opcode\n");
                 instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_C2);
                 break;
             case 0xE2:
-                printf("\tRMW IMMEDIATE NOP Opcode\n");
+                // printf("\tRMW IMMEDIATE NOP Opcode\n");
                 instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_E2);
                 break;
             case 0x1A:
-                printf("\tRMW IMPLIED NOP Opcode\n");
+                // printf("\tRMW IMPLIED NOP Opcode\n");
                 instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_1A);
                 break;
             case 0x3A:
-                printf("\tRMW IMPLIED NOP Opcode\n");
+                // printf("\tRMW IMPLIED NOP Opcode\n");
                 instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_3A);
                 break;
             case 0x5A:
-                printf("\tRMW IMPLIED NOP Opcode\n");
+                // printf("\tRMW IMPLIED NOP Opcode\n");
                 instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_5A);
                 break;
             case 0x7A:
-                printf("\tRMW IMPLIED NOP Opcode\n");
+                // printf("\tRMW IMPLIED NOP Opcode\n");
                 instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_7A);
                 break;
             case 0xDA:
-                printf("\tRMW IMPLIED NOP Opcode\n");
+                // printf("\tRMW IMPLIED NOP Opcode\n");
                 instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_DA);
                 break;
             case 0xFA:
-                printf("\tRMW IMPLIED NOP Opcode\n");
+                // printf("\tRMW IMPLIED NOP Opcode\n");
                 instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_FA);
                 break;
             default:
@@ -1484,51 +1484,51 @@ struct instruction* RMW_STP_Opcodes(unsigned char* inst, char extraCycles){
     unsigned char opcode = inst[0];
 
     if(opcode == 0x02){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_02);
     }
     else if(opcode == 0x12){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_12);
     }
     else if(opcode == 0x22){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_22);
     }
     else if(opcode == 0x32){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_32);
     }
     else if(opcode == 0x42){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_42);
     }
     else if(opcode == 0x52){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_52);
     }
     else if(opcode == 0x62){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_62);
     }
     else if(opcode == 0x72){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_72);
     }
     else if(opcode == 0x92){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_92);
     }
     else if(opcode == 0xB2){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_B2);
     }
     else if(opcode == 0xD2){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_D2);
     }
     else if(opcode == 0xF2){
-        printf("\tRMW STP Opcode\n");
+        // printf("\tRMW STP Opcode\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_F2);
     }
     else{
@@ -1555,7 +1555,7 @@ struct instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCycles){
 
     struct instruction* instData = NULL;
     if(inst[0] == 0x9E){
-        printf("\tRMW SHX Opcode\n");
+        // printf("\tRMW SHX Opcode\n");
         instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, 5, opcode_9E);
     }
     else{
@@ -1564,7 +1564,7 @@ struct instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCycles){
     }
 
     return instData;
-    
+
 }
 
 
@@ -1579,56 +1579,56 @@ struct instruction* RMW_Opcodes(unsigned char* inst, char extraCycles){
     struct instruction* instData = NULL;
     unsigned char opcode = inst[0];
     if(opcode == 0x06 || opcode == 0x0A || opcode == 0x0E || opcode == 0x16 || opcode == 0x1E){
-        printf("\tASL (Arithmetic Shift Left)\n");
+        // printf("\tASL (Arithmetic Shift Left)\n");
         instData = RMW_ASL_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x2A || opcode == 0x26 || opcode == 0x2E || opcode == 0x36 || opcode == 0x3E){
-        printf("\tROL (ROtate Left)\n");
+        // printf("\tROL (ROtate Left)\n");
         instData = RMW_ROL_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x4A || opcode == 0x46 || opcode == 0x2E || opcode == 0x56 || opcode == 0x5E){
-        printf("\tLSR (Logical Shift Right)\n");
+        // printf("\tLSR (Logical Shift Right)\n");
         instData = RMW_LSR_Opcodes(inst, extraCycles);
     }
     else if(((opcode & 0b11100011) == 0b01100010) && ((opcode & 0b00000100) || (~(opcode & 0b00010000) & (opcode & 0b00001000)))){ // y = C + A'B // C = 0000 0100 // B = 0000 1000 // A = 0001 0000
-        printf("\tROR (ROtate Right)\n");
+        // printf("\tROR (ROtate Right)\n");
         instData = RMW_ROR_Opcodes(inst, extraCycles);
     }
     else if(((opcode & 0b11100011) == 0b10100010) && (((opcode & 0b00000100) == 0b00000100) | (~((opcode & 0b00010000) == 0b00010000) & ~((opcode & 0b0001000) == 0b00001000)))){
-        printf("\tLDX (LoaD X register)\n");
+        // printf("\tLDX (LoaD X register)\n");
         instData = RMW_LDX_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x86 || opcode == 0x8E || opcode == 0x96){
-        printf("\tSTX (STore X register)\n");
+        // printf("\tSTX (STore X register)\n");
         instData = RMW_STX_Opcodes(inst, extraCycles);
     }
     // else if()
     else if(opcode == 0x9A || opcode == 0xBA){
-        printf("\tRMW Stack Instructions\n");
+        // printf("\tRMW Stack Instructions\n");
         instData = RMW_STACK_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x8A || opcode == 0xAA || opcode == 0xCA){
-        printf("\tRMW Register Instructions\n");
+        // printf("\tRMW Register Instructions\n");
         instData = RMW_register_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0xE6 || opcode == 0xEE || opcode == 0xF6 || opcode == 0xFE){
-        printf("\tRMW INC Instructions\n");
+        // printf("\tRMW INC Instructions\n");
         instData = RMW_INC_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0xC6 || opcode == 0xCE || opcode == 0xD6 || opcode == 0xDE){
-        printf("\tRMW DEC Instructions\n");
+        // printf("\tRMW DEC Instructions\n");
         instData = RMW_DEC_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0xEA || opcode == 0xFA || opcode == 0xDA || opcode == 0x7A || opcode == 0x5A || opcode == 0x3A || opcode == 0x1A || opcode == 0xE2 || opcode == 0xC2 || opcode == 0x82){
-        printf("\tRMW NOP Instructions\n");
+        // printf("\tRMW NOP Instructions\n");
         instData = RMW_NOP_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x02 || opcode == 0x12 || opcode == 0x22 || opcode == 0x32 || opcode == 0x42 || opcode == 0x52 || opcode == 0x62 || opcode == 0x72 || opcode == 0x92 || opcode == 0xB2 || opcode == 0xD2 || opcode == 0xF2){
-        printf("\tRMW STP Instructions\n");
+        // printf("\tRMW STP Instructions\n");
         instData = RMW_STP_Opcodes(inst, extraCycles);
     }
     else if(opcode == 0x9E){
-        printf("\tRMW SHX Instructions\n");
+        // printf("\tRMW SHX Instructions\n");
         instData = RMW_SHX_Opcodes(inst, extraCycles);
     }
     else{
@@ -1644,20 +1644,19 @@ struct instruction* detectType(unsigned char* inst, char extraCycles){
     unsigned char type = (unsigned char)(inst[0] & 0b11);
     struct instruction* instData = NULL;
     // printf("opcode: %i\ntype: %i\n", (unsigned int)inst[0], (unsigned int)type);
-    printf("opcode: $");
-    printfCharAsHex(inst[0]);
-    printf("\n");
+    // printf("opcode: $");
+    // printfCharAsHex(inst[0]);
+    // printf("\n");
     if(type == 0b00){
-        printf("\tControl instruction opcode\n");
+        // printf("\tControl instruction opcode\n");
         instData = controlInstructionOpcodes(inst, extraCycles);
     }
     else if(type == 0b01){
-        printf("\tALU operation opcode\n");
+        // printf("\tALU operation opcode\n");
         instData = ALUOpcodes(inst, extraCycles);
-
     }
     else if(type == 0b10){
-        printf("\tread-modify-write (RMW) and data movement instructions opcode\n");
+        // printf("\tread-modify-write (RMW) and data movement instructions opcode\n");
         instData = RMW_Opcodes(inst, extraCycles);
     }
     else{ // if(type == 0b11)
@@ -1739,7 +1738,7 @@ void iterateInstructions(struct nesRom* rom){
                 extraCycles = 0;
                 inst = (unsigned char*)strncpy(aux, (char *)&(rom->prgRom->prgRom[i][j]), 3);
             }
-            
+
             instData = detectType(inst, extraCycles);
 
             printf("\n");
@@ -1836,3 +1835,47 @@ unsigned char loadNumberFromRamOrArg(struct instruction *instData, struct nesReg
             return 0;
     }
 }
+
+/*
+Return value:
+  -> == 0: Handled correctly.
+  -> != 0: Cannot be handled. Go panic D: .
+*/
+int handleErrorRet(int retVal){
+    switch(retVal){
+        case 0:
+        case -1:
+            printf("Not implemented\n");
+            return -1;
+        case -2:
+            printf("write on read only\n");
+            return retVal;
+        case -3:
+        case -4:
+            printf("Some error\n");
+            return retVal;
+        default:
+            printf("Unknown return value.\n");
+            return retVal;
+    }
+}
+
+void printfOpcodeSyntax(struct instruction* instData){
+    printfCharAsHex(instData->opcode);
+    if(instData->bytesAmount > 1){
+        printf(" ");
+        printfCharAsHex(instData->byte2);
+    }
+    if(instData->bytesAmount > 0){
+        printf(" ");
+        printfCharAsHex(instData->byte1);
+    }
+    printf("\n");
+}
+
+void printfInstruction(struct instruction* instData){
+    printf("Opcode: ");
+    printfOpcodeSyntax(instData);
+    printf("Type: %hhu\nCycles: %hi\n", instData->type, instData->cycles);
+}
+

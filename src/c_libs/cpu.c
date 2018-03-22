@@ -67,10 +67,8 @@ int getInstsFromRam(unsigned char* inst, unsigned short programCounter, struct n
 }
 
 int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, struct nesRom* rom){
-    if(getResetVector(ram) + RAM_ROM_FIRST_PAGE >= RAM_SIZE){
-        return -1;
-    }
-	registers->programCounter = (unsigned short)(getResetVector(ram) + RAM_ROM_FIRST_PAGE);
+    printf("data in reset vector\n$%x: $%x\n", getResetVector(ram), loadFromRam(ram, getResetVector(ram)));
+    registers->programCounter = getResetVector(ram);
 	unsigned char* inst = malloc(sizeof(unsigned char) * 3);
 	int ret;
 	struct instruction* instData = NULL;
@@ -82,32 +80,26 @@ int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, stru
 			break;
 		}
 
-        printf("position~: %i\n", registers->programCounter-(getResetVector(ram) + RAM_ROM_FIRST_PAGE));
+        printf("position: 0x%x ~ %hu\n", registers->programCounter, registers->programCounter);
 		instData = detectType(inst, 0);
-        printf("\n");
         if(instData == NULL){
+            printf("\n\n");
             printf("\t\tunknow opcode: $%x\n", inst[0]);
             printf("\t\tPC: 0x%x\n", registers->programCounter);
-            printf("\t\tpointer: 0x%x\n", registers->programCounter-RAM_ROM_FIRST_PAGE);
-            printf("\t\tposition~: %i\n", registers->programCounter-(getResetVector(ram) + RAM_ROM_FIRST_PAGE));
             break;
         }
 
-        printf("\t\topcode sintax: ");
-        printfCharAsHex(instData->opcode);
-        if(instData->bytesAmount > 0){
-            printf(" ");
-            printfCharAsHex(instData->byte1);
-        }
-        if(instData->bytesAmount > 1){
-            printf(" ");
-            printfCharAsHex(instData->byte2);
-        }
+        printf("\topcode sintax: ");
+        printfOpcodeSyntax(instData);
 
-        printf("\n\n");
 
-        instData->execute(instData, registers, ram);
-        printf("\n\n");
+        int retVal = instData->execute(instData, registers, ram);
+        if(retVal <= 0){
+            printfInstruction(instData);
+            printf("retVal: %i\n", retVal);
+            return retVal;
+        }
+        // printf("\n\n");
 
         registers->programCounter += instData->bytesAmount;
         // sleep(1);
