@@ -7,8 +7,18 @@
 *.NEs
 *.NES
 
+*.sav
+*.ans
+*.anss
+
 *.o
 
 out/
 
 *.nsf
+*.m3u
+*.deb
+
+*.exe
+tools/
+
