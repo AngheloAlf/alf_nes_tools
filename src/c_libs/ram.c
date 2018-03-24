@@ -9,6 +9,9 @@ struct nesRam* initRam(){
     ram->ram = malloc(sizeof(unsigned char)*RAM_SIZE);
     ram->readOnlyRam = calloc(RAM_SIZE, sizeof(unsigned char));
     ram->writeOnReadOnly = 0;
+    ram->wroAddress = 0;
+    ram->wroValue = 0;
+    ram->saveData = NULL;
     return ram;
 }
 
@@ -58,7 +61,7 @@ int parseRomToRam(struct nesRam* ram, struct nesRom* rom){
 
 	if(firstPage == -1 || secondPage == -1){
 		printf("\n---ERROR---\n\tmapper %i not implemented\n", rom->header->mapperId);
-		return -1;
+		return -5;
 	}
 
     setFirst16KbRom(ram, rom->prgRom->prgRom[firstPage]);
@@ -117,4 +120,54 @@ char storeIntoRamAndSetReadOnly(struct nesRam *ram, unsigned short address, unsi
     mirrorRam(ram, address, number);
 
     return aux;
+}
+
+int parseSaveToRam(struct nesRam* ram, struct nesRom* rom, char* fileName){
+    if(rom->header->hasSRAM){
+        char* saveName = changeExtension(fileName, "ans", 3);
+        unsigned char* saveData = calloc(rom->header->SRAMSize, sizeof(char));
+        FILE* fileptr = fopen(saveName, "rb");
+        if(fileptr == NULL){
+            fileptr = fopen(saveName, "wb");
+            if(fileptr == NULL){
+                return -7;
+            }
+            fwrite(saveData, 1, rom->header->SRAMSize, fileptr);
+            fclose(fileptr);
+        }
+        else{
+            size_t readedSize = fread(saveData, 1, rom->header->SRAMSize, fileptr);
+            fclose(fileptr);
+            if(readedSize != rom->header->SRAMSize){
+                return -8;
+            }
+        }
+
+        ram->saveData = saveData;
+
+        unsigned short ramUsed = 0x2000;
+        if(rom->header->SRAMSize < ramUsed){
+            ramUsed = rom->header->SRAMSize;
+        }
+        for(int i = 0; i*ramUsed < 0x2000; i++){
+            charCopy(&(ram->ram[0x6000+i*ramUsed]), saveData, ramUsed);
+        }
+
+        return rom->header->SRAMSize;
+    }
+    return 0;
+}
+
+void printfRAM(struct nesRam* ram, unsigned short start, unsigned short end){
+    int aux = 0;
+    for(int i = start; i < end; i++){
+        printf("0x");
+        printfCharAsHex(ram->ram[i]);
+        printf(" ");
+        aux += 1;
+        if(aux == 16){
+            aux = 0;
+            printf("\n");
+        }
+    }
 }

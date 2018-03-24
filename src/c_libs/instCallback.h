@@ -25,6 +25,10 @@ errors codes:
     -2: writeOnReadOnly
     -3:
     -4:
+    -5: mapper not implemented
+    -6: can't read rom
+    -7: can't read save
+    -8: size of save less than expected
 
 */
 

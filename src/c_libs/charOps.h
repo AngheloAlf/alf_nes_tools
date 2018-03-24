@@ -20,11 +20,12 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
 
-void charCopy(unsigned char* dst, unsigned char* src, size_t size);
-unsigned char *newCharFromIndex(unsigned char* src, size_t size, size_t start);
+void charCopy(unsigned char* dst, const unsigned char* src, size_t size);
+unsigned char *newCharFromIndex(const unsigned char* src, size_t size, size_t start);
 void printfCharAsHex(unsigned char character);
 void printfAsColor(unsigned char character, int withNumber);
 
+char* changeExtension(const char* word, const char* newExt, int lenExt);
 
 
 #endif //ALF_NES_TOOLS_CHAROPS_H

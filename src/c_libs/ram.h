@@ -53,6 +53,8 @@ struct nesRam{
     unsigned char writeOnReadOnly;
     unsigned short wroAddress; // write on read only address
     unsigned char wroValue; // write on read only value
+
+    unsigned char* saveData;
 };
 
 struct nesRam* initRam();
@@ -70,5 +72,9 @@ int parseRomToRam(struct nesRam* ram, struct nesRom* rom);
 unsigned char loadFromRam(struct nesRam* ram, unsigned short address);
 char storeIntoRam(struct nesRam* ram, unsigned short address, unsigned char number);
 char storeIntoRamAndSetReadOnly(struct nesRam *ram, unsigned short address, unsigned char number);
+
+int parseSaveToRam(struct nesRam* ram, struct nesRom* rom, char* fileName);
+
+void printfRAM(struct nesRam* ram, unsigned short start, unsigned short end);
 
 #endif //ALF_NES_TOOLS_RAM_H

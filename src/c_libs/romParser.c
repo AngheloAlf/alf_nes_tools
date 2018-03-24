@@ -43,6 +43,12 @@ struct nesRomHeader* loadInesHeader(unsigned char* header){
     aux <<= 4;
     chrPageAmount += aux;
 
+    romHeader->hasSRAM = (char)((romHeader->flags6&0b00000010)>>1);
+    romHeader->SRAMSize = 0;
+    if(romHeader->hasSRAM){
+        romHeader->SRAMSize = 0x2000;
+    }
+
     if(((romHeader->flags7 & 0x0C) == 0x08) && (prgPageAmount*PRG_ROM_PAGE_SIZE + chrPageAmount*CHR_ROM_PAGE_SIZE < fileSize)){
         printf("NES 2.0 detected\n");
         romHeader->typeVersion = 2;
@@ -51,6 +57,11 @@ struct nesRomHeader* loadInesHeader(unsigned char* header){
 
         romHeader->mapperId |= (unsigned int)((romHeader->flags8 & 0b00001111)<<8);
         romHeader->subMapper = (unsigned char)((romHeader->flags8 & 0b11110000)>>4);
+
+        if(romHeader->hasSRAM){
+            romHeader->SRAMSize = (unsigned short)((romHeader->flags10&0b11110000>>4) * 0x80);
+        }
+
     }
     else if(((romHeader->flags7 & 0x0C) == 0x00) && !header[12] && !header[13] && !header[14] && !header[15]){ // TODO: If byte 7 AND $0C = $00
         printf("iNES 1 detected\n");
@@ -110,7 +121,7 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
     if(romHeader->flags6 & 0b100){
         printf("\tloading trainer\n");
         trainer = malloc(sizeof(unsigned char) * 512);
-        fread(trainer, 512, 1, filePtr);
+        fread(trainer, 1, 512, filePtr);
     }
     else{
         printf("\tno trainer\n");
@@ -124,10 +135,10 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
     if(prgPages > 0){
         unsigned char** prgRom = malloc(sizeof(unsigned char*) * prgPages);
         printf("\tloading %i bytes (%i KiB or %i pages) of prgRom\n", (int)prgPages*PRG_ROM_PAGE_SIZE, (int)prgPages*PRG_ROM_PAGE_SIZE/1024, (int)prgPages);
-        // fread(prgRom, PRG_ROM_PAGE_SIZE, prgPages, filePtr);
+        // fread(prgRom, prgPages, PRG_ROM_PAGE_SIZE, filePtr);
         for(size_t i = 0; i < prgPages; i++){
             prgRom[i] = malloc(sizeof(unsigned char) * PRG_ROM_PAGE_SIZE);
-            fread(prgRom[i], PRG_ROM_PAGE_SIZE, 1, filePtr);
+            fread(prgRom[i], 1, PRG_ROM_PAGE_SIZE, filePtr);
         }
         prgRomData = generatePrgRomData(prgRom);
     }
@@ -144,10 +155,10 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
         struct tile** tiles = NULL;
         unsigned char** chrRom = malloc(sizeof(unsigned char*) * chrPages);
         printf("\tloading %i bytes (%i KiB or %i pages) of chrRom\n", (int)chrPages*CHR_ROM_PAGE_SIZE, (int)chrPages*CHR_ROM_PAGE_SIZE/1024, (int)chrPages);
-        // fread(chrRom, CHR_ROM_PAGE_SIZE, chrPages, filePtr);
+        // fread(chrRom, chrPages, CHR_ROM_PAGE_SIZE, filePtr);
         for(size_t i = 0; i < chrPages; i++){
             chrRom[i] = malloc(sizeof(unsigned char) * CHR_ROM_PAGE_SIZE);
-            fread(chrRom[i], CHR_ROM_PAGE_SIZE, 1, filePtr);
+            fread(chrRom[i], 1, CHR_ROM_PAGE_SIZE, filePtr);
         }
         tiles = generateTilesFromChrRom(chrRom, chrPages);
         chrRomData = generateChrRomData(chrRom, tiles);
@@ -164,10 +175,10 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
         printf("\tloading playChoice\n");
 
         playChoiceInstRom = malloc(sizeof(unsigned char) * 8192);
-        fread(playChoiceInstRom, 8192, 1, filePtr);
+        fread(playChoiceInstRom, 1, 8192, filePtr);
 
         playChoicePRom = malloc(sizeof(unsigned char) * (16 + 16));
-        fread(playChoicePRom, 16 + 16, 1, filePtr);
+        fread(playChoicePRom, 1, 16 + 16, filePtr);
     }
     else{
         printf("\tno playChoice\n");
@@ -177,7 +188,7 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
 
     // title //
     unsigned char* title = malloc(sizeof(unsigned char) * 128);
-    size_t readedBytes = fread(title, 128, 1, filePtr);
+    size_t readedBytes = fread(title, 1, 128, filePtr);
     if(readedBytes >= 127 && readedBytes <= 128){
         printf("\tloading %zd bytes of title\n", readedBytes);
         // yada yada
@@ -197,13 +208,14 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
 }
 
 struct nesRom* loadRom(char* filename){
+    printf("loading ROM: %s\n", filename);
     size_t header_size = 16;
     unsigned char* header = malloc(sizeof(unsigned char) * header_size);
 
     FILE* filePtr = fopen(filename, "rb");
 
     if(filePtr == NULL){
-        printf("The file %s does not exists.\n", filename);
+        printf("ERROR: The file %s does not exists.\n", filename);
         return NULL;
     }
 
@@ -211,7 +223,7 @@ struct nesRom* loadRom(char* filename){
     fileSize = ftell(filePtr);
     fseek(filePtr, 0, SEEK_SET);
 
-    fread(header, header_size, 1, filePtr);
+    fread(header, 1, header_size, filePtr);
 
     /*
     for(int i = 0; i < header_size; i++){

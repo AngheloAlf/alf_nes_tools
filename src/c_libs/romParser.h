@@ -33,6 +33,9 @@ struct nesRomHeader{
 
     unsigned int mapperId;
     unsigned char subMapper;
+
+    char hasSRAM;
+    unsigned short SRAMSize;
 };
 
 struct nesPrgRom{

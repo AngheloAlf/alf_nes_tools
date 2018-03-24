@@ -10,7 +10,7 @@ int main(int argc, char* argv[]){
 
     char* defaultFileName = "../roms/smb.nes";
     char* fileName = NULL;
-    int errorRet = 0;
+    int retVal = 0;
 
     if(argc > 1){
         printf("-----Arguments-----\n");
@@ -50,11 +50,12 @@ int main(int argc, char* argv[]){
         rom = loadRom(fileName);
     }
     if(rom == NULL){
+        fileName = defaultFileName;
         rom = loadRom(defaultFileName);
     }
 
     if(rom == NULL){
-    	return 1;
+    	return -6;
     }
 
     if(printfChr){
@@ -65,9 +66,16 @@ int main(int argc, char* argv[]){
     struct nesRam* ram = initRam();
 
     powerUp(registers, ram);
-    errorRet = parseRomToRam(ram, rom);
-    if(errorRet != 0){
-        return errorRet;
+
+    retVal = parseRomToRam(ram, rom);
+    if(retVal < 0){
+        return retVal;
+    }
+
+    retVal = parseSaveToRam(ram, rom, fileName);
+    if(retVal < 0){
+        printf("retVal: %i", retVal);
+        return retVal;
     }
 
     unsigned int reset = getResetVector(ram);
@@ -79,7 +87,7 @@ int main(int argc, char* argv[]){
     }
     
     if(execute){
-        int retVal = executeInstructions(registers, ram, rom);
+        retVal = executeInstructions(registers, ram, rom);
         if(retVal < 0){
             return retVal;
         }
@@ -87,6 +95,8 @@ int main(int argc, char* argv[]){
     if(printfInst){
         iterateInstructions(rom);
     }
+
+    //printfRAM(ram, 0x6000, 0x8000);
 
     return 0;
 }
