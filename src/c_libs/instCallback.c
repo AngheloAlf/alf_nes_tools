@@ -83,14 +83,14 @@ int opcode_24(struct instruction* instData, struct nesRegisters* registers, stru
         clearZero(registers);
     }
 
-    if(number & 0b01000000){
+    if(number & BIT_6){
         setOverflow(registers);
     }
     else{
         clearOverflow(registers);
     }
 
-    if(number & 0b10000000){
+    if(number & BIT_7){
         setNegative(registers);
     }
     else{
@@ -115,14 +115,14 @@ int opcode_2C(struct instruction* instData, struct nesRegisters* registers, stru
         clearZero(registers);
     }
 
-    if(number & 0b01000000){
+    if(number & BIT_6){
         setOverflow(registers);
     }
     else{
         clearOverflow(registers);
     }
 
-    if(number & 0b10000000){
+    if(number & BIT_7){
         setNegative(registers);
     }
     else{

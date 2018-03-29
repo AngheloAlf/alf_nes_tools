@@ -6,7 +6,7 @@
 
 
 unsigned char ASL(struct nesRegisters* registers, unsigned char number){
-    char carry = (char)(number & 0b10000000)>>7;
+    char carry = (char)(number & BIT_7)>>7;
     number = number<<1;
     if(carry){
         setCarry(registers);
@@ -23,7 +23,7 @@ unsigned char ASL(struct nesRegisters* registers, unsigned char number){
 unsigned char ROL(struct nesRegisters* registers, unsigned char number){
     char oldCarry = getCarry(registers);
 
-    char carry = (char)((number & 0b10000000)>>7);
+    char carry = (char)((number & BIT_7)>>7);
     number = number<<1 | oldCarry;
     if(carry){
         setCarry(registers);
@@ -38,7 +38,7 @@ unsigned char ROL(struct nesRegisters* registers, unsigned char number){
 }
 
 unsigned char LSR(struct nesRegisters* registers, unsigned char number){
-    char carry = (char)((number & 0b00000001));
+    char carry = (char)((number & BIT_0));
     number = number>>1;
     if(carry){
         setCarry(registers);
@@ -55,7 +55,7 @@ unsigned char LSR(struct nesRegisters* registers, unsigned char number){
 unsigned char ROR(struct nesRegisters* registers, unsigned char number){
     char oldCarry = getCarry(registers);
 
-    char carry = (char)((number & 0b00000001));
+    char carry = (char)((number & BIT_0));
     number = number>>1 | oldCarry<<7;
     if(carry){
         setCarry(registers);

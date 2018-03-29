@@ -29,21 +29,21 @@ struct nesRomHeader* loadInesHeader(unsigned char* header){
     romHeader->realPrgPageAmount = romHeader->prgPageAmount;
     romHeader->realChrPageAmount = romHeader->chrPageAmount;
 
-    romHeader->mapperId = (unsigned int)(((romHeader->flags6) & 0b11110000)>>4 | (romHeader->flags7 & 0b11110000));
+    romHeader->mapperId = (unsigned int)(((romHeader->flags6) & HIGH_NIBBLE)>>4 | (romHeader->flags7 & HIGH_NIBBLE));
     romHeader->subMapper = 0;
 
 
     unsigned int prgPageAmount = romHeader->prgPageAmount;
-    unsigned int aux = (unsigned int)romHeader->flags9 & 0b1111;
+    unsigned int aux = (unsigned int)romHeader->flags9 & LOW_NIBBLE;
     aux <<= 8;
     prgPageAmount += aux;
 
     unsigned int chrPageAmount = romHeader->chrPageAmount;
-    aux = (unsigned int)romHeader->flags9 & 0b11110000;
+    aux = (unsigned int)romHeader->flags9 & HIGH_NIBBLE;
     aux <<= 4;
     chrPageAmount += aux;
 
-    romHeader->hasSRAM = (char)((romHeader->flags6&0b00000010)>>1);
+    romHeader->hasSRAM = (char)((romHeader->flags6&BIT_1)>>1);
     romHeader->SRAMSize = 0;
     if(romHeader->hasSRAM){
         romHeader->SRAMSize = 0x2000;
@@ -55,11 +55,11 @@ struct nesRomHeader* loadInesHeader(unsigned char* header){
         romHeader->realPrgPageAmount = prgPageAmount;
         romHeader->realChrPageAmount = chrPageAmount;
 
-        romHeader->mapperId |= (unsigned int)((romHeader->flags8 & 0b00001111)<<8);
-        romHeader->subMapper = (unsigned char)((romHeader->flags8 & 0b11110000)>>4);
+        romHeader->mapperId |= (unsigned int)((romHeader->flags8 & LOW_NIBBLE)<<8);
+        romHeader->subMapper = (unsigned char)((romHeader->flags8 & HIGH_NIBBLE)>>4);
 
         if(romHeader->hasSRAM){
-            romHeader->SRAMSize = (unsigned short)((romHeader->flags10&0b11110000>>4) * 0x80);
+            romHeader->SRAMSize = (unsigned short)((romHeader->flags10&HIGH_NIBBLE>>4) * 0x80);
         }
 
     }
@@ -118,7 +118,7 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
     }
 
     unsigned char* trainer;
-    if(romHeader->flags6 & 0b100){
+    if(romHeader->flags6 & BIT_2){
         printf("\tloading trainer\n");
         trainer = malloc(sizeof(unsigned char) * 512);
         fread(trainer, 1, 512, filePtr);
@@ -171,7 +171,7 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header){
     // playChoice
     unsigned char* playChoiceInstRom = NULL;
     unsigned char* playChoicePRom = NULL;
-    if(romHeader->flags7 & 0b10){
+    if(romHeader->flags7 & BIT_1){
         printf("\tloading playChoice\n");
 
         playChoiceInstRom = malloc(sizeof(unsigned char) * 8192);

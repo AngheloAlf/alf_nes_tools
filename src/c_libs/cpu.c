@@ -12,7 +12,7 @@ struct nesRegisters* initRegisters(){
     registers->indexY = 0x0; // Y
     registers->programCounter = 0x0; // PC
     registers->stack = 0x0; // S
-    registers->statusRegister = 0b00100000; // P
+    registers->statusRegister = BIT_5; // P
 
     registers->disablePC = 0;
     registers->jumping = 0;
@@ -111,73 +111,73 @@ int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, stru
 
 // http://wiki.nesdev.com/w/index.php/CPU_status_flag_behavior
 void setCarry(struct nesRegisters* registers){
-    registers->statusRegister |= 0b00000001;
+    registers->statusRegister |= BIT_0;
 }
 void clearCarry(struct nesRegisters* registers){
-    registers->statusRegister &= 0b11111110;
+    registers->statusRegister &= ~BIT_0;
 }
 char getCarry(struct nesRegisters* registers){
-    return (char)(registers->statusRegister & 0b00000001);
+    return (char)(registers->statusRegister & BIT_0);
 }
 
 void setZero(struct nesRegisters* registers){
-    registers->statusRegister |= 0b00000010;
+    registers->statusRegister |= BIT_1;
 }
 void clearZero(struct nesRegisters* registers){
-    registers->statusRegister &= 0b11111101;
+    registers->statusRegister &= ~BIT_1;
 }
 char getZero(struct nesRegisters* registers){
-    return (char)((registers->statusRegister>>1) & 0b00000001);
+    return (char)((registers->statusRegister & BIT_1)>>1);
 }
 
 void setInterrupt(struct nesRegisters* registers){
-    registers->statusRegister |= 0b00000100;
+    registers->statusRegister |= BIT_2;
 }
 void clearInterrupt(struct nesRegisters* registers){
-    registers->statusRegister &= 0b11111011;
+    registers->statusRegister &= ~BIT_2;
 }
 char getInterrupt(struct nesRegisters* registers){
-    return (char)((registers->statusRegister>>2) & 0b00000001);
+    return (char)((registers->statusRegister & BIT_2)>>2);
 }
 
 void setDecimal(struct nesRegisters* registers){
-    registers->statusRegister |= 0b00001000;
+    registers->statusRegister |= BIT_3;
 }
 void clearDecimal(struct nesRegisters* registers){
-    registers->statusRegister &= 0b11110111;
+    registers->statusRegister &= ~BIT_3;
 }
 char getDecimal(struct nesRegisters* registers){
-    return (char)((registers->statusRegister>>3) & 0b00000001);
+    return (char)((registers->statusRegister & BIT_3)>>3);
 }
 
 void setS(struct nesRegisters* registers){
-    registers->statusRegister |= 0b00010000;
+    registers->statusRegister |= BIT_4;
 }
 void clearS(struct nesRegisters* registers){
-    registers->statusRegister &= 0b11101111;
+    registers->statusRegister &= ~BIT_4;
 }
 char getS(struct nesRegisters* registers){
-    return (char)((registers->statusRegister>>4) & 0b00000001);
+    return (char)((registers->statusRegister & BIT_4)>>4);
 }
 
 void setOverflow(struct nesRegisters* registers){
-    registers->statusRegister |= 0b01000000;
+    registers->statusRegister |= BIT_6;
 }
 void clearOverflow(struct nesRegisters* registers){
-    registers->statusRegister &= 0b10111111;
+    registers->statusRegister &= ~BIT_6;
 }
 char getOverflow(struct nesRegisters* registers){
-    return (char)((registers->statusRegister>>6) & 0b00000001);
+    return (char)((registers->statusRegister & BIT_6)>>6);
 }
 
 void setNegative(struct nesRegisters* registers){
-    registers->statusRegister |= 0b10000000;
+    registers->statusRegister |= BIT_7;
 }
 void clearNegative(struct nesRegisters* registers){
-    registers->statusRegister &= 0b01111111;
+    registers->statusRegister &= ~BIT_7;
 }
 char getNegative(struct nesRegisters* registers){
-    return (char)((registers->statusRegister>>7) & 0b00000001);
+    return (char)((registers->statusRegister & BIT_7)>>7);
 }
 
 void disablePC(struct nesRegisters* registers){
@@ -194,7 +194,7 @@ void parseZeroNegative(struct nesRegisters* registers, char number){
     else{
         clearZero(registers);
     }
-    if(number & 0b10000000){
+    if(number & BIT_7){
         setNegative(registers);
     }
     else{

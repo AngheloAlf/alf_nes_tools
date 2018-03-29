@@ -74,14 +74,14 @@ struct tileLine* generateTileLine(unsigned char lineA, unsigned char lineB){
     struct tileLine* tileline = malloc(sizeof(struct tileLine));
     tileline->pixels = malloc(sizeof(struct pixel*) * 8);
 
-    unsigned char pixel1Color = (unsigned char)(((lineA & 0b10000000) >> 7) + ((lineB & 0b10000000) >> 6));
-    unsigned char pixel2Color = (unsigned char)(((lineA & 0b01000000) >> 6) + ((lineB & 0b01000000) >> 5));
-    unsigned char pixel3Color = (unsigned char)(((lineA & 0b00100000) >> 5) + ((lineB & 0b00100000) >> 4));
-    unsigned char pixel4Color = (unsigned char)(((lineA & 0b00010000) >> 4) + ((lineB & 0b00010000) >> 3));
-    unsigned char pixel5Color = (unsigned char)(((lineA & 0b00001000) >> 3) + ((lineB & 0b00001000) >> 2));
-    unsigned char pixel6Color = (unsigned char)(((lineA & 0b00000100) >> 2) + ((lineB & 0b00000100) >> 1));
-    unsigned char pixel7Color = (unsigned char)(((lineA & 0b00000010) >> 1) + ((lineB & 0b00000010) >> 0));
-    unsigned char pixel8Color = (unsigned char)(((lineA & 0b00000001) >> 0) + ((lineB & 0b00000001) << 1));
+    unsigned char pixel1Color = (unsigned char)(((lineA & BIT_7) >> 7) + ((lineB & BIT_7) >> 6));
+    unsigned char pixel2Color = (unsigned char)(((lineA & BIT_6) >> 6) + ((lineB & BIT_6) >> 5));
+    unsigned char pixel3Color = (unsigned char)(((lineA & BIT_5) >> 5) + ((lineB & BIT_5) >> 4));
+    unsigned char pixel4Color = (unsigned char)(((lineA & BIT_4) >> 4) + ((lineB & BIT_4) >> 3));
+    unsigned char pixel5Color = (unsigned char)(((lineA & BIT_3) >> 3) + ((lineB & BIT_3) >> 2));
+    unsigned char pixel6Color = (unsigned char)(((lineA & BIT_2) >> 2) + ((lineB & BIT_2) >> 1));
+    unsigned char pixel7Color = (unsigned char)(((lineA & BIT_1) >> 1) + ((lineB & BIT_1) >> 0));
+    unsigned char pixel8Color = (unsigned char)(((lineA & BIT_0) >> 0) + ((lineB & BIT_0) << 1));
 
     tileline->pixels[0] = generatePixel(pixel1Color, 0, 0, 0, 0);
     tileline->pixels[1] = generatePixel(pixel2Color, 0, 0, 0, 0);
