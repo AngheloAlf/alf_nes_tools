@@ -5,5 +5,6 @@
 
 int firstPageToLoad(unsigned int mapperId, unsigned int prgPageAmount);
 int secondPageToLoad(unsigned int mapperId, unsigned int prgPageAmount);
+int chrPageToLoad(unsigned int mapperId, unsigned int chrPageAmount);
 
 #endif //ALF_NES_TOOLS_MAPPERS_H

@@ -7,6 +7,9 @@
 
 #include <stdlib.h>
 
+#include "romParser.h"
+#include "mappers.h"
+
 
 typedef struct{
     unsigned char ppuCtrl; // $2000
@@ -46,6 +49,7 @@ typedef struct{
 
 NesPPU* initNesPPU();
 void resetNesPPU(NesPPU* ppu);
+int parseChrRomToPPU(NesPPU* ppu, NesRom* rom);
 
 
 #endif //ALF_NES_TOOLS_PPU_H

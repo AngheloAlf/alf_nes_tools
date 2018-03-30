@@ -59,6 +59,8 @@ struct nesRom{
     unsigned char* title; // [127 or 128 byte]
 };
 
+typedef struct nesRom NesRom;
+
 long fileSize;
 
 struct nesRomHeader* loadInesHeader(unsigned char* header);

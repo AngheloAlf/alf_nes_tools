@@ -61,3 +61,14 @@ void resetNesPPU(NesPPU* ppu){
 
     ppu->oddFrame = 0x0;
 }
+
+int parseChrRomToPPU(NesPPU* ppu, NesRom* rom){
+    if(rom->chrRom != NULL){
+        int page = chrPageToLoad(rom->header->mapperId, rom->header->realChrPageAmount);
+        if(page < 0){
+            return page;
+        }
+        charCopy(ppu->vram->vram, rom->chrRom->chrRom[page], CHR_ROM_PAGE_SIZE);
+    }
+    return 0;
+}

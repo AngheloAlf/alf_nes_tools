@@ -1,5 +1,6 @@
 #include "c_libs/romParser.h"
 #include "c_libs/instructions.h"
+#include "c_libs/ppu.h"
 
 int main(int argc, char* argv[]){
     int nothing = 0;
@@ -64,6 +65,7 @@ int main(int argc, char* argv[]){
 
     struct nesRegisters* registers = initRegisters();
     struct nesRam* ram = initRam();
+    NesPPU* ppu = initNesPPU();
 
     powerUp(registers, ram);
 
@@ -78,8 +80,11 @@ int main(int argc, char* argv[]){
         return retVal;
     }
 
-    unsigned int reset = getResetVector(ram);
-    printf("\tReset vector: $%x\n", reset);
+    retVal = parseChrRomToPPU(ppu, rom);
+    if(retVal < 0){
+        printf("retVal: %i", retVal);
+        return retVal;
+    }
 
     printf("\n\n");
     if(nothing){
@@ -96,7 +101,7 @@ int main(int argc, char* argv[]){
         iterateInstructions(rom);
     }
 
-    //printfRAM(ram, 0x6000, 0x8000);
+    // printfRAM(ram, 0x6000, 0x8000);
 
     return 0;
 }

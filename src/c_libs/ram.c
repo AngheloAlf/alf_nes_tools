@@ -18,6 +18,9 @@ struct nesRam* initRam(){
 void freeRam(struct nesRam* ram){
 	free(ram->ram);
     free(ram->readOnlyRam);
+    if(ram->saveData != NULL){
+        free(ram->saveData);
+    }
 	free(ram);
 }
 
@@ -59,8 +62,8 @@ int parseRomToRam(struct nesRam* ram, struct nesRom* rom){
 	int firstPage = firstPageToLoad(rom->header->mapperId, rom->header->realPrgPageAmount);
 	int secondPage = secondPageToLoad(rom->header->mapperId, rom->header->realPrgPageAmount);
 
-	if(firstPage == -1 || secondPage == -1){
-		printf("\n---ERROR---\n\tmapper %i not implemented\n", rom->header->mapperId);
+	if(firstPage < 0 || secondPage < 0){
+		printf("\n---ERROR---\n\tmapper %i not implemented or bad implemented\n", rom->header->mapperId);
 		return -5;
 	}
 

@@ -29,6 +29,7 @@ errors codes:
     -6: can't read rom
     -7: can't read save
     -8: size of save less than expected
+    -9: wrong implementation of mapper
 
 */
 

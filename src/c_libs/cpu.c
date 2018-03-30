@@ -84,12 +84,12 @@ int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, stru
 		instData = detectType(inst, 0);
         if(instData == NULL){
             printf("\n\n");
-            printf("\t\tunknow opcode: $%x\n", inst[0]);
+            printf("\t\tunknown opcode: $%x\n", inst[0]);
             printf("\t\tPC: 0x%x\n", registers->programCounter);
             break;
         }
 
-        printf("\topcode sintax: ");
+        printf("\topcode syntax: ");
         printfOpcodeSyntax(instData);
 
 
@@ -101,7 +101,12 @@ int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, stru
         }
         // printf("\n\n");
 
-        registers->programCounter += instData->bytesAmount;
+        if(!registers->jumping){
+            registers->programCounter += instData->bytesAmount;
+        }
+        else{
+            registers->jumping = 0;
+        }
         // sleep(1);
 
 	}

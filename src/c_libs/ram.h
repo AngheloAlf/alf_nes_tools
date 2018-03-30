@@ -6,7 +6,6 @@
 #define ALF_NES_TOOLS_RAM_H
 
 #include <stdlib.h>
-#include <string.h>
 
 #include "romParser.h"
 #include "mappers.h"
