@@ -38,6 +38,8 @@ struct nesRomHeader{
     unsigned short SRAMSize;
 };
 
+typedef struct nesRomHeader NesRomHeader;
+
 struct nesPrgRom{
     unsigned char** prgRom; // [x][16384]
 };
@@ -57,6 +59,8 @@ struct nesRom{
     unsigned char* playChoiceInstRom; // [8192 bytes]
     unsigned char* playChoicePRom; // [16 bytes Data, 16 bytes CounterOut]
     unsigned char* title; // [127 or 128 byte]
+
+    char* fileName;
 };
 
 typedef struct nesRom NesRom;
@@ -64,9 +68,15 @@ typedef struct nesRom NesRom;
 long fileSize;
 
 struct nesRomHeader* loadInesHeader(unsigned char* header);
-struct nesRom* generateINesRom(struct nesRomHeader* header, unsigned char* trainer, struct nesPrgRom* prgRomData, struct nesChrRom* chrRomData, unsigned char* playChoiceInstRom, unsigned char* playChoicePRom, unsigned char* title);
-struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header);
+struct nesRom* generateINesRom(struct nesRomHeader* header, unsigned char* trainer, struct nesPrgRom* prgRomData, struct nesChrRom* chrRomData, unsigned char* playChoiceInstRom, unsigned char* playChoicePRom, unsigned char* title, char* fileName);
+struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header, char* fileName);
 struct nesRom* loadRom(char* filename);
+
+
+// Mappers:
+int firstPageToLoad(NesRomHeader* header);
+int secondPageToLoad(NesRomHeader* header);
+int chrPageToLoad(NesRomHeader* header);
 
 
 #endif //ALF_NES_TOOLS_ROMPARSER_H

@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 
 #define ANSI_COLOR_BLACK   "\x1b[30m"
@@ -39,6 +40,8 @@ void printfCharAsHex(unsigned char character);
 void printfAsColor(unsigned char character, int withNumber);
 
 char* changeExtension(const char* word, const char* newExt, int lenExt);
+
+int charLenUntilNull(const unsigned char* src);
 
 
 #endif //ALF_NES_TOOLS_CHAROPS_H

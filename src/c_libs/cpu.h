@@ -38,11 +38,13 @@ struct nesRegisters{
     unsigned char jumpingSubroutine;
 };
 
+typedef struct nesRegisters NesCPURegisters;
+
 struct nesRegisters* initRegisters();
 
 // https://wiki.nesdev.com/w/index.php/CPU_power_up_state
-void powerUp(struct nesRegisters* registers, struct nesRam* ram);
-void resetCpu(struct nesRegisters* registers, struct nesRam* ram);
+int cpuPowerUp(struct nesRegisters *registers);
+int resetCpu(struct nesRegisters* registers, struct nesRam* ram);
 
 int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, struct nesRom* rom);
 

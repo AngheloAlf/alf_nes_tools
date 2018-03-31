@@ -52,7 +52,31 @@ NesPPU* initNesPPU(){
     return ppu;
 }
 
-void resetNesPPU(NesPPU* ppu){
+int ppuPowerUp(NesPPU* ppu, NesRom* rom){
+    ppu->registers->ppuCtrl = 0x0; // $2000
+    ppu->registers->ppuMask = 0x0; // $2001
+    ppu->registers->ppuStatus = 0xA0; // $2002
+
+    ppu->registers->oamAddr = 0x0; // $2003
+    ppu->registers->oamData = 0x0; // $2004
+
+    ppu->registers->ppuScroll = 0x0; // $2005
+    ppu->registers->ppuAddr = 0x0; // $2006
+    ppu->registers->ppuData = 0x0; // $2007
+
+    ppu->registers->oamDMA = 0x0; // $4014
+
+    if(rom->chrRom != NULL){
+        int retVal = loadChrIntoPPU(ppu, rom);
+        if(retVal < 0){
+            return retVal;
+        }
+    }
+
+    return 0;
+}
+
+int resetNesPPU(NesPPU* ppu){
     ppu->registers->ppuCtrl = 0x0;
     ppu->registers->ppuMask = 0x0;
 
@@ -60,11 +84,12 @@ void resetNesPPU(NesPPU* ppu){
     ppu->registers->ppuData = 0x0;
 
     ppu->oddFrame = 0x0;
+    return 0;
 }
 
-int parseChrRomToPPU(NesPPU* ppu, NesRom* rom){
-    if(rom->chrRom != NULL){
-        int page = chrPageToLoad(rom->header->mapperId, rom->header->realChrPageAmount);
+int loadChrIntoPPU(NesPPU* ppu, NesRom* rom){
+    if(rom->chrRom != NULL && rom->chrRom->chrRom != NULL){
+        int page = chrPageToLoad(rom->header);
         if(page < 0){
             return page;
         }

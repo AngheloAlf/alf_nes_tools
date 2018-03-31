@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 #include "romParser.h"
-#include "mappers.h"
+
 
 #define RAM_SIZE 0x10000
 
@@ -56,8 +56,12 @@ struct nesRam{
     unsigned char* saveData;
 };
 
+typedef struct nesRam NesRam;
+
 struct nesRam* initRam();
 void freeRam(struct nesRam* ram);
+
+int ramPowerUp(NesRam* ram);
 
 void setFirst16KbRom(struct nesRam* ram, const unsigned char* romPage);
 void setLast16KbRom(struct nesRam* ram, const unsigned char* romPage);
@@ -71,8 +75,9 @@ int parseRomToRam(struct nesRam* ram, struct nesRom* rom);
 unsigned char loadFromRam(struct nesRam* ram, unsigned short address);
 char storeIntoRam(struct nesRam* ram, unsigned short address, unsigned char number);
 char storeIntoRamAndSetReadOnly(struct nesRam *ram, unsigned short address, unsigned char number);
+int storeIntoRamAndDisableReadOnly(NesRam* ram, unsigned short address, unsigned char number);;
 
-int parseSaveToRam(struct nesRam* ram, struct nesRom* rom, char* fileName);
+int loadSaveIntoRam(NesRam* ram, unsigned char* saveData, unsigned short SRAMSize);
 
 void printfRAM(struct nesRam* ram, unsigned short start, unsigned short end);
 

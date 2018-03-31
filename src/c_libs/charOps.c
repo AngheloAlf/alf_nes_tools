@@ -66,3 +66,11 @@ char* changeExtension(const char* word, const char* newExt, int lenExt){
 
     return newWord;
 }
+
+int charLenUntilNull(const unsigned char* src){
+    int len = 0;
+    for(int i = 0; src[i] != 0; i++){
+        len += 1;
+    }
+    return len;
+}

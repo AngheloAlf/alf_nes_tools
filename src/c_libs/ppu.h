@@ -8,7 +8,6 @@
 #include <stdlib.h>
 
 #include "romParser.h"
-#include "mappers.h"
 
 
 typedef struct{
@@ -48,8 +47,9 @@ typedef struct{
 
 
 NesPPU* initNesPPU();
-void resetNesPPU(NesPPU* ppu);
-int parseChrRomToPPU(NesPPU* ppu, NesRom* rom);
+int ppuPowerUp(NesPPU* ppu, NesRom* rom);
+int resetNesPPU(NesPPU* ppu);
+int loadChrIntoPPU(NesPPU* ppu, NesRom* rom);
 
 
 #endif //ALF_NES_TOOLS_PPU_H

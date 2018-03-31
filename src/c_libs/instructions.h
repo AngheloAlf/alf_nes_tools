@@ -79,8 +79,6 @@ struct instruction{
 };
 
 struct instruction* detectType(unsigned char* inst, char extraCicles);
-void printfInstructions(struct nesRom* rom);
-void iterateInstructions(struct nesRom* rom);
 
 unsigned short loadAddress(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram);
 unsigned char loadNumberFromRamOrArg(struct instruction *instData, struct nesRegisters *registers, struct nesRam *ram);

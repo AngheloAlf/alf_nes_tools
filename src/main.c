@@ -1,107 +1,83 @@
-#include "c_libs/romParser.h"
-#include "c_libs/instructions.h"
-#include "c_libs/ppu.h"
+#include <stdio.h>
 
-int main(int argc, char* argv[]){
-    int nothing = 0;
-    int printfInst = 0;
-    int execute = 0;
-    int printfChr = 0;
-    int withNumber = 0;
+#include "c_libs/charOps.h"
+#include "c_libs/AlfNes.h"
 
-    char* defaultFileName = "../roms/smb.nes";
-    char* fileName = NULL;
-    int retVal = 0;
+typedef struct{
+    int nothing;
+    int execute;
+    int printfChr;
+    int withNumber;
+    char* fileName;
+}Arguments;
 
+Arguments* parseArguments(int argc, char* argv[]){
+    Arguments* args = malloc(sizeof(Arguments));
+    args->nothing = 0;
+    args->execute = 0;
+    args->printfChr = 0;
+    args->withNumber = 0;
+
+    args->fileName = "../roms/smb.nes"; // default
     if(argc > 1){
-        printf("-----Arguments-----\n");
-        fileName = argv[1];
+        printf("-----Arguments-----\n\n");
+        args->fileName = argv[1];
         for(int i = 1; i < argc; i++){
             printf("\t%i: %s\n", i, argv[i]);
 
             if(strcmp("-nothing", argv[i]) == 0){
-                nothing = 1;
-                printf("\t\t\tnothing = 1\n");
+                args->nothing = 1;
+                printf("\t\tnothing = 1\n");
             }
-
             else if(strcmp("-execute", argv[i]) == 0){
-                execute = 1;
-                printf("\t\t\texecute = 1\n");
+                args->execute = 1;
+                printf("\t\texecute = 1\n");
             }
-
-            else if(strcmp("-printfInst", argv[i]) == 0){
-                printfInst = 1;
-                printf("\t\t\tprintfInst = 1\n");
-            }
-
             else if(strcmp("-printfChr", argv[i]) == 0){
-                printfChr = 1;
-                printf("\t\t\tprintfChr = 1\n");
+                args->printfChr = 1;
+                printf("\t\tprintfChr = 1\n");
             }
             else if(strcmp("-withNumber", argv[i]) == 0){
-                withNumber = 1;
-                printf("\t\t\twithNumber = 1\n");
+                args->withNumber = 1;
+                printf("\t\twithNumber = 1\n");
             }
         }
         printf("---Arguments end---\n\n");
     }
 
-    struct nesRom* rom = NULL;
-    if(fileName != NULL){
-        rom = loadRom(fileName);
-    }
-    if(rom == NULL){
-        fileName = defaultFileName;
-        rom = loadRom(defaultFileName);
-    }
+    return args;
+}
 
-    if(rom == NULL){
-    	return -6;
-    }
+int main(int argc, char* argv[]){
+    int retVal = 0;
 
-    if(printfChr){
-        printfChrRom(rom, withNumber);
-    }
+    Arguments* args = parseArguments(argc, argv);
 
-    struct nesRegisters* registers = initRegisters();
-    struct nesRam* ram = initRam();
-    NesPPU* ppu = initNesPPU();
-
-    powerUp(registers, ram);
-
-    retVal = parseRomToRam(ram, rom);
+    AlfNes* nes = initAlfNes();
+    retVal = NesPowerUp(nes, args->fileName);
     if(retVal < 0){
         return retVal;
     }
 
-    retVal = parseSaveToRam(ram, rom, fileName);
-    if(retVal < 0){
-        printf("retVal: %i", retVal);
-        return retVal;
-    }
-
-    retVal = parseChrRomToPPU(ppu, rom);
-    if(retVal < 0){
-        printf("retVal: %i", retVal);
-        return retVal;
+    if(args->printfChr){
+        printfChrRom(nes->rom, args->withNumber);
     }
 
     printf("\n\n");
-    if(nothing){
+    if(args->nothing){
         return 0;
     }
     
-    if(execute){
-        retVal = executeInstructions(registers, ram, rom);
+    if(args->execute){
+        retVal = executeInstructions(nes->cpu, nes->ram, nes->rom);
         if(retVal < 0){
             return retVal;
         }
     }
-    if(printfInst){
-        iterateInstructions(rom);
-    }
 
     // printfRAM(ram, 0x6000, 0x8000);
+
+    free(args);
 
     return 0;
 }
