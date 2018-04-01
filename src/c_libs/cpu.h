@@ -5,8 +5,6 @@
 #ifndef ALF_NES_TOOLS_CPU_H
 #define ALF_NES_TOOLS_CPU_H
 
-#include <stdlib.h>
-
 #include "common.h"
 
 #include "instructions.h"
@@ -26,19 +24,7 @@
 //   -> PPU divide CLK by 5
 //   -> 3.2 PPU ticks per CPU cycle
 
-typedef struct nesRegisters{
-    // https://wiki.nesdev.com/w/index.php/CPU_registers
-    char accumulator; // A
-    unsigned char indexX; // X
-    unsigned char indexY; // Y
-    unsigned short programCounter; // PC
-    unsigned char stack; // S
-    unsigned char statusRegister; // P
-
-    unsigned char disablePC;
-    unsigned char jumping;
-    unsigned char jumpingSubroutine;
-}NesCPURegisters;
+// https://wiki.nesdev.com/w/index.php/CPU_registers
 
 NesCPURegisters* initRegisters();
 

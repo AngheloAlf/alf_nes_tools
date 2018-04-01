@@ -6,7 +6,7 @@
 
 
 Instruction* initInstruction(const unsigned char* inst, unsigned char bytesAmount, unsigned char type, char cicles, int (*execute)(Instruction *, NesCPURegisters *, NesRam *)) {
-    Instruction* instData = malloc(sizeof(struct instruction));
+    Instruction* instData = malloc(sizeof(Instruction));
 
     instData->opcode = inst[0];
     instData->byte1 = 0;

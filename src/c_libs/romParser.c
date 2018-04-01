@@ -4,8 +4,8 @@
 
 #include "romParser.h"
 
-struct nesRomHeader* loadInesHeader(unsigned char* header){
-    struct nesRomHeader* romHeader = malloc(sizeof(struct nesRomHeader));
+NesRomHeader* loadInesHeader(unsigned char* header){
+    NesRomHeader* romHeader = malloc(sizeof(NesRomHeader));
 
     romHeader->header = malloc(sizeof(unsigned char) * 16);
     charCopy(romHeader->header, header, 16);
@@ -75,22 +75,21 @@ struct nesRomHeader* loadInesHeader(unsigned char* header){
     return romHeader;
 }
 
-struct nesPrgRom* generatePrgRomData(unsigned char** prgRom){
-    struct nesPrgRom* prgRomData = malloc(sizeof(struct nesPrgRom));
+NesPrgRom* generatePrgRomData(unsigned char** prgRom){
+    NesPrgRom* prgRomData = malloc(sizeof(NesPrgRom));
     prgRomData->prgRom = prgRom;
 
     return prgRomData;
 }
 
-struct nesChrRom* generateChrRomData(unsigned char** chrRom, struct tile** tiles){
-    struct nesChrRom* chrRomData = malloc(sizeof(struct nesChrRom));
+NesChrRom* generateChrRomData(unsigned char** chrRom){
+    NesChrRom* chrRomData = malloc(sizeof(NesChrRom));
     chrRomData->chrRom = chrRom;
-    chrRomData->tiles = tiles;
 
     return chrRomData;
 }
 
-NesRom* generateINesRom(struct nesRomHeader* header, unsigned char* trainer, struct nesPrgRom* prgRomData, struct nesChrRom* chrRomData, unsigned char* playChoiceInstRom, unsigned char* playChoicePRom, unsigned char* title, char* fileName){
+NesRom* generateINesRom(NesRomHeader* header, unsigned char* trainer, NesPrgRom* prgRomData, NesChrRom* chrRomData, unsigned char* playChoiceInstRom, unsigned char* playChoicePRom, unsigned char* title, char* fileName){
     NesRom* rom = malloc(sizeof(NesRom));
 
     if(header == NULL){
@@ -114,7 +113,7 @@ NesRom* generateINesRom(struct nesRomHeader* header, unsigned char* trainer, str
 
 NesRom* loadINesRom(FILE* filePtr, unsigned char* header, char* fileName){
     /* load header */
-    struct nesRomHeader* romHeader = loadInesHeader(header);
+    NesRomHeader* romHeader = loadInesHeader(header);
     if(romHeader == NULL){
         // ERROR
         return NULL;
@@ -133,12 +132,11 @@ NesRom* loadINesRom(FILE* filePtr, unsigned char* header, char* fileName){
 
 
     // prgRom
-    struct nesPrgRom* prgRomData = NULL;
+    NesPrgRom* prgRomData = NULL;
     size_t prgPages = romHeader->realPrgPageAmount;
     if(prgPages > 0){
         unsigned char** prgRom = malloc(sizeof(unsigned char*) * prgPages);
         printf("\tloading %i bytes (%i KiB or %i pages) of prgRom\n", (int)prgPages*PRG_ROM_PAGE_SIZE, (int)prgPages*PRG_ROM_PAGE_SIZE/1024, (int)prgPages);
-        // fread(prgRom, prgPages, PRG_ROM_PAGE_SIZE, filePtr);
         for(size_t i = 0; i < prgPages; i++){
             prgRom[i] = malloc(sizeof(unsigned char) * PRG_ROM_PAGE_SIZE);
             fread(prgRom[i], 1, PRG_ROM_PAGE_SIZE, filePtr);
@@ -152,19 +150,16 @@ NesRom* loadINesRom(FILE* filePtr, unsigned char* header, char* fileName){
     }
 
     // chrRom
-    struct nesChrRom* chrRomData = NULL;
+    NesChrRom* chrRomData = NULL;
     size_t chrPages = romHeader->realChrPageAmount;
     if(chrPages > 0){
-        struct tile** tiles = NULL;
         unsigned char** chrRom = malloc(sizeof(unsigned char*) * chrPages);
         printf("\tloading %i bytes (%i KiB or %i pages) of chrRom\n", (int)chrPages*CHR_ROM_PAGE_SIZE, (int)chrPages*CHR_ROM_PAGE_SIZE/1024, (int)chrPages);
-        // fread(chrRom, chrPages, CHR_ROM_PAGE_SIZE, filePtr);
         for(size_t i = 0; i < chrPages; i++){
             chrRom[i] = malloc(sizeof(unsigned char) * CHR_ROM_PAGE_SIZE);
             fread(chrRom[i], 1, CHR_ROM_PAGE_SIZE, filePtr);
         }
-        tiles = generateTilesFromChrRom(chrRom, chrPages);
-        chrRomData = generateChrRomData(chrRom, tiles);
+        chrRomData = generateChrRomData(chrRom);
     }
     else{
         printf("\tno chrRom\n");
@@ -265,7 +260,6 @@ NesRom* loadRom(char* filename){
 
     return rom;
 }
-
 
 
 // Mappers:

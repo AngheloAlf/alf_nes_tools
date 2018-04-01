@@ -3,8 +3,6 @@
 //
 
 #include "instCallback.h"
-#include "alu.h"
-#include "rmw.h"
 
 
 // Control instructions
@@ -1639,321 +1637,321 @@ int opcode_FE(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 // unofficial opcodes
 int opcode_03(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_07(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_0B(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_0F(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_13(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_17(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_1B(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_1F(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_23(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_27(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_2B(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_2F(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_33(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_37(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_3B(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_3F(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_43(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_47(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_4B(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_4F(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_53(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_57(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_5B(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_5F(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_63(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_67(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_6B(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_6F(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_73(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_77(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_7B(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_7F(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_83(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_87(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_8B(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_8F(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_93(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_97(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_9B(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_9F(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_A3(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_A7(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_AB(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_AF(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_B3(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_B7(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_BB(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_BF(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_C3(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_C7(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_CB(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_CF(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_D3(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_D7(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_DB(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_DF(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_E3(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_E7(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_EB(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_EF(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_F3(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_F7(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_FB(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 
 int opcode_FF(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     printf("\tinstruction %x not implemented\n\n", instData->opcode);
-    return 0;
+    return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;;
 }
 

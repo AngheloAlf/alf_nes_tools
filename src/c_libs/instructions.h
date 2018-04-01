@@ -5,15 +5,9 @@
 #ifndef ALF_NES_TOOLS_INSTRUCTIONS_H
 #define ALF_NES_TOOLS_INSTRUCTIONS_H
 
-
-#include <stdio.h>
-
 #include "common.h"
 
 #include "instCallback.h"
-#include "romParser.h"
-#include "cpu.h"
-#include "ram.h"
 
 
 #define TYPE_ACCUMULATOR    0
@@ -44,39 +38,27 @@
 #define SIZE_INDIRECT_Y     1
 #define SIZE_IMPLIED        0
 #define SIZE_RELATIVE       1
+/*
+types:
+    0:  Accumulator
+    1:  Immediate
+    2:  Zero Page
+    3:  Zero Page,X
+    4:  Zero Page,Y
+    5:  Absolute
+    6:  Absolute,X
+    7:  Absolute,Y
+    8:  Indirect
+    9:  Indirect,X
+    10: Indirect,Y
+    11: Implied
+*/
 
-
-typedef struct instruction{
-    // https://wiki.nesdev.com/w/index.php/CPU_unofficial_opcodes
-    // http://www.6502.org/tutorials/6502opcodes.html
-    // http://www.obelisk.me.uk/6502/reference.html
-    // http://nesdev.com/undocumented_opcodes.txt
-    // http://www.emulator101.com/6502-addressing-modes.html
-
-    unsigned char opcode;
-    unsigned char byte1;
-    unsigned char byte2;
-    unsigned char bytesAmount;
-    unsigned char type;
-    /*
-    types:
-        0:  Accumulator
-        1:  Immediate
-        2:  Zero Page
-        3:  Zero Page,X
-        4:  Zero Page,Y
-        5:  Absolute
-        6:  Absolute,X
-        7:  Absolute,Y
-        8:  Indirect
-        9:  Indirect,X
-        10: Indirect,Y
-        11: Implied
-    */
-    int (*execute)(struct instruction*, NesCPURegisters*, NesRam*);
-
-    char cycles;
-}Instruction;
+// https://wiki.nesdev.com/w/index.php/CPU_unofficial_opcodes
+// http://www.6502.org/tutorials/6502opcodes.html
+// http://www.obelisk.me.uk/6502/reference.html
+// http://nesdev.com/undocumented_opcodes.txt
+// http://www.emulator101.com/6502-addressing-modes.html
 
 Instruction* detectType(unsigned char* inst, char extraCicles);
 

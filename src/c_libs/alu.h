@@ -5,11 +5,11 @@
 #ifndef ALF_NES_TOOLS_ALU_H
 #define ALF_NES_TOOLS_ALU_H
 
-
 #include "common.h"
 
 #include "cpu.h"
 #include "ram.h"
+
 
 /*
 return values:

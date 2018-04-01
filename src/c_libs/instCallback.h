@@ -5,20 +5,15 @@
 #ifndef ALF_NES_TOOLS_INSTCALLBACK_H
 #define ALF_NES_TOOLS_INSTCALLBACK_H
 
-#include "instructions.h"
-#include "cpu.h"
-#include "ram.h"
+#include "common.h"
 
-struct instruction;
-typedef struct instruction Instruction;
-struct nesRegisters;
-typedef struct nesRegisters NesCPURegisters;
-struct nesRam;
+#include "alu.h"
+#include "rmw.h"
+
 
 /*
 return values:
     retVal > 0: cycles of instruction
-    retVal == 0: not implemented
     retVal < 0: error code
 */
 
