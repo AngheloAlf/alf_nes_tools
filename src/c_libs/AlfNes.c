@@ -17,7 +17,7 @@ AlfNes* initAlfNes(){
 }
 
 int NesPowerUp(AlfNes* nes, char* romFileName){
-    int retVal = 0;
+    int retVal, retValHandled;
 
     nes->rom = loadRom(romFileName);
     if(nes->rom == NULL){
@@ -26,27 +26,42 @@ int NesPowerUp(AlfNes* nes, char* romFileName){
 
     retVal = cpuPowerUp(nes->cpu);
     if(retVal < 0){
-        return retVal;
+        retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     retVal = ramPowerUp(nes->ram);
     if(retVal < 0){
-        return retVal;
+        retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     retVal = ppuPowerUp(nes->ppu, nes->rom);
     if(retVal < 0){
-        return retVal;
+        retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
 
     retVal = loadPrgIntoMemory(nes);
     if(retVal < 0){
-        return retVal;
+        retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     retVal = loadSaveData(nes);
     if(retVal < 0){
-        return retVal;
+        retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
 
-    return retVal;
+    return 0;
 }
 
 int loadPrgIntoMemory(AlfNes* nes){

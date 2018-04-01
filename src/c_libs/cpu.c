@@ -23,8 +23,7 @@ NesCPURegisters* initRegisters(){
 
 // https://wiki.nesdev.com/w/index.php/CPU_power_up_state
 int cpuPowerUp(NesCPURegisters *registers){
-    int retVal = 0;
-	registers->statusRegister = 0x34; // P = $34[1] (IRQ disabled)
+    registers->statusRegister = 0x34; // P = $34[1] (IRQ disabled)
 	registers->accumulator = 0x0; // A, X, Y = 0
 	registers->indexX = 0x0; // A, X, Y = 0
 	registers->indexY = 0x0; // A, X, Y = 0
@@ -34,7 +33,7 @@ int cpuPowerUp(NesCPURegisters *registers){
 
     registers->disablePC = 0;
 
-    return retVal;
+    return 0;
 }
 
 int resetCpu(NesCPURegisters* registers, NesRam* ram){
@@ -66,34 +65,46 @@ int executeInstructions(NesCPURegisters* registers, NesRam* ram, NesRom* rom){
     printf("data in reset vector\n$%x: $%x\n", getResetVector(ram), loadFromRam(ram, getResetVector(ram)));
     registers->programCounter = getResetVector(ram);
 	unsigned char* inst = malloc(sizeof(unsigned char) * 3);
-	int ret;
+	int retVal, retValHandled;
 	Instruction* instData = NULL;
     
 	for(; registers->programCounter < RAM_SIZE && !registers->disablePC; registers->programCounter++){
-		ret = getInstsFromRam(inst, registers->programCounter, ram);
-		if(ret < 0){
-			printf("\tinvalid RAM position\n");
-			break;
+		retVal = getInstsFromRam(inst, registers->programCounter, ram);
+		if(retVal < 0){
+            retValHandled = handleErrorRet(retVal);
+            if(retValHandled < 0){
+                printf("\ninvalid RAM position\n");
+                // todo: printf(insts, programcounter)
+                printf("retVal: %i\nretValHandled: %i\n", retVal, retValHandled);
+                return retValHandled;
+            }
 		}
 
         printf("position: 0x%x ~ %hu\n", registers->programCounter, registers->programCounter);
 		instData = detectType(inst, 0);
         if(instData == NULL){
-            printf("\n\n");
-            printf("\t\tunknown opcode: $%x\n", inst[0]);
-            printf("\t\tPC: 0x%x\n", registers->programCounter);
-            break;
+            retVal = ALF_NES_ERROR_CODE_UNKNOWN_OPCODE;
+            retValHandled = handleErrorRet(retVal);
+            if(retValHandled < 0){
+                printf("\n\n");
+                printf("\t\tunknown opcode: $%x\n", inst[ 0 ]);
+                printf("\t\tPC: 0x%x\n", registers->programCounter);
+                return retValHandled;
+            }
+            return retVal;
         }
 
         printf("\topcode syntax: ");
         printfOpcodeSyntax(instData);
 
-
-        int retVal = instData->execute(instData, registers, ram);
+        retVal = instData->execute(instData, registers, ram);
         if(retVal <= 0){
-            printfInstruction(instData);
-            printf("retVal: %i\n", retVal);
-            return retVal;
+            retValHandled = handleErrorRet(retVal);
+            if(retValHandled < 0){
+                printfInstruction(instData);
+                printf("retVal: %i\nretValHandled: %i\n", retVal, retValHandled);
+                return retValHandled;
+            }
         }
         // printf("\n\n");
 

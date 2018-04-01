@@ -1,7 +1,6 @@
-#include <stdio.h>
-
 #include "c_libs/common.h"
 #include "c_libs/AlfNes.h"
+#include "c_libs/chr.h"
 
 typedef struct{
     int nothing;
@@ -75,7 +74,7 @@ int main(int argc, char* argv[]){
         }
     }
 
-    // printfRAM(ram, 0x6000, 0x8000);
+    // printfRAM(nes->ram, 0x6000, 0x8000);
 
     free(args);
 

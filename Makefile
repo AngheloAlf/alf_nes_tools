@@ -32,4 +32,4 @@ $(O_C_LIBS)/%.o: $(S_C_LIBS)/%.c
 
 
 clean:
-	rm $(OBJECTS)
+	rm $(OBJECTS) $(B_OBJECTS)

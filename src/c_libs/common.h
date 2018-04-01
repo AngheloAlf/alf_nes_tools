@@ -43,6 +43,8 @@
 #define ALF_NES_ERROR_CODE_SAVE_CANT_READ               (-7)
 #define ALF_NES_ERROR_CODE_SAVE_SIZE_LESS_EXPECTED      (-8)
 #define ALF_NES_ERROR_CODE_MAPPER_WRONG_IMPLEMENTATION  (-9)
+#define ALF_NES_ERROR_CODE_UNKNOWN_OPCODE               (-10)
+
 /* errors codes:
     -1: not implemented
     -2: writeOnReadOnly

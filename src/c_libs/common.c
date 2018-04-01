@@ -111,6 +111,9 @@ int handleErrorRet(int retVal){
         case ALF_NES_ERROR_CODE_MAPPER_WRONG_IMPLEMENTATION:
             printf("Mapper has wrong implementation.\n");
             return retVal;
+        case ALF_NES_ERROR_CODE_UNKNOWN_OPCODE:
+            printf("Unknown opcode.\n");
+            return retVal;
         default:
             printf("Unknown return value.\n");
             return retVal;

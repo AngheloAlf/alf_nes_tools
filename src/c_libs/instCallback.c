@@ -276,7 +276,10 @@ int opcode_84(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
     char retVal = storeIntoRam(ram, address, registers->indexY);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -290,7 +293,10 @@ int opcode_8C(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
     char retVal = storeIntoRam(ram, address, registers->indexY);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -308,7 +314,10 @@ int opcode_94(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short address = loadAddress(instData, registers, ram);
     char retVal = storeIntoRam(ram, address, registers->indexY);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -324,7 +333,10 @@ int opcode_9C(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned char result = registers->indexY & (unsigned char)((address>>8) + 1);
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -529,7 +541,10 @@ int opcode_01(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -539,7 +554,10 @@ int opcode_05(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -549,7 +567,10 @@ int opcode_09(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -559,7 +580,10 @@ int opcode_0D(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -569,7 +593,10 @@ int opcode_11(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -579,7 +606,10 @@ int opcode_15(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -589,7 +619,10 @@ int opcode_19(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -599,7 +632,10 @@ int opcode_1D(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ORA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -609,7 +645,10 @@ int opcode_21(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -618,7 +657,10 @@ int opcode_25(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -627,7 +669,10 @@ int opcode_29(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -636,7 +681,10 @@ int opcode_2D(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -645,7 +693,10 @@ int opcode_31(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -654,7 +705,10 @@ int opcode_35(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -663,7 +717,10 @@ int opcode_39(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -672,7 +729,10 @@ int opcode_3D(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = AND(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -681,7 +741,10 @@ int opcode_41(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -690,7 +753,10 @@ int opcode_45(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -699,7 +765,10 @@ int opcode_49(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -708,7 +777,10 @@ int opcode_4D(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -717,7 +789,10 @@ int opcode_51(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -726,7 +801,10 @@ int opcode_55(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -735,7 +813,10 @@ int opcode_59(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -744,7 +825,10 @@ int opcode_5D(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = EOR(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -753,8 +837,11 @@ int opcode_61(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     // ADC Indirect X
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ADC(registers, number);
-    if(retVal != 0){
-        return retVal;
+    if(retVal < 0){
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -763,8 +850,11 @@ int opcode_65(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     // ADC Zero Page
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ADC(registers, number);
-    if(retVal != 0){
-        return retVal;
+    if(retVal < 0){
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -773,8 +863,11 @@ int opcode_69(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     // ADC Immediate
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ADC(registers, number);
-    if(retVal != 0){
-        return retVal;
+    if(retVal < 0){
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -783,8 +876,11 @@ int opcode_6D(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     // ADC Absoulte
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ADC(registers, number);
-    if(retVal != 0){
-        return retVal;
+    if(retVal < 0){
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -793,8 +889,11 @@ int opcode_71(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     // ADC Indirect Y
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ADC(registers, number);
-    if(retVal != 0){
-        return retVal;
+    if(retVal < 0){
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -803,8 +902,11 @@ int opcode_75(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     // ADC Zero Page X
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ADC(registers, number);
-    if(retVal != 0){
-        return retVal;
+    if(retVal < 0){
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -813,8 +915,11 @@ int opcode_79(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     // ADC Absolute Y
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ADC(registers, number);
-    if(retVal != 0){
-        return retVal;
+    if(retVal < 0){
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -823,8 +928,11 @@ int opcode_7D(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     // ADC Absolute X
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = ADC(registers, number);
-    if(retVal != 0){
-        return retVal;
+    if(retVal < 0){
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -833,7 +941,10 @@ int opcode_81(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short number = loadAddress(instData, registers, ram);
     int retVal = STA(registers, number, ram);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -842,7 +953,10 @@ int opcode_85(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short number = loadAddress(instData, registers, ram);
     int retVal = STA(registers, number, ram);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -856,7 +970,10 @@ int opcode_8D(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short number = loadAddress(instData, registers, ram);
     int retVal = STA(registers, number, ram);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -865,7 +982,10 @@ int opcode_91(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short number = loadAddress(instData, registers, ram);
     int retVal = STA(registers, number, ram);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -874,7 +994,10 @@ int opcode_95(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short number = loadAddress(instData, registers, ram);
     int retVal = STA(registers, number, ram);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -883,7 +1006,10 @@ int opcode_99(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short number = loadAddress(instData, registers, ram);
     int retVal = STA(registers, number, ram);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -892,7 +1018,10 @@ int opcode_9D(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short number = loadAddress(instData, registers, ram);
     int retVal = STA(registers, number, ram);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -901,7 +1030,10 @@ int opcode_A1(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -910,7 +1042,10 @@ int opcode_A5(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -919,7 +1054,10 @@ int opcode_A9(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -928,7 +1066,10 @@ int opcode_AD(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -937,7 +1078,10 @@ int opcode_B1(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -946,7 +1090,10 @@ int opcode_B5(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -955,7 +1102,10 @@ int opcode_B9(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -964,7 +1114,10 @@ int opcode_BD(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = LDA(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -973,7 +1126,10 @@ int opcode_C1(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -982,7 +1138,10 @@ int opcode_C5(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -991,7 +1150,10 @@ int opcode_C9(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1000,7 +1162,10 @@ int opcode_CD(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1009,7 +1174,10 @@ int opcode_D1(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1018,7 +1186,10 @@ int opcode_D5(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1027,7 +1198,10 @@ int opcode_D9(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1036,7 +1210,10 @@ int opcode_DD(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = CMP(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1045,7 +1222,10 @@ int opcode_E1(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1054,7 +1234,10 @@ int opcode_E5(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1063,7 +1246,10 @@ int opcode_E9(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1072,7 +1258,10 @@ int opcode_ED(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1081,7 +1270,10 @@ int opcode_F1(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1090,7 +1282,10 @@ int opcode_F5(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1099,7 +1294,10 @@ int opcode_F9(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1108,7 +1306,10 @@ int opcode_FD(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     char number = (char) loadNumberFromRamOrArg(instData, registers, ram);
     int retVal = SBC(registers, number);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1129,7 +1330,10 @@ int opcode_06(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1145,7 +1349,10 @@ int opcode_0E(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1163,7 +1370,10 @@ int opcode_16(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1179,7 +1389,10 @@ int opcode_1E(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1197,7 +1410,10 @@ int opcode_26(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1213,7 +1429,10 @@ int opcode_2E(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1231,7 +1450,10 @@ int opcode_36(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1247,7 +1469,10 @@ int opcode_3E(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1265,7 +1490,10 @@ int opcode_46(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1281,7 +1509,10 @@ int opcode_4E(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1299,7 +1530,10 @@ int opcode_56(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1315,7 +1549,10 @@ int opcode_5E(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1333,7 +1570,10 @@ int opcode_66(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1349,7 +1589,10 @@ int opcode_6E(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1367,7 +1610,10 @@ int opcode_76(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1383,7 +1629,10 @@ int opcode_7E(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1398,7 +1647,10 @@ int opcode_86(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address,registers->indexX);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1414,7 +1666,10 @@ int opcode_8E(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, registers->indexX);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1431,7 +1686,10 @@ int opcode_96(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, registers->indexX);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1447,7 +1705,10 @@ int opcode_9E(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1512,7 +1773,10 @@ int opcode_C6(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1528,7 +1792,10 @@ int opcode_CE(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1546,7 +1813,10 @@ int opcode_D6(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1562,7 +1832,10 @@ int opcode_DE(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1578,7 +1851,10 @@ int opcode_E6(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1594,7 +1870,10 @@ int opcode_EE(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1612,7 +1891,10 @@ int opcode_F6(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }
@@ -1628,7 +1910,10 @@ int opcode_FE(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
 
     char retVal = storeIntoRam(ram, address, result);
     if(retVal < 0){
-        return retVal;
+        int retValHandled = handleErrorRet(retVal);
+        if(retValHandled < 0){
+            return retValHandled;
+        }
     }
     return instData->cycles;
 }

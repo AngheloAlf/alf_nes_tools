@@ -4,21 +4,54 @@
 
 #include "instructions.h"
 
+unsigned char getInstSizeByType(unsigned char type){
+    switch(type){
+        case TYPE_ACCUMULATOR:
+            return SIZE_ACCUMULATOR;
+        case TYPE_IMMEDIATE:
+            return SIZE_IMMEDIATE;
+        case TYPE_ZERO_PAGE:
+            return SIZE_ZERO_PAGE;
+        case TYPE_ZERO_PAGE_X:
+            return SIZE_ZERO_PAGE_X;
+        case TYPE_ZERO_PAGE_Y:
+            return SIZE_ZERO_PAGE_Y;
+        case TYPE_ABSOLUTE:
+            return SIZE_ABSOLUTE;
+        case TYPE_ABSOLUTE_X:
+            return SIZE_ABSOLUTE_X;
+        case TYPE_ABSOLUTE_Y:
+            return SIZE_ABSOLUTE_Y;
+        case TYPE_INDIRECT:
+            return SIZE_INDIRECT;
+        case TYPE_INDIRECT_X:
+            return SIZE_INDIRECT_X;
+        case TYPE_INDIRECT_Y:
+            return SIZE_INDIRECT_Y;
+        case TYPE_IMPLIED:
+            return SIZE_IMPLIED;
+        case TYPE_RELATIVE:
+            return SIZE_RELATIVE;
+        default:
+            return HIGH_NIBBLE | LOW_NIBBLE;
+    }
+}
 
-Instruction* initInstruction(const unsigned char* inst, unsigned char bytesAmount, unsigned char type, char cicles, int (*execute)(Instruction *, NesCPURegisters *, NesRam *)) {
+Instruction *initInstruction(const unsigned char *inst, unsigned char type, char cicles,
+                             int (*execute)(Instruction *, NesCPURegisters *, NesRam *)){
     Instruction* instData = malloc(sizeof(Instruction));
 
     instData->opcode = inst[0];
     instData->byte1 = 0;
     instData->byte2 = 0;
-    if(bytesAmount > 0){
+    instData->type = type;
+    instData->bytesAmount = getInstSizeByType(type);
+    if(instData->bytesAmount > 0){
         instData->byte1 = inst[1];
     }
-    if(bytesAmount > 1){
+    if(instData->bytesAmount > 1){
         instData->byte2 = inst[2];
     }
-    instData->bytesAmount = bytesAmount;
-    instData->type = type;
 
     instData->cycles = cicles;
     instData->execute = execute;
@@ -37,20 +70,16 @@ Instruction* control_BRK_Opcodes(unsigned char* inst, char extraCycles){
     // go to the address of the BRK +2 so that BRK may be used to replace a
     // two-byte instruction for debugging and the subsequent RTI will be correct.
 
-    Instruction* instData = NULL;
     if(inst[0] == 0x00){
         // printf("\tBRK (BReaK)\n");
-        instData = initInstruction(inst, 1, TYPE_IMPLIED, 7, opcode_00);
+        return initInstruction(inst, TYPE_IMPLIED, 7, opcode_00);
     }
-    else{
-        printf("\tINVALID Control BRK Opcode\n");
-        instData = NULL;
-    }
-
-    return instData;
+    printf("\tINVALID Control BRK Opcode\n");
+    return NULL;
 }
 
 Instruction* control_STACK_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // Stack Instructions
     // These instructions are implied mode, have a length of one byte and require
     // machine cycles as indicated. The "PuLl" operations are known as "POP" on most
@@ -61,32 +90,24 @@ Instruction* control_STACK_Opcodes(unsigned char* inst, char extraCycles){
     // PLP (PuLl Processor status)     $28  4
     // PHA (PusH Accumulator)          $48  3
     // PLA (PuLl Accumulator)          $68  4
-    Instruction* instData = NULL;
-
+     */
     switch(inst[0]){
         case 0x08:
             // printf("\tPHP (PusH Processor status)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 3, opcode_08);
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 3, opcode_08);
         case 0x28:
             //printf("\tPLP (PuLl Processor status)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 4, opcode_28);
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 4, opcode_28);
         case 0x48:
             //printf("\tPHA (PusH Accumulator)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 3, opcode_48);
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 3, opcode_48);
         case 0x68:
             // printf("\tPLA (PuLl Accumulator)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 4, opcode_68);
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 4, opcode_68);
         default:
             printf("\tINVALID CONTROL STACK\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* control_Branching_Opcodes(unsigned char* inst, char extraCycles){
@@ -117,51 +138,39 @@ Instruction* control_Branching_Opcodes(unsigned char* inst, char extraCycles){
     // not taken: 2+
     // taken: 3+
 
-    Instruction* instData = NULL;
-
     switch(inst[0]){
         case 0x10:
             // printf("\tBranch on PLus\n");
-            instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_10);
-            break;
+            return initInstruction(inst, TYPE_RELATIVE, (char)(2 + extraCycles), opcode_10);
         case 0x30:
             // printf("\tBranch on MInus\n");
-            instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_30);
-            break;
+            return initInstruction(inst, TYPE_RELATIVE, (char)(2 + extraCycles), opcode_30);
         case 0x50:
             // printf("\tBranch on oVerflow Clear\n");
-            instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_50);
-            break;
+            return initInstruction(inst, TYPE_RELATIVE, (char)(2 + extraCycles), opcode_50);
         case 0x70:
             // printf("\tBranch on oVerflow Set\n");
-            instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_70);
-            break;
+            return initInstruction(inst, TYPE_RELATIVE, (char)(2 + extraCycles), opcode_70);
         case 0x90:
             // printf("\tBranch on Carry Clear\n");
-            instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_90);
-            break;
+            return initInstruction(inst, TYPE_RELATIVE, (char)(2 + extraCycles), opcode_90);
         case 0xB0:
             // printf("\tBranch on Carry Set\n");
-            instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_B0);
-            break;
+            return initInstruction(inst, TYPE_RELATIVE, (char)(2 + extraCycles), opcode_B0);
         case 0xD0:
             // printf("\tBranch on Not Equal\n");
-            instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_D0);
-            break;
+            return initInstruction(inst, TYPE_RELATIVE, (char)(2 + extraCycles), opcode_D0);
         case 0xF0:
             // printf("\tBranch on EQual\n");
-            instData = initInstruction(inst, SIZE_RELATIVE, TYPE_RELATIVE, (char) 2 + extraCycles, opcode_F0);
-            break;
+            return initInstruction(inst, TYPE_RELATIVE, (char)(2 + extraCycles), opcode_F0);
         default:
             printf("\tINVALID BRANCH\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* control_BIT_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // BIT (test BITs)
     //   Affects Flags: N V Z
     // Zero Page     BIT $44       $24  2   3
@@ -174,26 +183,20 @@ Instruction* control_BIT_Opcodes(unsigned char* inst, char extraCycles){
     // Beware: a BIT instruction used in this way as a NOP does have effects: the flags
     // may be modified, and the read of the absolute address, if it happens to access an
     // I/O device, may cause an unwanted action.
-
-    Instruction* instData = NULL;
-
+    */
     switch(inst[0]){
         case 0x24:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_24);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_24);
         case 0x2C:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_2C);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_2C);
         default:
             printf("\tINVALID BRANCH\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* control_Flag_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // Flag (Processor Status) Instructions
     //   Affect Flags: as noted
     // These instructions are implied mode, have a length of one byte and require
@@ -229,48 +232,37 @@ Instruction* control_Flag_Opcodes(unsigned char* inst, char extraCycles){
         // affected by increments, decrements, shifts and logical operations i.e. only
         // ADC, BIT, CLV, PLP, RTI and SBC affect it. There is no op code to set the
         // overflow but a BIT test on an RTS instruction will do the trick.
-
-    Instruction* instData = NULL;
-
+    */
     switch(inst[0]){
         case 0x18:
             // printf("\tCLC (CLear Carry) \n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_18); // CLC (CLear Carry)              $18
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_18); // CLC (CLear Carry)              $18
         case 0x38:
             // printf("\tSEC (SEt Carry)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_38); // SEC (SEt Carry)                $38
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_38); // SEC (SEt Carry)                $38
         case 0x58:
             // printf("\tCLI (CLear Interrupt)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_58); // CLI (CLear Interrupt)          $58
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_58); // CLI (CLear Interrupt)          $58
         case 0x78:
             // printf("\tSEI (SEt Interrupt)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_78); // SEI (SEt Interrupt)            $78
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_78); // SEI (SEt Interrupt)            $78
         case 0xB8:
             // printf("\tCLV (CLear oVerflow)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_B8); // CLV (CLear oVerflow)           $B8
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_B8); // CLV (CLear oVerflow)           $B8
         case 0xD8:
             // printf("\tCLD (CLear Decimal)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_D8); // CLD (CLear Decimal)            $D8
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_D8); // CLD (CLear Decimal)            $D8
         case 0xF8:
             // printf("\tSED (SEt Decimal)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_F8); // SED (SEt Decimal)              $F8
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_F8); // SED (SEt Decimal)              $F8
         default:
             printf("\tINVALID FLAG\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* control_RTI_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // RTI (ReTurn from Interrupt)
     //   Affects Flags: all
     // Implied       RTI           $40  1   6
@@ -279,21 +271,18 @@ Instruction* control_RTI_Opcodes(unsigned char* inst, char extraCycles){
     // from the stack in that order (interrupts push the PC first and then the PSW).
     // Note that unlike RTS, the return address on the stack is the actual address
     // rather than the address-1.
+    */
 
-    Instruction* instData = NULL;
     if(inst[0] == 0x40){
         // printf("\tRTI (ReTurn from Interrupt)\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 6, opcode_40);
+        return initInstruction(inst, TYPE_IMPLIED, 6, opcode_40);
     }
-    else{
-        printf("\tINVALID Control RTI Opcode\n");
-        instData = NULL;
-    }
-
-    return instData;
+    printf("\tINVALID Control RTI Opcode\n");
+    return NULL;
 }
 
 Instruction* control_JSR_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // JSR (Jump to SubRoutine)
     //   Affects Flags: none
     // Absolute      JSR $5597     $20  3   6
@@ -302,21 +291,18 @@ Instruction* control_JSR_Opcodes(unsigned char* inst, char extraCycles){
     // transferring program control to the following address. Subroutines are normally
     // terminated by a <a href="#RTS">RTS</a> op
     // code.
+    */
 
-    Instruction* instData = NULL;
     if(inst[0] == 0x20){
         // printf("\tJSR (Jump to SubRoutine)\n");
-        instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 6, opcode_20);
+        return initInstruction(inst, TYPE_ABSOLUTE, 6, opcode_20);
     }
-    else{
-        printf("\tINVALID Control JSR Opcode\n");
-        instData = NULL;
-    }
-
-    return instData;
+    printf("\tINVALID Control JSR Opcode\n");
+    return NULL;
 }
 
 Instruction* control_JMP_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // JMP (JuMP)
     //   Affects Flags: none
     // Absolute      JMP $5597     $4C  3   3
@@ -331,26 +317,21 @@ Instruction* control_JMP_Opcodes(unsigned char* inst, char extraCycles){
     // contains $50, the result of JMP ($30FF) will be a transfer of control to $4080
     // rather than $5080 as you intended i.e. the 6502 took the low byte of the address
     // from $30FF and the high byte from $3000.
-
-    Instruction* instData = NULL;
+     */
 
     switch(inst[0]){
         case 0x4C:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 3, opcode_4C);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 3, opcode_4C);
         case 0x6C:
-            instData = initInstruction(inst, SIZE_INDIRECT, TYPE_INDIRECT, 5, opcode_6C);
-            break;
+            return initInstruction(inst, TYPE_INDIRECT, 5, opcode_6C);
         default:
             printf("\tINVALID JMP\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* control_RTS_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // RTS (ReTurn from Subroutine)
     //   Affects Flags: none
     // Implied       RTS           $60  1   6
@@ -359,116 +340,92 @@ Instruction* control_RTS_Opcodes(unsigned char* inst, char extraCycles){
     // program control to that address+1. It is used, as expected, to exit a subroutine
     // invoked via JSR which
     // pushed the address-1.
+    */
 
-    Instruction* instData = NULL;
     if(inst[0] == 0x60){
         // printf("\tRTS (ReTurn from Subroutine)\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 6, opcode_60);
+        return initInstruction(inst, TYPE_IMPLIED, 6, opcode_60);
     }
-    else{
-        printf("\tINVALID Control RTS Opcode\n");
-        instData = NULL;
-    }
+    printf("\tINVALID Control RTS Opcode\n");
+    return NULL;
 
-    return instData;
 }
 
 Instruction* control_register_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // Register Instructions
     //   Affect Flags: S Z
     // These instructions are implied mode, have a length of one byte and require
     // two machine cycles.
-
-    Instruction* instData = NULL;
+    */
     switch(inst[0]){
         case 0x88:
             // printf("\tDEY (DEcrement Y)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_88); // DEY (DEcrement Y)        $88
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_88); // DEY (DEcrement Y)        $88
         case 0x98:
             // printf("\tTYA (Transfer Y to A)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_98); // TYA (Transfer Y to A)    $98
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_98); // TYA (Transfer Y to A)    $98
         case 0xA8:
             // printf("\tTAY (Transfer A to Y) \n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_A8); // TAY (Transfer A to Y)    $A8
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_A8); // TAY (Transfer A to Y)    $A8
         case 0xC8:
             // printf("\tINY (INcrement Y)\n"); // INY (INcrement Y)        $C8
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_C8);
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_C8);
         case 0xE8:
             // printf("\tINX (INcrement X)\n"); // INX (INcrement X)        $E8
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_E8);
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_E8);
         default:
             printf("\tINVALID Control Register Opcode\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* control_LDY_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // LDY (LoaD Y register)
     //   Affects Flags: S Z
     // + add 1 cycle if page boundary crossed
-
-    Instruction* instData = NULL;
+    */
     switch(inst[0]){
         case 0xA0:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_A0); // Immediate     LDY #$44      $A0  2   2
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_A0); // Immediate     LDY #$44      $A0  2   2
         case 0xA4:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_A4); // Zero Page     LDY $44       $A4  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_A4); // Zero Page     LDY $44       $A4  2   3
         case 0xAC:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_AC); // Absolute      LDY $4400     $AC  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_AC); // Absolute      LDY $4400     $AC  3   4
         case 0xB4:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 4, opcode_B4); // Zero Page,X   LDY $44,X     $B4  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 4, opcode_B4); // Zero Page,X   LDY $44,X     $B4  2   4
         case 0xBC:
-            instData = initInstruction(inst, 2, TYPE_ZERO_PAGE_X, (char) 4 + extraCycles, opcode_BC); // Absolute,X    LDY $4400,X   $BC  3   4+
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, (char)(4 + extraCycles), opcode_BC); // Absolute,X    LDY $4400,X   $BC  3   4+
         default:
             printf("\tINVALID Control LDY Opcode\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* control_STY_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // STY (STore Y register)
     //   Affects Flags: none
     // Zero Page     STY $44       $84  2   3
     // Absolute      STY $4400     $8C  3   4
     // Zero Page,X   STY $44,X     $94  2   4
-
-    Instruction* instData = NULL;
+    */
     switch(inst[0]){
         case 0x84:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_84);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_84);
         case 0x8C:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_8C);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_8C);
         case 0x94:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 4, opcode_94);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 4, opcode_94);
         default:
             printf("\tINVALID Control STY Opcode\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* control_SHY_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // http://nesdev.com/undocumented_opcodes.txt
     // SHY ()
     //   Affects Flags: None
@@ -478,19 +435,16 @@ Instruction* control_SHY_Opcodes(unsigned char* inst, char extraCycles){
     // + 1. Store the result in memory.
 
     // M =3D Y AND HIGH(arg) + 1
-
-    Instruction* instData = NULL;
+    */
     if(inst[0] == 0x9C){
-        instData = initInstruction(inst, 3, TYPE_ABSOLUTE_X, 5, opcode_9C);
+        return initInstruction(inst, TYPE_ABSOLUTE_X, 5, opcode_9C);
     }
-    else{
-        printf("\tINVALID Control SHY Opcode\n");
-        instData = NULL;
-    }
-    return instData;
+    printf("\tINVALID Control SHY Opcode\n");
+    return NULL;
 }
 
 Instruction* control_CPY_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // CPY (ComPare Y register)
     //   Affects Flags: S Z C
     // Immediate     CPY #$44      $C0  2   2
@@ -498,25 +452,18 @@ Instruction* control_CPY_Opcodes(unsigned char* inst, char extraCycles){
     // Absolute      CPY $4400     $CC  3   4
 
     // Operation and flag results are identical to equivalent mode accumulator <a href="#CMP">CMP</a> ops.
-
-    Instruction* instData = NULL;
+    */
     switch(inst[0]){
         case 0xC0:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_C0);
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_C0);
         case 0xC4:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_C4);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_C4);
         case 0xCC:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_CC);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_CC);
         default:
             printf("\tINVALID Control CPY Opcode\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* control_CPX_Opcodes(unsigned char* inst, char extraCycles){
@@ -528,300 +475,233 @@ Instruction* control_CPX_Opcodes(unsigned char* inst, char extraCycles){
 
     // Operation and flag results are identical to equivalent mode accumulator <a href="#CMP">CMP</a> ops.
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xE0:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_E0);
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_E0);
         case 0xE4:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_E4);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_E4);
         case 0xEC:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_EC);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_EC);
         default:
             printf("\tINVALID Control CPX Opcode\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* control_NOP_Opcodes(unsigned char* inst, char extraCycles){
-    Instruction* instData = NULL;
-    unsigned char opcode = inst[0];
-
-    if((opcode & 0b11) == 0b00){
-        // Control opcode NOP
-        if(opcode == 0x80){
-            // printf("\tIMMEDIATE NOP\n");
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_80);
-        }
-        else if(((opcode & 0b10011111) == 0b00000100) && ((opcode & 0b01000000) | ~(opcode & 0b00100000))){
-            // printf("\tZERO PAGE NOP\n");
-            if(opcode == 0x04){
-                instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 2, opcode_04);
-            }
-            else if(opcode == 0x44){
-                instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 2, opcode_44);
-            }
-            else if(opcode == 0x64){
-                instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 2, opcode_64);
-            }
-            else{
-                printf("\tINVALID ZERO PAGE NOP\n");
-            }
-        }
-        else if(opcode == 0x0C){
-            // printf("\tABSOLUTE NOP\n");
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 2, opcode_0C);
-        }
-        else if(((opcode & 0b00011111) == 0b00010100) && (~(opcode & 0b10000000) | (opcode & 0b01000000))){
-            // printf("\tZERO PAGE X NOP\n");
-            if(opcode == 0x14){
-                instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 2, opcode_14);
-            }
-            else if(opcode == 0x34){
-                instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 2, opcode_34);
-            }
-            else if(opcode == 0x54){
-                instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 2, opcode_54);
-            }
-            else if(opcode == 0x74){
-                instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 2, opcode_74);
-            }
-            else if(opcode == 0xD4){
-                instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 2, opcode_D4);
-            }
-            else if(opcode == 0xF4){
-                instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 2, opcode_F4);
-            }
-            else{
-                printf("\tINVALID ZERO PAGE X NOP\n");
-            }
-        }
-        else if(((opcode & 0b00011111) == 0b00011100) && (~(opcode & 0b10000000) | (opcode & 0b01000000))){
-            printf("\tABSOLUTE X NOP\n");
-            if(opcode == 0x1C){
-                instData = initInstruction(inst, 1, TYPE_ABSOLUTE_X, 2, opcode_1C);
-            }
-            else if(opcode == 0x3C){
-                instData = initInstruction(inst, 1, TYPE_ABSOLUTE_X, 2, opcode_3C);
-            }
-            else if(opcode == 0x5C){
-                instData = initInstruction(inst, 1, TYPE_ABSOLUTE_X, 2, opcode_5C);
-            }
-            else if(opcode == 0x7C){
-                instData = initInstruction(inst, 1, TYPE_ABSOLUTE_X, 2, opcode_7C);
-            }
-            else if(opcode == 0xDC){
-                instData = initInstruction(inst, 1, TYPE_ABSOLUTE_X, 2, opcode_DC);
-            }
-            else if(opcode == 0xFC){
-                instData = initInstruction(inst, 1, TYPE_ABSOLUTE_X, 2, opcode_FC);
-            }
-            else{
-                printf("\tINVALID ABSOLUTE X NOP\n");
-            }
-        }
-        else{
-            // printf("\tINVALID CONTROL NOP\n");
-            instData = NULL;
-        }
-    }
-
-    else{
+    if((inst[0] & (BIT_1 | BIT_0)) != 0x0){
         printf("\tINVALID NOP\n");
-        instData = NULL;
+        return NULL;
     }
 
-    return instData;
+    switch(inst[0]){
+        case 0x80:
+            // printf("\tIMMEDIATE NOP\n");
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_80);
+        case 0x04:
+            return initInstruction(inst, TYPE_ZERO_PAGE, 2, opcode_04);
+        case 0x44:
+            return initInstruction(inst, TYPE_ZERO_PAGE, 2, opcode_44);
+        case 0x64:
+            return initInstruction(inst, TYPE_ZERO_PAGE, 2, opcode_64);
+        case 0x0C:
+            // printf("\tABSOLUTE NOP\n");
+            return initInstruction(inst, TYPE_ABSOLUTE, 2, opcode_0C);
+        case 0x14:
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 2, opcode_14);
+        case 0x34:
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 2, opcode_34);
+        case 0x54:
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 2, opcode_54);
+        case 0x74:
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 2, opcode_74);
+        case 0xD4:
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 2, opcode_D4);
+        case 0xF4:
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 2, opcode_F4);
+        case 0x1C:
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 2, opcode_1C);
+        case 0x3C:
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 2, opcode_3C);
+        case 0x5C:
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 2, opcode_5C);
+        case 0x7C:
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 2, opcode_7C);
+        case 0xDC:
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 2, opcode_DC);
+        case 0xFC:
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 2, opcode_FC);
+
+        default:
+            printf("\tINVALID CONTROL NOP\n");
+            return NULL;
+    }
 }
 
 //CONTROL
 Instruction* controlInstructionOpcodes(unsigned char* inst, char extraCycles){
-    if((inst[0] & 0b11) != 0b00){
+    if((inst[0] & (BIT_1 | BIT_0)) != 0x0){
         // error
         return NULL;
     }
-    Instruction* instData = NULL;
-
-    if((inst[0] & 0b00011111) == 0b00010000){ // Branching instructions
-        // printf("\tcontrol Branching Instructions\n");
-        instData = control_Branching_Opcodes(inst, extraCycles);
+    switch(inst[0]){
+        case 0x10:
+        case 0x30:
+        case 0x50:
+        case 0x70:
+        case 0x90:
+        case 0xB0:
+        case 0xD0:
+        case 0xF0:
+            // printf("\tcontrol Branching Instructions\n");
+            return control_Branching_Opcodes(inst, extraCycles);
+        case 0x18:
+        case 0x38:
+        case 0x58:
+        case 0x78:
+        case 0xB8:
+        case 0xD8:
+        case 0xF8:
+            // printf("\tcontrol Flag Instructions\n");
+            return control_Flag_Opcodes(inst, extraCycles);
+        case 0x08:
+        case 0x28:
+        case 0x48:
+        case 0x68:
+            // printf("\tcontrol Stack Instructions\n");
+            return control_STACK_Opcodes(inst, extraCycles);
+        case 0x88:
+        case 0x98:
+        case 0xA8:
+        case 0xC8:
+        case 0xE8:
+            // printf("\tcontrol Register Instructions\n");
+            return control_register_Opcodes(inst, extraCycles);
+        case 0xA0:
+        case 0xA4:
+        case 0xAC:
+        case 0xB4:
+        case 0xBC:
+            // printf("\tControl LDY Instructions)\n");
+            return control_LDY_Opcodes(inst, extraCycles);
+        case 0x24:
+        case 0x2C:
+            // printf("\tControl BIT Instructions)\n");
+            return control_BIT_Opcodes(inst, extraCycles);
+        case 0x4C:
+        case 0x6C:
+            // printf("\tControl JMP Instructions)\n");
+            return control_JMP_Opcodes(inst, extraCycles);
+        case 0x84:
+        case 0x8C:
+        case 0x94:
+            // printf("\tControl STY Instructions)\n");
+            return control_STY_Opcodes(inst, extraCycles);
+        case 0xC0:
+        case 0xC4:
+        case 0xCC:
+            // printf("\tControl CPY Instructions)\n");
+            return control_CPY_Opcodes(inst, extraCycles);
+        case 0xE0:
+        case 0xE4:
+        case 0xEC:
+            // printf("\tControl CPX Instructions)\n");
+            return control_CPX_Opcodes(inst, extraCycles);
+        case 0x20:
+            // printf("\tControl JSR Instructions)\n");
+            return control_JSR_Opcodes(inst, extraCycles);
+        case 0x60:
+            // printf("\tControl RTS Instructions)\n");
+            return control_RTS_Opcodes(inst, extraCycles);
+        case 0x00:
+            // printf("\tControl BRK Instructions)\n");
+            return control_BRK_Opcodes(inst, extraCycles);
+        case 0x40:
+            // printf("\tControl RTI Instructions)\n");
+            return control_RTI_Opcodes(inst, extraCycles);
+        case 0x9C:
+            // printf("\tControl undocumented SHY Instructions)\n");
+            return control_SHY_Opcodes(inst, extraCycles);
+        default:
+            return control_NOP_Opcodes(inst, extraCycles);
     }
-    else if(((inst[0] & 0b00011111) == 0b00011000) && (inst[0] != 0x98)){ // Flag instructions
-        // printf("\tcontrol Flag Instructions\n");
-        instData = control_Flag_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0x08 || inst[0] == 0x28 || inst[0] == 0x48 || inst[0] == 0x68){
-        // printf("\tcontrol Stack Instructions\n");
-        instData = control_STACK_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0x88 || inst[0] == 0x98 || inst[0] == 0xA8 || inst[0] == 0xC8 || inst[0] == 0xE8){
-        // printf("\tcontrol Register Instructions\n");
-        instData = control_register_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0xA0 || inst[0] == 0xA4 || inst[0] == 0xAC || inst[0] == 0xB4 || inst[0] == 0xBC){
-        // printf("\tControl LDY Instructions)\n");
-        instData = control_LDY_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0x20){
-        // printf("\tControl JSR Instructions)\n");
-        instData = control_JSR_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0x60){
-        // printf("\tControl RTS Instructions)\n");
-        instData = control_RTS_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0x00){
-        // printf("\tControl BRK Instructions)\n");
-        instData = control_BRK_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0x24 || inst[0] == 0x2C){
-        // printf("\tControl BIT Instructions)\n");
-        instData = control_BIT_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0x40){
-        // printf("\tControl RTI Instructions)\n");
-        instData = control_RTI_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0x4C || inst[0] == 0x6C){
-        // printf("\tControl JMP Instructions)\n");
-        instData = control_JMP_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0x84 || inst[0] == 0x8C || inst[0] == 0x94){
-        // printf("\tControl STY Instructions)\n");
-        instData = control_STY_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0x9C){
-        // printf("\tControl undocumented SHY Instructions)\n");
-        instData = control_SHY_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0xC0 || inst[0] == 0xC4 || inst[0] == 0xCC){
-        // printf("\tControl CPY Instructions)\n");
-        instData = control_CPY_Opcodes(inst, extraCycles);
-    }
-    else if(inst[0] == 0xE0 || inst[0] == 0xE4 || inst[0] == 0xEC){
-        // printf("\tControl CPX Instructions)\n");
-        instData = control_CPX_Opcodes(inst, extraCycles);
-    }
-    else{
-        instData = control_NOP_Opcodes(inst, extraCycles);
-    }
-    return instData;
 }
-
 
 
 //ALU
 Instruction* ALU_ORA_Opcode(unsigned char* inst, char extraCycles){
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x01:
-            instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_01); // Indirect,X    ORA ($44,X)   $01  2   6
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_X, 6, opcode_01); // Indirect,X    ORA ($44,X)   $01  2   6
         case 0x05:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_05); // Zero Page     ORA $44       $05  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_05); // Zero Page     ORA $44       $05  2   3
         case 0x09:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_09); // Immediate     ORA #$44      $09  2   2
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_09); // Immediate     ORA #$44      $09  2   2
         case 0x0D:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_0D); // Absolute      ORA $4400     $0D  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_0D); // Absolute      ORA $4400     $0D  3   4
         case 0x11:
-            instData = initInstruction(inst, SIZE_INDIRECT_Y, TYPE_INDIRECT_Y, (char) 5 + extraCycles, opcode_11); // Indirect,Y    ORA ($44),Y   $11  2   5+
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_Y, (char)(5 + extraCycles), opcode_11); // Indirect,Y    ORA ($44),Y   $11  2   5+
         case 0x15:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 4, opcode_15); // Zero Page,X   ORA $44,X     $15  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 4, opcode_15); // Zero Page,X   ORA $44,X     $15  2   4
         case 0x19:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, (char) 4 + extraCycles, opcode_19); // Absolute,Y    ORA $4400,Y   $19  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_Y, (char)(4 + extraCycles), opcode_19); // Absolute,Y    ORA $4400,Y   $19  3   4+
         case 0x1D:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, (char) 4 + extraCycles, opcode_1D); // Absolute,X    ORA $4400,X   $1D  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, (char)(4 + extraCycles), opcode_1D); // Absolute,X    ORA $4400,X   $1D  3   4+
         default:
             printf("\tINVALID ORA\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* ALU_AND_Opcode(unsigned char* inst, char extraCycles){
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x21:
-            instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_21); // Indirect,X    AND ($44,X)   $21  2   6
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_X, 6, opcode_21); // Indirect,X    AND ($44,X)   $21  2   6
         case 0x25:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_25); // Zero Page     AND $44       $25  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_25); // Zero Page     AND $44       $25  2   3
         case 0x29:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_29); // Immediate     AND #$44      $29  2   2
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_29); // Immediate     AND #$44      $29  2   2
         case 0x2D:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_2D); // Absolute      AND $4400     $2D  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_2D); // Absolute      AND $4400     $2D  3   4
         case 0x31:
-            instData = initInstruction(inst, SIZE_INDIRECT_Y, TYPE_INDIRECT_Y, (char) 5 + extraCycles, opcode_31); // Indirect,Y    AND ($44),Y   $31  2   5+
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_Y, (char)(5 + extraCycles), opcode_31); // Indirect,Y    AND ($44),Y   $31  2   5+
         case 0x35:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 4, opcode_35); // Zero Page,X   AND $44,X     $35  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 4, opcode_35); // Zero Page,X   AND $44,X     $35  2   4
         case 0x39:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, (char) 4 + extraCycles, opcode_39); // Absolute,Y    AND $4400,Y   $39  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_Y, (char)(4 + extraCycles), opcode_39); // Absolute,Y    AND $4400,Y   $39  3   4+
         case 0x3D:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, (char) 4 + extraCycles, opcode_3D); // Absolute,X    AND $4400,X   $3D  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, (char)(4 + extraCycles), opcode_3D); // Absolute,X    AND $4400,X   $3D  3   4+
         default:
             printf("\tINVALID AND\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* ALU_EOR_Opcode(unsigned char* inst, char extraCycles){
     // EOR (bitwise Exclusive OR)
     //   Affects Flags: S Z
     // + add 1 cycle if page boundary crossed
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x41:
-            instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_41); // Indirect,X    EOR ($44,X)   $41  2   6
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_X, 6, opcode_41); // Indirect,X    EOR ($44,X)   $41  2   6
         case 0x45:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_45); // Zero Page     EOR $44       $45  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_45); // Zero Page     EOR $44       $45  2   3
         case 0x49:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_49); // Immediate     EOR #$44      $49  2   2
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_49); // Immediate     EOR #$44      $49  2   2
         case 0x4D:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_4D); // Absolute      EOR $4400     $4D  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_4D); // Absolute      EOR $4400     $4D  3   4
         case 0x51:
-            instData = initInstruction(inst, SIZE_INDIRECT_Y, TYPE_INDIRECT_Y, (char) 5 + extraCycles, opcode_51); // Indirect,Y    EOR ($44),Y   $51  2   5+
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_Y, (char)(5 + extraCycles), opcode_51); // Indirect,Y    EOR ($44),Y   $51  2   5+
         case 0x55:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 4, opcode_55); // Zero Page,X   EOR $44,X     $55  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 4, opcode_55); // Zero Page,X   EOR $44,X     $55  2   4
         case 0x59:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, (char) 4 + extraCycles, opcode_59); // Absolute,Y    EOR $4400,Y   $59  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_Y, (char)(4 + extraCycles), opcode_59); // Absolute,Y    EOR $4400,Y   $59  3   4+
         case 0x5D:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, (char) 4 + extraCycles, opcode_5D); // Absolute,X    EOR $4400,X   $5D  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, (char)(4 + extraCycles), opcode_5D); // Absolute,X    EOR $4400,X   $5D  3   4+
         default:
             printf("\tINVALID EOR\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCycles){
@@ -834,76 +714,54 @@ Instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCycles){
 
     // There is no way to add without carry.
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x61:
-            instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_61); // Indirect,X    ADC ($44,X)   $61  2   6
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_X, 6, opcode_61); // Indirect,X    ADC ($44,X)   $61  2   6
         case 0x65:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_65); // Zero Page     ADC $44       $65  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_65); // Zero Page     ADC $44       $65  2   3
         case 0x69:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_69); // Immediate     ADC #$44      $69  2   2
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_69); // Immediate     ADC #$44      $69  2   2
         case 0x6D:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_6D); // Absolute      ADC $4400     $6D  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_6D); // Absolute      ADC $4400     $6D  3   4
         case 0x71:
-            instData = initInstruction(inst, SIZE_INDIRECT_Y, TYPE_INDIRECT_Y, (char) 5 + extraCycles, opcode_71); // Indirect,Y    ADC ($44),Y   $71  2   5+
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_Y, (char)(5 + extraCycles), opcode_71); // Indirect,Y    ADC ($44),Y   $71  2   5+
         case 0x75:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 4, opcode_75); // Zero Page,X   ADC $44,X     $75  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 4, opcode_75); // Zero Page,X   ADC $44,X     $75  2   4
         case 0x79:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, (char) 4 + extraCycles, opcode_79); // Absolute,Y    ADC $4400,Y   $79  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_Y, (char)(4 + extraCycles), opcode_79); // Absolute,Y    ADC $4400,Y   $79  3   4+
         case 0x7D:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, (char) 4 + extraCycles, opcode_7D); // Absolute,X    ADC $4400,X   $7D  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, (char)(4 + extraCycles), opcode_7D); // Absolute,X    ADC $4400,X   $7D  3   4+
         default:
             printf("\tINVALID ADC\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* ALU_STA_Opcode(unsigned char* inst, char extraCycles){
     // STA (STore Accumulator)
     //   Affects Flags: none
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x81:
-            instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_81); // Indirect,X    STA ($44,X)   $81  2   6
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_X, 6, opcode_81); // Indirect,X    STA ($44,X)   $81  2   6
         case 0x85:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_85); // Zero Page     STA $44       $85  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_85); // Zero Page     STA $44       $85  2   3
         case 0x89: // NOP
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_89); // NOP // Immediate     ADC #$44      $69  2   2
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_89); // NOP // Immediate     ADC #$44      $69  2   2
         case 0x8D:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_8D);  // Absolute      STA $4400     $8D  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_8D);  // Absolute      STA $4400     $8D  3   4
         case 0x91:
-            instData = initInstruction(inst, SIZE_INDIRECT_Y, TYPE_INDIRECT_Y, 6, opcode_91); // Indirect,Y    STA ($44),Y   $91  2   6
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_Y, 6, opcode_91); // Indirect,Y    STA ($44),Y   $91  2   6
         case 0x95:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 4, opcode_95); // Zero Page,X   STA $44,X     $95  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 4, opcode_95); // Zero Page,X   STA $44,X     $95  2   4
         case 0x99:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, 5, opcode_99); // Absolute,Y    STA $4400,Y   $99  3   5
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_Y, 5, opcode_99); // Absolute,Y    STA $4400,Y   $99  3   5
         case 0x9D:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, 5, opcode_9D); // Absolute,X    STA $4400,X   $9D  3   5
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 5, opcode_9D); // Absolute,X    STA $4400,X   $9D  3   5
         default:
             printf("\tINVALID STA\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* ALU_LDA_Opcode(unsigned char* inst, char extraCycles){
@@ -912,38 +770,27 @@ Instruction* ALU_LDA_Opcode(unsigned char* inst, char extraCycles){
 
     // + add 1 cycle if page boundary crossed
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xA1:
-            instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_A1); // Indirect,X    LDA ($44,X)   $A1  2   6
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_X, 6, opcode_A1); // Indirect,X    LDA ($44,X)   $A1  2   6
         case 0xA5:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_A5); // Zero Page     LDA $44       $A5  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_A5); // Zero Page     LDA $44       $A5  2   3
         case 0xA9:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_A9); // Immediate     LDA #$44      $A9  2   2
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_A9); // Immediate     LDA #$44      $A9  2   2
         case 0xAD:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_AD); // Absolute      LDA $4400     $AD  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_AD); // Absolute      LDA $4400     $AD  3   4
         case 0xB1:
-            instData = initInstruction(inst, SIZE_INDIRECT_Y, TYPE_INDIRECT_Y, (char) 5 + extraCycles, opcode_B1); // Indirect,Y    LDA ($44),Y   $B1  2   5+
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_Y, (char)(5 + extraCycles), opcode_B1); // Indirect,Y    LDA ($44),Y   $B1  2   5+
         case 0xB5:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 4, opcode_B5); // Zero Page,X   LDA $44,X     $B5  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 4, opcode_B5); // Zero Page,X   LDA $44,X     $B5  2   4
         case 0xB9:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, (char) 4 + extraCycles, opcode_B9); // Absolute,Y    LDA $4400,Y   $B9  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_Y, (char)(4 + extraCycles), opcode_B9); // Absolute,Y    LDA $4400,Y   $B9  3   4+
         case 0xBD:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, (char) 4 + extraCycles, opcode_BD); // Absolute,X    LDA $4400,X   $BD  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, (char)(4 + extraCycles), opcode_BD); // Absolute,X    LDA $4400,X   $BD  3   4+
         default:
             printf("\tINVALID LDA\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCycles){
@@ -955,40 +802,27 @@ Instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCycles){
     // in the accumulator is equal or greater than the compared value, the Carry will
     // be set. The equal (Z) and sign (S) flags will be set based on equality or lack
     // thereof and the sign (i.e. A&gt;=$80) of the accumulator.
-
-
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xC1:
-            instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_C1); // Indirect,X    CMP ($44,X)   $C1  2   6
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_X, 6, opcode_C1); // Indirect,X    CMP ($44,X)   $C1  2   6
         case 0xC5:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_C5); // Zero Page     CMP $44       $C5  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_C5); // Zero Page     CMP $44       $C5  2   3
         case 0xC9:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_C9); // Immediate     CMP #$44      $C9  2   2
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_C9); // Immediate     CMP #$44      $C9  2   2
         case 0xCD:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_CD); // Absolute      CMP $4400     $CD  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_CD); // Absolute      CMP $4400     $CD  3   4
         case 0xD1:
-            instData = initInstruction(inst, SIZE_INDIRECT_Y, TYPE_INDIRECT_Y, (char) 5 + extraCycles, opcode_D1); // Indirect,Y    CMP ($44),Y   $D1  2   5+   $B1  2   5+
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_Y, (char)(5 + extraCycles), opcode_D1); // Indirect,Y    CMP ($44),Y   $D1  2   5+   $B1  2   5+
         case 0xD5:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 4, opcode_D5); // Zero Page,X   CMP $44,X     $D5  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 4, opcode_D5); // Zero Page,X   CMP $44,X     $D5  2   4
         case 0xD9:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, (char) 4 + extraCycles, opcode_D9); // Absolute,Y    CMP $4400,Y   $D9  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_Y, (char)(4 + extraCycles), opcode_D9); // Absolute,Y    CMP $4400,Y   $D9  3   4+
         case 0xDD:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, (char) 4 + extraCycles, opcode_DD); // Absolute,X    CMP $4400,X   $DD  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, (char)(4 + extraCycles), opcode_DD); // Absolute,X    CMP $4400,X   $DD  3   4+
         default:
             printf("\tINVALID CMP\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* ALU_SBC_Opcode(unsigned char* inst, char extraCycles){
@@ -1003,90 +837,67 @@ Instruction* ALU_SBC_Opcode(unsigned char* inst, char extraCycles){
     // borrow. i.e, to subtract you set the carry before the operation. If the carry is
     // cleared by the operation, it indicates a borrow occurred.
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xE1:
-            instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_E1); // Indirect,X    SBC ($44,X)   $E1  2   6
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_X, 6, opcode_E1); // Indirect,X    SBC ($44,X)   $E1  2   6
         case 0xE5:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_E5); // Zero Page     SBC $44       $E5  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_E5); // Zero Page     SBC $44       $E5  2   3
         case 0xE9:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_E9); // Immediate     SBC #$44      $E9  2   2
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_E9); // Immediate     SBC #$44      $E9  2   2
         case 0xED:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_ED); // Absolute      SBC $4400     $ED  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_ED); // Absolute      SBC $4400     $ED  3   4
         case 0xF1:
-            instData = initInstruction(inst, SIZE_INDIRECT_Y, TYPE_INDIRECT_Y, (char) 5 + extraCycles, opcode_F1); // Indirect,Y    SBC ($44),Y   $F1  2   5+
-            break;
+            return initInstruction(inst, TYPE_INDIRECT_Y, (char)(5 + extraCycles), opcode_F1); // Indirect,Y    SBC ($44),Y   $F1  2   5+
         case 0xF5:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 4, opcode_F5); // Zero Page,X   SBC $44,X     $F5  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 4, opcode_F5); // Zero Page,X   SBC $44,X     $F5  2   4
         case 0xF9:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, (char) 4 + extraCycles, opcode_F9); // Absolute,Y    SBC $4400,Y   $F9  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_Y, (char)(4 + extraCycles), opcode_F9); // Absolute,Y    SBC $4400,Y   $F9  3   4+
         case 0xFD:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, (char) 4 + extraCycles, opcode_FD); // Absolute,X    SBC $4400,X   $FD  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, (char)(4 + extraCycles), opcode_FD); // Absolute,X    SBC $4400,X   $FD  3   4+
         default:
             printf("\tINVALID SBC\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 
 
 // ALU
 Instruction* ALUOpcodes(unsigned char* inst, char extraCycles){
-    if((inst[0] & 0b11) != 0b01){
+    if((inst[0] & (BIT_1 | BIT_0)) != BIT_0){
         // Error
         return NULL;
     }
-    Instruction* instData = NULL;
-    unsigned char type = (unsigned char)(inst[0] & 0b11100011);
-
+    unsigned char type = (unsigned char)(inst[0] & (BIT_7 | BIT_6 | BIT_5));
     switch(type){
-        case 0b00000001: // 0x00
+        case 0x00:
             // printf("\tORA (bitwise OR with Accumulator)\n");
-            instData = ALU_ORA_Opcode(inst, extraCycles);
-            break;
-        case 0b00100001:  // 0x20
+            return ALU_ORA_Opcode(inst, extraCycles);
+        case 0x20:
             // printf("\tAND (bitwise AND with accumulator)\n");
-            instData = ALU_AND_Opcode(inst, extraCycles);
-            break;
-        case 0b01000001: // 0x40
+            return ALU_AND_Opcode(inst, extraCycles);
+        case 0x40:
             // printf("\tEOR (bitwise Exclusive OR)\n");
-            instData = ALU_EOR_Opcode(inst, extraCycles);
-            break;
-        case 0b01100001: // 0x60
+            return ALU_EOR_Opcode(inst, extraCycles);
+        case 0x60:
             // printf("\tADC (ADd with Carry)\n");
-            instData = ALU_ADC_Opcode(inst, extraCycles);
-            break;
-        case 0b10000001: // 0x80
+            return ALU_ADC_Opcode(inst, extraCycles);
+        case 0x80:
             // printf("\tSTA (STore Accumulator) (or NOP)\n");
-            instData = ALU_STA_Opcode(inst, extraCycles);
-            break;
-        case 0b10100001: // 0xA0
+            return ALU_STA_Opcode(inst, extraCycles);
+        case 0xA0:
             // printf("\tLDA (LoaD Accumulator)\n");
-            instData = ALU_LDA_Opcode(inst, extraCycles);
-            break;
-        case 0b11000001: // 0xC0
+            return ALU_LDA_Opcode(inst, extraCycles);
+        case 0xC0:
             // printf("\tCMP (CoMPare accumulator)\n");
-            instData = ALU_CMP_Opcode(inst, extraCycles);
-            break;
-        case 0b11100001: // 0xE0
+            return ALU_CMP_Opcode(inst, extraCycles);
+        case 0xE0:
             // printf("\tSBC (SuBtract with Carry)\n");
-            instData = ALU_SBC_Opcode(inst, extraCycles);
-            break;
+            return ALU_SBC_Opcode(inst, extraCycles);
         default:
             printf("\tERROR\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 
@@ -1104,29 +915,21 @@ Instruction* RMW_ASL_Opcodes(unsigned char* inst, char extraCycles){
     // ASL shifts all bits left one position. 0 is shifted into bit 0 and the
     // original bit 7 is shifted into the Carry..
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x06:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_06);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 5, opcode_06);
         case 0x0A:
-            instData = initInstruction(inst, SIZE_ACCUMULATOR, TYPE_ACCUMULATOR, 2, opcode_0A);
-            break;
+            return initInstruction(inst, TYPE_ACCUMULATOR, 2, opcode_0A);
         case 0x0E:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 6, opcode_0E);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 6, opcode_0E);
         case 0x16:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 6, opcode_16);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 6, opcode_16);
         case 0x1E:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, 7, opcode_1E);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 7, opcode_1E);
         default:
             printf("\tINVALID ASL\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCycles){
@@ -1141,29 +944,21 @@ Instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCycles){
     // ROL shifts all bits left one position. The Carry is shifted into bit 0 and
     // the original bit 7 is shifted into the Carry.
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x26:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_26);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 5, opcode_26);
         case 0x2A:
-            instData = initInstruction(inst, SIZE_ACCUMULATOR, TYPE_ACCUMULATOR, 2, opcode_2A);
-            break;
+            return initInstruction(inst, TYPE_ACCUMULATOR, 2, opcode_2A);
         case 0x36:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 6, opcode_36);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 6, opcode_36);
         case 0x2E:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 6, opcode_2E);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 6, opcode_2E);
         case 0x3E:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, 7, opcode_3E);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 7, opcode_3E);
         default:
             printf("\tINVALID ROL\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* RMW_LSR_Opcodes(unsigned char* inst, char extraCycles){
@@ -1178,29 +973,21 @@ Instruction* RMW_LSR_Opcodes(unsigned char* inst, char extraCycles){
     // LSR shifts all bits right one position. 0 is shifted into bit 7 and the
     // original bit 0 is shifted into the Carry.
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x46:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_46);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 5, opcode_46);
         case 0x4A:
-            instData = initInstruction(inst, SIZE_ACCUMULATOR, TYPE_ACCUMULATOR, 2, opcode_4A);
-            break;
+            return initInstruction(inst, TYPE_ACCUMULATOR, 2, opcode_4A);
         case 0x4E:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 6, opcode_4E);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 6, opcode_4E);
         case 0x56:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 6, opcode_56);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 6, opcode_56);
         case 0x5E:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, 7, opcode_5E);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 7, opcode_5E);
         default:
             printf("\tINVALID LSR\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* RMW_ROR_Opcodes(unsigned char* inst, char extraCycles){
@@ -1208,81 +995,59 @@ Instruction* RMW_ROR_Opcodes(unsigned char* inst, char extraCycles){
     //   Affects Flags: S Z C
     // ROR shifts all bits right one position. The Carry is shifted into bit 7
     // and the original bit 0 is shifted into the Carry.
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x66:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_66); // Zero Page     ROR $44       $66  2   5
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 5, opcode_66); // Zero Page     ROR $44       $66  2   5
         case 0x6A:
-            instData = initInstruction(inst, SIZE_ACCUMULATOR, TYPE_ACCUMULATOR, 2, opcode_6A); // Accumulator   ROR A         $6A  1   2
-            break;
+            return initInstruction(inst, TYPE_ACCUMULATOR, 2, opcode_6A); // Accumulator   ROR A         $6A  1   2
         case 0x6E:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 6, opcode_6E); // Absolute      ROR $4400     $6E  3   6
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 6, opcode_6E); // Absolute      ROR $4400     $6E  3   6
         case 0x76:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 6, opcode_76); // Zero Page,X   ROR $44,X     $76  2   6
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 6, opcode_76); // Zero Page,X   ROR $44,X     $76  2   6
         case 0x7E:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, 7, opcode_7E); // Absolute,X    ROR $4400,X   $7E  3   7
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 7, opcode_7E); // Absolute,X    ROR $4400,X   $7E  3   7
         default:
             printf("\tINVALID ROR\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* RMW_LDX_Opcodes(unsigned char* inst, char extraCycles){
     // LDX (LoaD X register)
     //   Affects Flags: S Z
     // + add 1 cycle if page boundary crossed
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xA2:
-            instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_A2); // Immediate     LDX #$44      $A2  2   2
-            break;
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_A2); // Immediate     LDX #$44      $A2  2   2
         case 0xA6:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_A6); // Zero Page     LDX $44       $A6  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_A6); // Zero Page     LDX $44       $A6  2   3
         case 0xB6:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_Y, TYPE_ZERO_PAGE_Y, 4, opcode_B6); // Zero Page,Y   LDX $44,Y     $B6  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_Y, 4, opcode_B6); // Zero Page,Y   LDX $44,Y     $B6  2   4
         case 0xAE:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_AE); // Absolute      LDX $4400     $AE  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_AE); // Absolute      LDX $4400     $AE  3   4
         case 0xBE:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, (char) 4 + extraCycles, opcode_BE); // Absolute,Y    LDX $4400,Y   $BE  3   4+
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_Y, (char)(4 + extraCycles), opcode_BE); // Absolute,Y    LDX $4400,Y   $BE  3   4+
         default:
             printf("\tINVALID LDX\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* RMW_STX_Opcodes(unsigned char* inst, char extraCycles){
     // STX (STore X register)
     //   Affects Flags: none
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x86:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_86); // Zero Page     STX $44       $86  2   3
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 3, opcode_86); // Zero Page     STX $44       $86  2   3
         case 0x8E:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 4, opcode_8E); // Absolute      STX $4400     $8E  3   4
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 4, opcode_8E); // Absolute      STX $4400     $8E  3   4
         case 0x96:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_Y, TYPE_ZERO_PAGE_Y, 4, opcode_96); // Zero Page,Y   STX $44,Y     $96  2   4
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_Y, 4, opcode_96); // Zero Page,Y   STX $44,Y     $96  2   4
         default:
             printf("\tINVALID STX\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-    return instData;
 }
 
 Instruction* RMW_STACK_Opcodes(unsigned char* inst, char extraCycles){
@@ -1292,24 +1057,17 @@ Instruction* RMW_STACK_Opcodes(unsigned char* inst, char extraCycles){
     // other microprocessors. With the 6502, the stack is always on page one
     // ($100-$1FF) and works top down.
 
-    Instruction* instData = NULL;
-
     switch(inst[0]){
         case 0x9A:
             // printf("\tTXS (Transfer X to Stack ptr)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_9A); // TXS (Transfer X to Stack ptr)   $9A  2
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_9A); // TXS (Transfer X to Stack ptr)   $9A  2
         case 0xBA:
             // printf("\tTSX (Transfer Stack ptr to X)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_BA); // TSX (Transfer Stack ptr to X)   $BA  2
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_BA); // TSX (Transfer Stack ptr to X)   $BA  2
         default:
             printf("\tINVALID RMW STACK\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* RMW_register_Opcodes(unsigned char* inst, char extraCycles){
@@ -1318,54 +1076,39 @@ Instruction* RMW_register_Opcodes(unsigned char* inst, char extraCycles){
     // These instructions are implied mode, have a length of one byte and require
     // two machine cycles.
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x8A:
             // printf("\tTXA (Transfer X to A)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_8A); // TXA (Transfer X to A)    $8A
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_8A); // TXA (Transfer X to A)    $8A
         case 0xAA:
             // printf("\tTAX (Transfer A to X)\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_AA); // TAX (Transfer A to X)    $AA
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_AA); // TAX (Transfer A to X)    $AA
         case 0xCA:
             // printf("\tDEX (DEcrement X))\n");
-            instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_CA); // DEX (DEcrement X)        $CA
-            break;
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_CA); // DEX (DEcrement X)        $CA
         default:
             printf("\tINVALID RMW REGISTER OPCODE\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* RMW_INC_Opcodes(unsigned char* inst, char extraCycles){
     // INC (INCrement memory)
     //   Affects Flags: S Z
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xE6:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_E6); // Zero Page     INC $44       $E6  2   5
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 5, opcode_E6); // Zero Page     INC $44       $E6  2   5
         case 0xEE:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 6, opcode_EE); // Absolute      INC $4400     $EE  3   6
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 6, opcode_EE); // Absolute      INC $4400     $EE  3   6
         case 0xF6:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 6, opcode_F6); // Zero Page,X   INC $44,X     $F6  2   6
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 6, opcode_F6); // Zero Page,X   INC $44,X     $F6  2   6
         case 0xFE:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, 7, opcode_FE); // Absolute,X    INC $4400,X   $FE  3   7
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 7, opcode_FE); // Absolute,X    INC $4400,X   $FE  3   7
         default:
             printf("\tINVALID RMW INC OPCODE\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* RMW_DEC_Opcodes(unsigned char* inst, char extraCycles){
@@ -1376,91 +1119,67 @@ Instruction* RMW_DEC_Opcodes(unsigned char* inst, char extraCycles){
     // Zero Page,X   DEC $44,X     $D6  2   6
     // Absolute,X    DEC $4400,X   $DE  3   7
 
-    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xC6:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_C6);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE, 5, opcode_C6);
         case 0xCE:
-            instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 6, opcode_CE);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE, 6, opcode_CE);
         case 0xD6:
-            instData = initInstruction(inst, SIZE_ZERO_PAGE_X, TYPE_ZERO_PAGE_X, 6, opcode_D6);
-            break;
+            return initInstruction(inst, TYPE_ZERO_PAGE_X, 6, opcode_D6);
         case 0xDE:
-            instData = initInstruction(inst, SIZE_ABSOLUTE_X, TYPE_ABSOLUTE_X, 7, opcode_DE);
-            break;
+            return initInstruction(inst, TYPE_ABSOLUTE_X, 7, opcode_DE);
         default:
             printf("\tINVALID RMW DEC OPCODE\n");
-            instData = NULL;
-            break;
+            return NULL;
     }
-
-    return instData;
 }
 
 Instruction* RMW_NOP_Opcodes(unsigned char* inst, char extraCycles){
-    Instruction* instData = NULL;
-    unsigned char opcode = inst[0];
-
-    if(opcode == 0xEA){
-        // NOP (No OPeration)
-        //   Affects Flags: none
-        // NOP is used to reserve space for future modifications or effectively REM
-        // out existing code.
-        // printf("\tofficial NOP\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 2, opcode_EA); // Implied       NOP           $EA  1   2
+    switch(inst[0]){
+        case 0xEA:
+            /*
+            // NOP (No OPeration)
+            //   Affects Flags: none
+            // NOP is used to reserve space for future modifications or effectively REM
+            // out existing code.
+            // printf("\tofficial NOP\n");
+             */
+            return initInstruction(inst, TYPE_IMPLIED, 2, opcode_EA); // Implied       NOP           $EA  1   2
+        case 0x82:
+            // printf("\tRMW IMMEDIATE NOP Opcode\n");
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_82);
+        case 0xC2:
+            // printf("\tRMW IMMEDIATE NOP Opcode\n");
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_C2);
+        case 0xE2:
+            // printf("\tRMW IMMEDIATE NOP Opcode\n");
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_E2);
+        case 0x1A:
+            // printf("\tRMW IMPLIED NOP Opcode\n");
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_1A);
+        case 0x3A:
+            // printf("\tRMW IMPLIED NOP Opcode\n");
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_3A);
+        case 0x5A:
+            // printf("\tRMW IMPLIED NOP Opcode\n");
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_5A);
+        case 0x7A:
+            // printf("\tRMW IMPLIED NOP Opcode\n");
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_7A);
+        case 0xDA:
+            // printf("\tRMW IMPLIED NOP Opcode\n");
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_DA);
+        case 0xFA:
+            // printf("\tRMW IMPLIED NOP Opcode\n");
+            return initInstruction(inst, TYPE_IMMEDIATE, 2, opcode_FA);
+        default:
+            printf("\tINVALID NOP\n");
+            return NULL;
     }
-
-    else{
-        switch(opcode){
-            case 0x82:
-                // printf("\tRMW IMMEDIATE NOP Opcode\n");
-                instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_82);
-                break;
-            case 0xC2:
-                // printf("\tRMW IMMEDIATE NOP Opcode\n");
-                instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_C2);
-                break;
-            case 0xE2:
-                // printf("\tRMW IMMEDIATE NOP Opcode\n");
-                instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_E2);
-                break;
-            case 0x1A:
-                // printf("\tRMW IMPLIED NOP Opcode\n");
-                instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_1A);
-                break;
-            case 0x3A:
-                // printf("\tRMW IMPLIED NOP Opcode\n");
-                instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_3A);
-                break;
-            case 0x5A:
-                // printf("\tRMW IMPLIED NOP Opcode\n");
-                instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_5A);
-                break;
-            case 0x7A:
-                // printf("\tRMW IMPLIED NOP Opcode\n");
-                instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_7A);
-                break;
-            case 0xDA:
-                // printf("\tRMW IMPLIED NOP Opcode\n");
-                instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_DA);
-                break;
-            case 0xFA:
-                // printf("\tRMW IMPLIED NOP Opcode\n");
-                instData = initInstruction(inst, 0, TYPE_IMMEDIATE, 2, opcode_FA);
-                break;
-            default:
-                printf("\tINVALID NOP\n");
-                instData = NULL;
-                break;
-        }
-    }
-
-    return instData;
 }
 
 Instruction* RMW_STP_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // http://nesdev.com/undocumented_opcodes.txt
     // STP (KIL (JAM) [HLT])
     // =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
@@ -1481,66 +1200,54 @@ Instruction* RMW_STP_Opcodes(unsigned char* inst, char extraCycles){
     // Implied     |KIL        |$B2| 1 | -
     // Implied     |KIL        |$D2| 1 | -
     // Implied     |KIL        |$F2| 1 | -
-    Instruction* instData = NULL;
-    unsigned char opcode = inst[0];
+    */
 
-    if(opcode == 0x02){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_02);
+    // printf("\tRMW STP Opcode\n");
+    if(inst[0] == 0x02){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_02);
     }
-    else if(opcode == 0x12){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_12);
+    else if(inst[0] == 0x12){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_12);
     }
-    else if(opcode == 0x22){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_22);
+    else if(inst[0] == 0x22){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_22);
     }
-    else if(opcode == 0x32){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_32);
+    else if(inst[0] == 0x32){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_32);
     }
-    else if(opcode == 0x42){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_42);
+    else if(inst[0] == 0x42){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_42);
     }
-    else if(opcode == 0x52){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_52);
+    else if(inst[0] == 0x52){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_52);
     }
-    else if(opcode == 0x62){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_62);
+    else if(inst[0] == 0x62){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_62);
     }
-    else if(opcode == 0x72){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_72);
+    else if(inst[0] == 0x72){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_72);
     }
-    else if(opcode == 0x92){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_92);
+    else if(inst[0] == 0x92){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_92);
     }
-    else if(opcode == 0xB2){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_B2);
+    else if(inst[0] == 0xB2){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_B2);
     }
-    else if(opcode == 0xD2){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_D2);
+    else if(inst[0] == 0xD2){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_D2);
     }
-    else if(opcode == 0xF2){
-        // printf("\tRMW STP Opcode\n");
-        instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, -1, opcode_F2);
+    else if(inst[0] == 0xF2){
+        return initInstruction(inst, TYPE_IMPLIED, -1, opcode_F2);
     }
     else{
         printf("\tINVALID STP\n");
-        instData = NULL;
     }
 
-    return instData;
+    return NULL;
 }
 
 Instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCycles){
+    /*
     // SXA (SHX) [XAS]
     // =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
     // AND X register with the high byte of the target address of the argument
@@ -1553,117 +1260,140 @@ Instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCycles){
     // Addressing  |Mnemonics  |Opc|Sz | n
     // ------------|-----------|---|---|---
     // Absolute,Y  |SXA arg,Y  |$9E| 3 | 5
+     */
 
-    Instruction* instData = NULL;
     if(inst[0] == 0x9E){
         // printf("\tRMW SHX Opcode\n");
-        instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, 5, opcode_9E);
-    }
-    else{
-        instData = NULL;
-        printf("\tINVALID SHX Opcode\n");
+        return initInstruction(inst, TYPE_ABSOLUTE_Y, 5, opcode_9E);
     }
 
-    return instData;
+    printf("\tINVALID SHX Opcode\n");
+    return NULL;
 
 }
-
 
 
 // RMW
 Instruction* RMW_Opcodes(unsigned char* inst, char extraCycles){
-    if((inst[0] & 0b11) != 0b10){
+    if((inst[0] & (BIT_1 | BIT_0)) != BIT_1){
         // ERROR
         return NULL;
     }
-
-    Instruction* instData = NULL;
-    unsigned char opcode = inst[0];
-    if(opcode == 0x06 || opcode == 0x0A || opcode == 0x0E || opcode == 0x16 || opcode == 0x1E){
-        // printf("\tASL (Arithmetic Shift Left)\n");
-        instData = RMW_ASL_Opcodes(inst, extraCycles);
+    switch(inst[0]){
+        case 0x06:
+        case 0x0A:
+        case 0x0E:
+        case 0x16:
+        case 0x1E:
+            // printf("\tASL (Arithmetic Shift Left)\n");
+            return RMW_ASL_Opcodes(inst, extraCycles);
+        case 0x2A:
+        case 0x26:
+        case 0x2E:
+        case 0x36:
+        case 0x3E:
+            // printf("\tROL (ROtate Left)\n");
+            return RMW_ROL_Opcodes(inst, extraCycles);
+        case 0x46:
+        case 0x4A:
+        case 0x4E:
+        case 0x56:
+        case 0x5E:
+            // printf("\tLSR (Logical Shift Right)\n");
+            return RMW_LSR_Opcodes(inst, extraCycles);
+        case 0x66:
+        case 0x6A:
+        case 0x6E:
+        case 0x76:
+        case 0x7E:
+            // printf("\tROR (ROtate Right)\n");
+            return RMW_ROR_Opcodes(inst, extraCycles);
+        case 0xA2:
+        case 0xA6:
+        case 0xAE:
+        case 0xB6:
+        case 0xBE:
+            // printf("\tLDX (LoaD X register)\n");
+            return RMW_LDX_Opcodes(inst, extraCycles);
+        case 0x86:
+        case 0x8E:
+        case 0x96:
+            // printf("\tSTX (STore X register)\n");
+            return RMW_STX_Opcodes(inst, extraCycles);
+        case 0x9A:
+        case 0xBA:
+            // printf("\tRMW Stack Instructions\n");
+            return RMW_STACK_Opcodes(inst, extraCycles);
+        case 0x8A:
+        case 0xAA:
+        case 0xCA:
+            // printf("\tRMW Register Instructions\n");
+            return RMW_register_Opcodes(inst, extraCycles);
+        case 0xE6:
+        case 0xEE:
+        case 0xF6:
+        case 0xFE:
+            // printf("\tRMW INC Instructions\n");
+            return RMW_INC_Opcodes(inst, extraCycles);
+        case 0xC6:
+        case 0xCE:
+        case 0xD6:
+        case 0xDE:
+            // printf("\tRMW DEC Instructions\n");
+            return RMW_DEC_Opcodes(inst, extraCycles);
+        case 0xEA:
+        case 0xFA:
+        case 0xDA:
+        case 0x7A:
+        case 0x5A:
+        case 0x3A:
+        case 0x1A:
+        case 0xE2:
+        case 0xC2:
+        case 0x82:
+            // printf("\tRMW NOP Instructions\n");
+            return RMW_NOP_Opcodes(inst, extraCycles);
+        case 0x02:
+        case 0x12:
+        case 0x22:
+        case 0x32:
+        case 0x42:
+        case 0x52:
+        case 0x62:
+        case 0x72:
+        case 0x92:
+        case 0xB2:
+        case 0xD2:
+        case 0xF2:
+            // printf("\tRMW STP Instructions\n");
+            return RMW_STP_Opcodes(inst, extraCycles);
+        case 0x9E:
+            // printf("\tRMW SHX Instructions\n");
+            return RMW_SHX_Opcodes(inst, extraCycles);
+        default:
+            return NULL;
     }
-    else if(opcode == 0x2A || opcode == 0x26 || opcode == 0x2E || opcode == 0x36 || opcode == 0x3E){
-        // printf("\tROL (ROtate Left)\n");
-        instData = RMW_ROL_Opcodes(inst, extraCycles);
-    }
-    else if(opcode == 0x4A || opcode == 0x46 || opcode == 0x2E || opcode == 0x56 || opcode == 0x5E){
-        // printf("\tLSR (Logical Shift Right)\n");
-        instData = RMW_LSR_Opcodes(inst, extraCycles);
-    }
-    else if(((opcode & 0b11100011) == 0b01100010) && ((opcode & 0b00000100) || (~(opcode & 0b00010000) & (opcode & 0b00001000)))){ // y = C + A'B // C = 0000 0100 // B = 0000 1000 // A = 0001 0000
-        // printf("\tROR (ROtate Right)\n");
-        instData = RMW_ROR_Opcodes(inst, extraCycles);
-    }
-    else if(((opcode & 0b11100011) == 0b10100010) && (((opcode & 0b00000100) == 0b00000100) | (~((opcode & 0b00010000) == 0b00010000) & ~((opcode & 0b0001000) == 0b00001000)))){
-        // printf("\tLDX (LoaD X register)\n");
-        instData = RMW_LDX_Opcodes(inst, extraCycles);
-    }
-    else if(opcode == 0x86 || opcode == 0x8E || opcode == 0x96){
-        // printf("\tSTX (STore X register)\n");
-        instData = RMW_STX_Opcodes(inst, extraCycles);
-    }
-    // else if()
-    else if(opcode == 0x9A || opcode == 0xBA){
-        // printf("\tRMW Stack Instructions\n");
-        instData = RMW_STACK_Opcodes(inst, extraCycles);
-    }
-    else if(opcode == 0x8A || opcode == 0xAA || opcode == 0xCA){
-        // printf("\tRMW Register Instructions\n");
-        instData = RMW_register_Opcodes(inst, extraCycles);
-    }
-    else if(opcode == 0xE6 || opcode == 0xEE || opcode == 0xF6 || opcode == 0xFE){
-        // printf("\tRMW INC Instructions\n");
-        instData = RMW_INC_Opcodes(inst, extraCycles);
-    }
-    else if(opcode == 0xC6 || opcode == 0xCE || opcode == 0xD6 || opcode == 0xDE){
-        // printf("\tRMW DEC Instructions\n");
-        instData = RMW_DEC_Opcodes(inst, extraCycles);
-    }
-    else if(opcode == 0xEA || opcode == 0xFA || opcode == 0xDA || opcode == 0x7A || opcode == 0x5A || opcode == 0x3A || opcode == 0x1A || opcode == 0xE2 || opcode == 0xC2 || opcode == 0x82){
-        // printf("\tRMW NOP Instructions\n");
-        instData = RMW_NOP_Opcodes(inst, extraCycles);
-    }
-    else if(opcode == 0x02 || opcode == 0x12 || opcode == 0x22 || opcode == 0x32 || opcode == 0x42 || opcode == 0x52 || opcode == 0x62 || opcode == 0x72 || opcode == 0x92 || opcode == 0xB2 || opcode == 0xD2 || opcode == 0xF2){
-        // printf("\tRMW STP Instructions\n");
-        instData = RMW_STP_Opcodes(inst, extraCycles);
-    }
-    else if(opcode == 0x9E){
-        // printf("\tRMW SHX Instructions\n");
-        instData = RMW_SHX_Opcodes(inst, extraCycles);
-    }
-    else{
-        printf("\t\tERROR\n\n");
-        instData = NULL;
-    }
-    return instData;
 }
 
 
-
 Instruction* detectType(unsigned char* inst, char extraCycles){
-    unsigned char type = (unsigned char)(inst[0] & 0b11);
-    Instruction* instData = NULL;
-    // printf("opcode: %i\ntype: %i\n", (unsigned int)inst[0], (unsigned int)type);
-    // printf("opcode: $");
-    // printfCharAsHex(inst[0]);
-    // printf("\n");
-    if(type == 0b00){
+    unsigned char type = (unsigned char)(inst[0] & (BIT_1 | BIT_0));
+    if(type == 0){
         // printf("\tControl instruction opcode\n");
-        instData = controlInstructionOpcodes(inst, extraCycles);
+        return controlInstructionOpcodes(inst, extraCycles);
     }
-    else if(type == 0b01){
+    else if(type == BIT_0){
         // printf("\tALU operation opcode\n");
-        instData = ALUOpcodes(inst, extraCycles);
+        return ALUOpcodes(inst, extraCycles);
     }
-    else if(type == 0b10){
+    else if(type == BIT_1){
         // printf("\tread-modify-write (RMW) and data movement instructions opcode\n");
-        instData = RMW_Opcodes(inst, extraCycles);
+        return RMW_Opcodes(inst, extraCycles);
     }
-    else{ // if(type == 0b11)
+    else{
         printf("\tunoficial opcode\n");
+        return NULL;
     }
-    return instData;
 }
 
 unsigned short loadAddress(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
