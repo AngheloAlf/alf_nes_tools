@@ -6,7 +6,7 @@
 
 
 // ORA (bitwise OR with Accumulator)
-int ORA(struct nesRegisters *registers, char number) {
+int ORA(NesCPURegisters *registers, char number) {
     char result = registers->accumulator | number;
 
     parseZeroNegative(registers, result);
@@ -16,7 +16,7 @@ int ORA(struct nesRegisters *registers, char number) {
 }
 
 // AND (bitwise AND with accumulator)
-int AND(struct nesRegisters* registers, char number){
+int AND(NesCPURegisters* registers, char number){
     char result = registers->accumulator & number;
 
     parseZeroNegative(registers, result);
@@ -26,7 +26,7 @@ int AND(struct nesRegisters* registers, char number){
 }
 
 // EOR (bitwise Exclusive OR)
-int EOR(struct nesRegisters* registers, char number){
+int EOR(NesCPURegisters* registers, char number){
     char result = registers->accumulator ^ number;
 
     parseZeroNegative(registers, result);
@@ -36,16 +36,14 @@ int EOR(struct nesRegisters* registers, char number){
 }
 
 // ADC (ADd with Carry)
-int ADC(struct nesRegisters *registers, char number) {
+int ADC(NesCPURegisters *registers, char number) {
     // TODO: Implement BCD (Decimal mode)
     if(getDecimal(registers)){
-        return -1;
+        return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;
     }
     char carry = getCarry(registers);
-    char sum = 0;
-    short auxSum = 0;
-    sum = carry + number + registers->accumulator;
-    auxSum = carry + number + registers->accumulator;
+    char sum = carry + number + registers->accumulator;
+    short auxSum = carry + number + registers->accumulator;
 
     unsigned short veryAux = (unsigned short)(auxSum & 0x100) - (unsigned short)(sum & 0x100);
     if(veryAux){
@@ -69,12 +67,12 @@ int ADC(struct nesRegisters *registers, char number) {
 }
 
 // STA (STore Accumulator)
-int STA(struct nesRegisters* registers, unsigned short number, struct nesRam* ram){
+int STA(NesCPURegisters* registers, unsigned short number, NesRam* ram){
     return storeIntoRam(ram, number, (unsigned char)registers->accumulator);
 }
 
 // LDA (LoaD Accumulator)
-int LDA(struct nesRegisters* registers, char number){
+int LDA(NesCPURegisters* registers, char number){
     parseZeroNegative(registers, number);
 
     registers->accumulator = number;
@@ -82,7 +80,7 @@ int LDA(struct nesRegisters* registers, char number){
 }
 
 // CMP (CoMPare accumulator)
-int CMP(struct nesRegisters* registers, char number){
+int CMP(NesCPURegisters* registers, char number){
     char result = registers->accumulator - number;
 
     if(result >= 0){
@@ -98,10 +96,10 @@ int CMP(struct nesRegisters* registers, char number){
 }
 
 // SBC (SuBtract with Carry)
-int SBC(struct nesRegisters* registers, char number){
+int SBC(NesCPURegisters* registers, char number){
     // TODO: Implement BCD (Decimal mode)
     if(getDecimal(registers)){
-        return -1;
+        return ALF_NES_ERROR_CODE_NOT_IMPLEMENTED;
     }
     char carry = getCarry(registers);
     char sum = 0;

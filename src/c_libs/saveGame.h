@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-#include "charOps.h"
+#include "common.h"
 
 
 typedef struct{

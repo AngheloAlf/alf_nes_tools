@@ -4,8 +4,8 @@
 
 #include "cpu.h"
 
-struct nesRegisters* initRegisters(){
-    struct nesRegisters* registers = malloc(sizeof(struct nesRegisters));
+NesCPURegisters* initRegisters(){
+    NesCPURegisters* registers = malloc(sizeof(NesCPURegisters));
 
     registers->accumulator = 0x0; // A
     registers->indexX = 0x0; // X
@@ -22,7 +22,7 @@ struct nesRegisters* initRegisters(){
 }
 
 // https://wiki.nesdev.com/w/index.php/CPU_power_up_state
-int cpuPowerUp(struct nesRegisters *registers){
+int cpuPowerUp(NesCPURegisters *registers){
     int retVal = 0;
 	registers->statusRegister = 0x34; // P = $34[1] (IRQ disabled)
 	registers->accumulator = 0x0; // A, X, Y = 0
@@ -37,7 +37,7 @@ int cpuPowerUp(struct nesRegisters *registers){
     return retVal;
 }
 
-int resetCpu(struct nesRegisters* registers, struct nesRam* ram){
+int resetCpu(NesCPURegisters* registers, NesRam* ram){
     // A, X, Y were not affected
     // registers->stack += 3; // S was decremented by 3 (but nothing was written to the stack)
     registers->statusRegister |= 0x04; // The I (IRQ disable) flag was set to true (status ORed with $04)
@@ -49,25 +49,25 @@ int resetCpu(struct nesRegisters* registers, struct nesRam* ram){
     return 0;
 }
 
-int getInstsFromRam(unsigned char* inst, unsigned short programCounter, struct nesRam* ram){
+int getInstsFromRam(unsigned char* inst, unsigned short programCounter, NesRam* ram){
 	inst[0] = loadFromRam(ram, programCounter);
 	if(programCounter+1 >= RAM_SIZE){
-		return -3;
+		return ALF_NES_ERROR_CODE_RAM_OUT_1;
 	}
+    inst[1] = loadFromRam(ram, (unsigned short)(programCounter+1));
 	if(programCounter+2 >= RAM_SIZE){
-		return -4;
+		return ALF_NES_ERROR_CODE_RAM_OUT_2;
 	}
-	inst[1] = loadFromRam(ram, (unsigned short)(programCounter+1));
 	inst[2] = loadFromRam(ram, (unsigned short)(programCounter+2));
 	return 0;
 }
 
-int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, struct nesRom* rom){
+int executeInstructions(NesCPURegisters* registers, NesRam* ram, NesRom* rom){
     printf("data in reset vector\n$%x: $%x\n", getResetVector(ram), loadFromRam(ram, getResetVector(ram)));
     registers->programCounter = getResetVector(ram);
 	unsigned char* inst = malloc(sizeof(unsigned char) * 3);
 	int ret;
-	struct instruction* instData = NULL;
+	Instruction* instData = NULL;
     
 	for(; registers->programCounter < RAM_SIZE && !registers->disablePC; registers->programCounter++){
 		ret = getInstsFromRam(inst, registers->programCounter, ram);
@@ -111,84 +111,84 @@ int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, stru
 
 
 // http://wiki.nesdev.com/w/index.php/CPU_status_flag_behavior
-void setCarry(struct nesRegisters* registers){
+void setCarry(NesCPURegisters* registers){
     registers->statusRegister |= BIT_0;
 }
-void clearCarry(struct nesRegisters* registers){
+void clearCarry(NesCPURegisters* registers){
     registers->statusRegister &= ~BIT_0;
 }
-char getCarry(struct nesRegisters* registers){
+char getCarry(NesCPURegisters* registers){
     return (char)(registers->statusRegister & BIT_0);
 }
 
-void setZero(struct nesRegisters* registers){
+void setZero(NesCPURegisters* registers){
     registers->statusRegister |= BIT_1;
 }
-void clearZero(struct nesRegisters* registers){
+void clearZero(NesCPURegisters* registers){
     registers->statusRegister &= ~BIT_1;
 }
-char getZero(struct nesRegisters* registers){
+char getZero(NesCPURegisters* registers){
     return (char)((registers->statusRegister & BIT_1)>>1);
 }
 
-void setInterrupt(struct nesRegisters* registers){
+void setInterrupt(NesCPURegisters* registers){
     registers->statusRegister |= BIT_2;
 }
-void clearInterrupt(struct nesRegisters* registers){
+void clearInterrupt(NesCPURegisters* registers){
     registers->statusRegister &= ~BIT_2;
 }
-char getInterrupt(struct nesRegisters* registers){
+char getInterrupt(NesCPURegisters* registers){
     return (char)((registers->statusRegister & BIT_2)>>2);
 }
 
-void setDecimal(struct nesRegisters* registers){
+void setDecimal(NesCPURegisters* registers){
     registers->statusRegister |= BIT_3;
 }
-void clearDecimal(struct nesRegisters* registers){
+void clearDecimal(NesCPURegisters* registers){
     registers->statusRegister &= ~BIT_3;
 }
-char getDecimal(struct nesRegisters* registers){
+char getDecimal(NesCPURegisters* registers){
     return (char)((registers->statusRegister & BIT_3)>>3);
 }
 
-void setS(struct nesRegisters* registers){
+void setS(NesCPURegisters* registers){
     registers->statusRegister |= BIT_4;
 }
-void clearS(struct nesRegisters* registers){
+void clearS(NesCPURegisters* registers){
     registers->statusRegister &= ~BIT_4;
 }
-char getS(struct nesRegisters* registers){
+char getS(NesCPURegisters* registers){
     return (char)((registers->statusRegister & BIT_4)>>4);
 }
 
-void setOverflow(struct nesRegisters* registers){
+void setOverflow(NesCPURegisters* registers){
     registers->statusRegister |= BIT_6;
 }
-void clearOverflow(struct nesRegisters* registers){
+void clearOverflow(NesCPURegisters* registers){
     registers->statusRegister &= ~BIT_6;
 }
-char getOverflow(struct nesRegisters* registers){
+char getOverflow(NesCPURegisters* registers){
     return (char)((registers->statusRegister & BIT_6)>>6);
 }
 
-void setNegative(struct nesRegisters* registers){
+void setNegative(NesCPURegisters* registers){
     registers->statusRegister |= BIT_7;
 }
-void clearNegative(struct nesRegisters* registers){
+void clearNegative(NesCPURegisters* registers){
     registers->statusRegister &= ~BIT_7;
 }
-char getNegative(struct nesRegisters* registers){
+char getNegative(NesCPURegisters* registers){
     return (char)((registers->statusRegister & BIT_7)>>7);
 }
 
-void disablePC(struct nesRegisters* registers){
+void disablePC(NesCPURegisters* registers){
     registers->disablePC = 1;
 }
-void enablePC(struct nesRegisters* registers){
+void enablePC(NesCPURegisters* registers){
     registers->disablePC = 0;
 }
 
-void parseZeroNegative(struct nesRegisters* registers, char number){
+void parseZeroNegative(NesCPURegisters* registers, char number){
     if(number == 0){
         setZero(registers);
     }
@@ -203,11 +203,11 @@ void parseZeroNegative(struct nesRegisters* registers, char number){
     }
 }
 
-void pushStack(struct nesRegisters* registers, struct nesRam* ram, unsigned char value){
+void pushStack(NesCPURegisters* registers, NesRam* ram, unsigned char value){
     storeIntoRam(ram, (unsigned short)0x0100 + registers->stack, value);
     registers->stack -= 1;
 }
-unsigned char pullStack(struct nesRegisters* registers, struct nesRam* ram){
+unsigned char pullStack(NesCPURegisters* registers, NesRam* ram){
     registers->stack += 1;
     return loadFromRam(ram, (unsigned short)0x0100 + registers->stack);
 }

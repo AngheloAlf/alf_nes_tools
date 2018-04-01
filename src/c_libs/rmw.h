@@ -5,14 +5,15 @@
 #ifndef ALF_NES_TOOLS_RMW_H
 #define ALF_NES_TOOLS_RMW_H
 
+#include "common.h"
 #include "cpu.h"
 
-unsigned char ASL(struct nesRegisters* registers, unsigned char number);
-unsigned char ROL(struct nesRegisters* registers, unsigned char number);
-unsigned char LSR(struct nesRegisters* registers, unsigned char number);
-unsigned char ROR(struct nesRegisters* registers, unsigned char number);
-void LDX(struct nesRegisters* registers, unsigned char number);
-unsigned char DEC(struct nesRegisters* registers, unsigned char number);
-unsigned char INC(struct nesRegisters* registers, unsigned char number);
+unsigned char ASL(NesCPURegisters* registers, unsigned char number);
+unsigned char ROL(NesCPURegisters* registers, unsigned char number);
+unsigned char LSR(NesCPURegisters* registers, unsigned char number);
+unsigned char ROR(NesCPURegisters* registers, unsigned char number);
+void LDX(NesCPURegisters* registers, unsigned char number);
+unsigned char DEC(NesCPURegisters* registers, unsigned char number);
+unsigned char INC(NesCPURegisters* registers, unsigned char number);
 
 #endif //ALF_NES_TOOLS_RMW_H

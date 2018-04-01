@@ -7,6 +7,8 @@
 
 #include <stdlib.h>
 
+#include "common.h"
+
 #include "instructions.h"
 #include "ram.h"
 
@@ -24,7 +26,7 @@
 //   -> PPU divide CLK by 5
 //   -> 3.2 PPU ticks per CPU cycle
 
-struct nesRegisters{
+typedef struct nesRegisters{
     // https://wiki.nesdev.com/w/index.php/CPU_registers
     char accumulator; // A
     unsigned char indexX; // X
@@ -36,47 +38,45 @@ struct nesRegisters{
     unsigned char disablePC;
     unsigned char jumping;
     unsigned char jumpingSubroutine;
-};
+}NesCPURegisters;
 
-typedef struct nesRegisters NesCPURegisters;
-
-struct nesRegisters* initRegisters();
+NesCPURegisters* initRegisters();
 
 // https://wiki.nesdev.com/w/index.php/CPU_power_up_state
-int cpuPowerUp(struct nesRegisters *registers);
-int resetCpu(struct nesRegisters* registers, struct nesRam* ram);
+int cpuPowerUp(NesCPURegisters *registers);
+int resetCpu(NesCPURegisters* registers, NesRam* ram);
 
-int executeInstructions(struct nesRegisters* registers, struct nesRam* ram, struct nesRom* rom);
+int executeInstructions(NesCPURegisters* registers, NesRam* ram, NesRom* rom);
 
 // http://wiki.nesdev.com/w/index.php/CPU_status_flag_behavior
-void setCarry(struct nesRegisters* registers);
-void clearCarry(struct nesRegisters* registers);
-char getCarry(struct nesRegisters* registers);
-void setZero(struct nesRegisters* registers);
-void clearZero(struct nesRegisters* registers);
-char getZero(struct nesRegisters* registers);
-void setInterrupt(struct nesRegisters* registers);
-void clearInterrupt(struct nesRegisters* registers);
-char getInterrupt(struct nesRegisters* registers);
-void setDecimal(struct nesRegisters* registers);
-void clearDecimal(struct nesRegisters* registers);
-char getDecimal(struct nesRegisters* registers);
-void setS(struct nesRegisters* registers);
-void clearS(struct nesRegisters* registers);
-char getS(struct nesRegisters* registers);
-void setOverflow(struct nesRegisters* registers);
-void clearOverflow(struct nesRegisters* registers);
-char getOverflow(struct nesRegisters* registers);
-void setNegative(struct nesRegisters* registers);
-void clearNegative(struct nesRegisters* registers);
-char getNegative(struct nesRegisters* registers);
+void setCarry(NesCPURegisters* registers);
+void clearCarry(NesCPURegisters* registers);
+char getCarry(NesCPURegisters* registers);
+void setZero(NesCPURegisters* registers);
+void clearZero(NesCPURegisters* registers);
+char getZero(NesCPURegisters* registers);
+void setInterrupt(NesCPURegisters* registers);
+void clearInterrupt(NesCPURegisters* registers);
+char getInterrupt(NesCPURegisters* registers);
+void setDecimal(NesCPURegisters* registers);
+void clearDecimal(NesCPURegisters* registers);
+char getDecimal(NesCPURegisters* registers);
+void setS(NesCPURegisters* registers);
+void clearS(NesCPURegisters* registers);
+char getS(NesCPURegisters* registers);
+void setOverflow(NesCPURegisters* registers);
+void clearOverflow(NesCPURegisters* registers);
+char getOverflow(NesCPURegisters* registers);
+void setNegative(NesCPURegisters* registers);
+void clearNegative(NesCPURegisters* registers);
+char getNegative(NesCPURegisters* registers);
 
-void disablePC(struct nesRegisters* registers);
-void enablePC(struct nesRegisters* registers);
+void disablePC(NesCPURegisters* registers);
+void enablePC(NesCPURegisters* registers);
 
-void parseZeroNegative(struct nesRegisters* registers, char number);
+void parseZeroNegative(NesCPURegisters* registers, char number);
 
-void pushStack(struct nesRegisters* registers, struct nesRam* ram, unsigned char value);
-unsigned char pullStack(struct nesRegisters* registers, struct nesRam* ram);
+void pushStack(NesCPURegisters* registers, NesRam* ram, unsigned char value);
+unsigned char pullStack(NesCPURegisters* registers, NesRam* ram);
 
 #endif //ALF_NES_TOOLS_CPU_H

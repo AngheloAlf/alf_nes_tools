@@ -10,9 +10,8 @@ void printfColoredLine(struct tileLine* simpleLine, int withNumber){
     }
 }
 
-void printfChrRom(struct nesRom* rom, int withNumber){
+void printfChrRom(NesRom* rom, int withNumber){
     size_t chrPages = rom->header->realChrPageAmount;
-    // struct tile tiles;
 
     for(size_t i = 0; i < chrPages; i++){
         for(size_t j = 0; j < CHR_ROM_PAGE_SIZE/16; j+=4){

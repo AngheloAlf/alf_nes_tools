@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 
+#include "common.h"
 #include "romParser.h"
 
 
@@ -16,7 +17,7 @@
 #define RAM_ROM_LAST_PAGE 0xC000
 
 
-struct nesRam{
+typedef struct nesRam{
 	/*
 		https://wiki.nesdev.com/w/index.php/CPU_memory_map
 		Address range 	Size 	Device
@@ -54,31 +55,29 @@ struct nesRam{
     unsigned char wroValue; // write on read only value
 
     unsigned char* saveData;
-};
+}NesRam;
 
-typedef struct nesRam NesRam;
-
-struct nesRam* initRam();
-void freeRam(struct nesRam* ram);
+NesRam* initRam();
+void freeRam(NesRam* ram);
 
 int ramPowerUp(NesRam* ram);
 
-void setFirst16KbRom(struct nesRam* ram, const unsigned char* romPage);
-void setLast16KbRom(struct nesRam* ram, const unsigned char* romPage);
+void setFirst16KbRom(NesRam* ram, const unsigned char* romPage);
+void setLast16KbRom(NesRam* ram, const unsigned char* romPage);
 
-unsigned short getNMIVector(struct nesRam* ram);
-unsigned short getResetVector(struct nesRam* ram);
-unsigned short getIRQBRKVector(struct nesRam* ram);
+unsigned short getNMIVector(NesRam* ram);
+unsigned short getResetVector(NesRam* ram);
+unsigned short getIRQBRKVector(NesRam* ram);
 
-int parseRomToRam(struct nesRam* ram, struct nesRom* rom);
+int parseRomToRam(NesRam* ram, NesRom* rom);
 
-unsigned char loadFromRam(struct nesRam* ram, unsigned short address);
-char storeIntoRam(struct nesRam* ram, unsigned short address, unsigned char number);
-char storeIntoRamAndSetReadOnly(struct nesRam *ram, unsigned short address, unsigned char number);
+unsigned char loadFromRam(NesRam* ram, unsigned short address);
+char storeIntoRam(NesRam* ram, unsigned short address, unsigned char number);
+char storeIntoRamAndSetReadOnly(NesRam *ram, unsigned short address, unsigned char number);
 int storeIntoRamAndDisableReadOnly(NesRam* ram, unsigned short address, unsigned char number);;
 
 int loadSaveIntoRam(NesRam* ram, unsigned char* saveData, unsigned short SRAMSize);
 
-void printfRAM(struct nesRam* ram, unsigned short start, unsigned short end);
+void printfRAM(NesRam* ram, unsigned short start, unsigned short end);
 
 #endif //ALF_NES_TOOLS_RAM_H

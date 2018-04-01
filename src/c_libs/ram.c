@@ -4,8 +4,8 @@
 
 #include "ram.h"
 
-struct nesRam* initRam(){
-    struct nesRam* ram = malloc(sizeof(struct nesRam));
+NesRam* initRam(){
+    NesRam* ram = malloc(sizeof(NesRam));
     ram->ram = malloc(sizeof(unsigned char)*RAM_SIZE);
     ram->readOnlyRam = calloc(RAM_SIZE, sizeof(unsigned char));
     ram->writeOnReadOnly = 0;
@@ -15,7 +15,7 @@ struct nesRam* initRam(){
     return ram;
 }
 
-void freeRam(struct nesRam* ram){
+void freeRam(NesRam* ram){
 	free(ram->ram);
     free(ram->readOnlyRam);
     if(ram->saveData != NULL){
@@ -37,41 +37,41 @@ int ramPowerUp(NesRam* ram){
     return retVal;
 }
 
-void setFirst16KbRom(struct nesRam* ram, const unsigned char* romPage){
+void setFirst16KbRom(NesRam* ram, const unsigned char* romPage){
 	size_t size = 0x4000;
 	for(unsigned short i = 0; i < size; i++){
         storeIntoRamAndSetReadOnly(ram, (unsigned short) (RAM_ROM_FIRST_PAGE + i), romPage[i]);
 	}
 }
-void setLast16KbRom(struct nesRam* ram, const unsigned char* romPage){
+void setLast16KbRom(NesRam* ram, const unsigned char* romPage){
 	size_t size = 0x4000;
 	for(size_t i = 0; i < size; i++){
         storeIntoRamAndSetReadOnly(ram, (unsigned short) (RAM_ROM_LAST_PAGE + i), romPage[i]);
 	}
 }
 
-unsigned short loadVector(struct nesRam* ram, unsigned short first, unsigned short second){
+unsigned short loadVector(NesRam* ram, unsigned short first, unsigned short second){
     unsigned short upper = ((unsigned short)(loadFromRam(ram, second))<<8);
     unsigned short lower = loadFromRam(ram, first);
     return upper | lower;
 }
 
-unsigned short getNMIVector(struct nesRam* ram){
+unsigned short getNMIVector(NesRam* ram){
 	// $FFFA-$FFFB = NMI vector
     return loadVector(ram, 0xFFFA, 0xFFFB);
 }
 
-unsigned short getResetVector(struct nesRam* ram){
+unsigned short getResetVector(NesRam* ram){
 	// $FFFC-$FFFD = Reset vector
     return loadVector(ram, 0xFFFC, 0xFFFD);
 }
 
-unsigned short getIRQBRKVector(struct nesRam* ram){
+unsigned short getIRQBRKVector(NesRam* ram){
 	// $FFFE-$FFFF = IRQ/BRK vector
     return loadVector(ram, 0xFFFE, 0xFFFF);
 }
 
-int parseRomToRam(struct nesRam* ram, struct nesRom* rom){
+int parseRomToRam(NesRam* ram, NesRom* rom){
 	int firstPage = firstPageToLoad(rom->header);
 	int secondPage = secondPageToLoad(rom->header);
 
@@ -90,7 +90,7 @@ int parseRomToRam(struct nesRam* ram, struct nesRom* rom){
 	return 0;
 }
 
-void _mirrorRam(struct nesRam* ram, unsigned short address, unsigned char number, unsigned short start, unsigned short end,
+void _mirrorRam(NesRam* ram, unsigned short address, unsigned char number, unsigned short start, unsigned short end,
                 unsigned short length){
     unsigned short addressAux;
     if(address >= start && address <= end){
@@ -102,15 +102,15 @@ void _mirrorRam(struct nesRam* ram, unsigned short address, unsigned char number
     }
 }
 
-void mirrorRam(struct nesRam* ram, unsigned short address, unsigned char number){
+void mirrorRam(NesRam* ram, unsigned short address, unsigned char number){
     _mirrorRam(ram, address, number, 0x0, 0x1FFF, 0x0800); // System memory mirror
     _mirrorRam(ram, address, number, 0x2000, 0x3FFF, 0x8); // PPU i/o registers
 }
 
-unsigned char loadFromRam(struct nesRam* ram, unsigned short address){
+unsigned char loadFromRam(NesRam* ram, unsigned short address){
     return ram->ram[address];
 }
-char storeIntoRam(struct nesRam* ram, unsigned short address, unsigned char number){
+char storeIntoRam(NesRam* ram, unsigned short address, unsigned char number){
     if(!ram->readOnlyRam[address]){
         ram->ram[address] = number;
         ram->writeOnReadOnly = 0;
@@ -124,13 +124,13 @@ char storeIntoRam(struct nesRam* ram, unsigned short address, unsigned char numb
         ram->writeOnReadOnly = 1;
         ram->wroAddress = address;
         ram->wroValue = number;
-        return -2;
+        return ALF_NES_ERROR_CODE_WRITE_ON_READ_ONLY;
     }
 }
-char storeIntoRamAndSetReadOnly(struct nesRam *ram, unsigned short address, unsigned char number){
+char storeIntoRamAndSetReadOnly(NesRam *ram, unsigned short address, unsigned char number){
     char aux = 0;
     if(ram->readOnlyRam[address]){
-        aux = -2;
+        aux = ALF_NES_ERROR_CODE_WRITE_ON_READ_ONLY;
     }
 
     ram->ram[address] = number;
@@ -146,7 +146,7 @@ char storeIntoRamAndSetReadOnly(struct nesRam *ram, unsigned short address, unsi
 int storeIntoRamAndDisableReadOnly(NesRam* ram, unsigned short address, unsigned char number){
     int retVal = 0;
     if(ram->readOnlyRam[address]){
-        retVal = -2;
+        retVal = ALF_NES_ERROR_CODE_WRITE_ON_READ_ONLY;
     }
 
     ram->ram[address] = number;
@@ -170,7 +170,7 @@ int loadSaveIntoRam(NesRam* ram, unsigned char* saveData, unsigned short SRAMSiz
     return 0;
 }
 
-void printfRAM(struct nesRam* ram, unsigned short start, unsigned short end){
+void printfRAM(NesRam* ram, unsigned short start, unsigned short end){
     int aux = 0;
     for(int i = start; i < end; i++){
         printf("0x");

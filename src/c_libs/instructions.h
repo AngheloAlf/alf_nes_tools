@@ -7,12 +7,12 @@
 
 
 #include <stdio.h>
-#include <string.h>
 
-#include "romParser.h"
-#include "charOps.h"
-#include "cpu.h"
+#include "common.h"
+
 #include "instCallback.h"
+#include "romParser.h"
+#include "cpu.h"
 #include "ram.h"
 
 
@@ -46,7 +46,7 @@
 #define SIZE_RELATIVE       1
 
 
-struct instruction{
+typedef struct instruction{
     // https://wiki.nesdev.com/w/index.php/CPU_unofficial_opcodes
     // http://www.6502.org/tutorials/6502opcodes.html
     // http://www.obelisk.me.uk/6502/reference.html
@@ -73,17 +73,17 @@ struct instruction{
         10: Indirect,Y
         11: Implied
     */
-    int (*execute)(struct instruction*, struct nesRegisters*, struct nesRam*);
+    int (*execute)(struct instruction*, NesCPURegisters*, NesRam*);
 
     char cycles;
-};
+}Instruction;
 
-struct instruction* detectType(unsigned char* inst, char extraCicles);
+Instruction* detectType(unsigned char* inst, char extraCicles);
 
-unsigned short loadAddress(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram);
-unsigned char loadNumberFromRamOrArg(struct instruction *instData, struct nesRegisters *registers, struct nesRam *ram);
+unsigned short loadAddress(Instruction* instData, NesCPURegisters* registers, NesRam* ram);
+unsigned char loadNumberFromRamOrArg(Instruction *instData, NesCPURegisters *registers, NesRam *ram);
 
-void printfOpcodeSyntax(struct instruction* instData);
-void printfInstruction(struct instruction* instData);
+void printfOpcodeSyntax(Instruction* instData);
+void printfInstruction(Instruction* instData);
 
 #endif //ALF_NES_TOOLS_INSTRUCTIONS_H

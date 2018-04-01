@@ -2,7 +2,7 @@
 // Created by anghelo on 23-02-18.
 //
 
-#include "charOps.h"
+#include "common.h"
 
 void charCopy(unsigned char* dst, const unsigned char* src, size_t size){
     for(size_t i = 0; i < size; i++){
@@ -73,4 +73,46 @@ int charLenUntilNull(const unsigned char* src){
         len += 1;
     }
     return len;
+}
+
+
+/*
+Return value:
+  -> == 0: Handled correctly.
+  -> != 0: Cannot be handled. Go panic D: .
+*/
+int handleErrorRet(int retVal){
+    if(retVal >= 0){
+        return 0;
+    }
+    switch(retVal){
+        case ALF_NES_ERROR_CODE_NOT_IMPLEMENTED:
+            printf("Not implemented\n");
+            return retVal;
+        case ALF_NES_ERROR_CODE_WRITE_ON_READ_ONLY:
+            printf("write on read only\n");
+            return retVal;
+        case ALF_NES_ERROR_CODE_RAM_OUT_1:
+        case ALF_NES_ERROR_CODE_RAM_OUT_2:
+            printf("Pointer is out of the RAM\n");
+            return retVal;
+        case ALF_NES_ERROR_CODE_MAPPER_NOT_IMPLEMENTED:
+            printf("Mapper not implemented\n");
+            return retVal;
+        case ALF_NES_ERROR_CODE_ROM_CANT_READ:
+            printf("Can't read ROM file.\n");
+            return retVal;
+        case ALF_NES_ERROR_CODE_SAVE_CANT_READ:
+            printf("Can't read Save file.\n");
+            return retVal;
+        case ALF_NES_ERROR_CODE_SAVE_SIZE_LESS_EXPECTED:
+            printf("Save file size is less than expected.\n");
+            return retVal;
+        case ALF_NES_ERROR_CODE_MAPPER_WRONG_IMPLEMENTATION:
+            printf("Mapper has wrong implementation.\n");
+            return retVal;
+        default:
+            printf("Unknown return value.\n");
+            return retVal;
+    }
 }

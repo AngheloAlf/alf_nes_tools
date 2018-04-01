@@ -76,7 +76,7 @@ int ppuPowerUp(NesPPU* ppu, NesRom* rom){
     return 0;
 }
 
-int resetNesPPU(NesPPU* ppu){
+int resetNesPPU(NesPPU* ppu, NesRom* rom){
     ppu->registers->ppuCtrl = 0x0;
     ppu->registers->ppuMask = 0x0;
 
@@ -84,6 +84,14 @@ int resetNesPPU(NesPPU* ppu){
     ppu->registers->ppuData = 0x0;
 
     ppu->oddFrame = 0x0;
+
+    if(rom->chrRom != NULL){
+        int retVal = loadChrIntoPPU(ppu, rom);
+        if(retVal < 0){
+            return retVal;
+        }
+    }
+
     return 0;
 }
 

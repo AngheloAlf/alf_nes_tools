@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "c_libs/charOps.h"
+#include "c_libs/common.h"
 #include "c_libs/AlfNes.h"
 
 typedef struct{

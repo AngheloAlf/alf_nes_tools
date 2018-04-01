@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "common.h"
+
 #define PRG_ROM_PAGE_SIZE 0x4000
 
 struct nesRomHeader{
@@ -51,7 +53,7 @@ struct nesChrRom{
 };
 
 
-struct nesRom{
+typedef struct nesRom{
     struct nesRomHeader* header;
     unsigned char* trainer; // [512 bytes]
     struct nesPrgRom* prgRom; // 16384 * x bytes
@@ -61,16 +63,14 @@ struct nesRom{
     unsigned char* title; // [127 or 128 byte]
 
     char* fileName;
-};
-
-typedef struct nesRom NesRom;
+}NesRom;
 
 long fileSize;
 
 struct nesRomHeader* loadInesHeader(unsigned char* header);
-struct nesRom* generateINesRom(struct nesRomHeader* header, unsigned char* trainer, struct nesPrgRom* prgRomData, struct nesChrRom* chrRomData, unsigned char* playChoiceInstRom, unsigned char* playChoicePRom, unsigned char* title, char* fileName);
-struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header, char* fileName);
-struct nesRom* loadRom(char* filename);
+NesRom* generateINesRom(struct nesRomHeader* header, unsigned char* trainer, struct nesPrgRom* prgRomData, struct nesChrRom* chrRomData, unsigned char* playChoiceInstRom, unsigned char* playChoicePRom, unsigned char* title, char* fileName);
+NesRom* loadINesRom(FILE* filePtr, unsigned char* header, char* fileName);
+NesRom* loadRom(char* filename);
 
 
 // Mappers:
@@ -82,4 +82,3 @@ int chrPageToLoad(NesRomHeader* header);
 #endif //ALF_NES_TOOLS_ROMPARSER_H
 
 #include "chr.h"
-#include "charOps.h"

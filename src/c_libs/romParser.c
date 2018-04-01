@@ -90,8 +90,8 @@ struct nesChrRom* generateChrRomData(unsigned char** chrRom, struct tile** tiles
     return chrRomData;
 }
 
-struct nesRom* generateINesRom(struct nesRomHeader* header, unsigned char* trainer, struct nesPrgRom* prgRomData, struct nesChrRom* chrRomData, unsigned char* playChoiceInstRom, unsigned char* playChoicePRom, unsigned char* title, char* fileName){
-    struct nesRom* rom = malloc(sizeof(struct nesRom));
+NesRom* generateINesRom(struct nesRomHeader* header, unsigned char* trainer, struct nesPrgRom* prgRomData, struct nesChrRom* chrRomData, unsigned char* playChoiceInstRom, unsigned char* playChoicePRom, unsigned char* title, char* fileName){
+    NesRom* rom = malloc(sizeof(NesRom));
 
     if(header == NULL){
         // ERROR
@@ -112,7 +112,7 @@ struct nesRom* generateINesRom(struct nesRomHeader* header, unsigned char* train
     return rom;
 }
 
-struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header, char* fileName){
+NesRom* loadINesRom(FILE* filePtr, unsigned char* header, char* fileName){
     /* load header */
     struct nesRomHeader* romHeader = loadInesHeader(header);
     if(romHeader == NULL){
@@ -205,12 +205,12 @@ struct nesRom* loadINesRom(FILE* filePtr, unsigned char* header, char* fileName)
 
     printf("\tmapper: %i\n", romHeader->mapperId);
 
-    struct nesRom* rom = generateINesRom(romHeader, trainer, prgRomData, chrRomData, playChoiceInstRom, playChoicePRom, title, fileName);
+    NesRom* rom = generateINesRom(romHeader, trainer, prgRomData, chrRomData, playChoiceInstRom, playChoicePRom, title, fileName);
     // printf("rom: %p\n", rom);
     return rom;
 }
 
-struct nesRom* loadRom(char* filename){
+NesRom* loadRom(char* filename){
     printf("loading ROM: %s\n", filename);
     size_t header_size = 16;
     unsigned char* header = malloc(sizeof(unsigned char) * header_size);
@@ -235,7 +235,7 @@ struct nesRom* loadRom(char* filename){
     printf("\n");
     */
 
-    struct nesRom* rom;
+    NesRom* rom;
 
     if(header[0] == 'N' && header[1] == 'E' && header[2] == 'S' && header[3] == 0x1A){
         printf(".nes (iNES) format detected\n");
@@ -275,14 +275,14 @@ int firstPageToLoad(NesRomHeader* header){
     switch(header->mapperId){
         case 0:
             if(header->realPrgPageAmount > 2){
-                page = -9;
+                page = ALF_NES_ERROR_CODE_MAPPER_WRONG_IMPLEMENTATION;
             }
             else{
                 page = 0;
             }
             break;
         default:
-            page = -5;
+            page = ALF_NES_ERROR_CODE_MAPPER_NOT_IMPLEMENTED;
             break;
     }
     return page;
@@ -293,7 +293,7 @@ int secondPageToLoad(NesRomHeader* header){
     switch(header->mapperId){
         case 0:
             if(header->realPrgPageAmount > 2){
-                page = -9;
+                page = ALF_NES_ERROR_CODE_MAPPER_WRONG_IMPLEMENTATION;
             }
             else if(header->realPrgPageAmount == 2){
                 page = 1;
@@ -303,7 +303,7 @@ int secondPageToLoad(NesRomHeader* header){
             }
             break;
         default:
-            page = -5;
+            page = ALF_NES_ERROR_CODE_MAPPER_NOT_IMPLEMENTED;
             break;
     }
     return page;
@@ -314,14 +314,14 @@ int chrPageToLoad(NesRomHeader* header){
     switch(header->mapperId){
         case 0:
             if(header->realChrPageAmount > 1){
-                page = -9;
+                page = ALF_NES_ERROR_CODE_MAPPER_WRONG_IMPLEMENTATION;
             }
             else{
                 page = 0;
             }
             break;
         default:
-            page = -5;
+            page = ALF_NES_ERROR_CODE_MAPPER_NOT_IMPLEMENTED;
             break;
     }
     return page;

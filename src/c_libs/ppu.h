@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 
+#include "common.h"
 #include "romParser.h"
 
 
@@ -48,7 +49,7 @@ typedef struct{
 
 NesPPU* initNesPPU();
 int ppuPowerUp(NesPPU* ppu, NesRom* rom);
-int resetNesPPU(NesPPU* ppu);
+int resetNesPPU(NesPPU* ppu, NesRom* rom);
 int loadChrIntoPPU(NesPPU* ppu, NesRom* rom);
 
 

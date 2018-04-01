@@ -21,7 +21,7 @@ int NesPowerUp(AlfNes* nes, char* romFileName){
 
     nes->rom = loadRom(romFileName);
     if(nes->rom == NULL){
-        return -6;
+        return ALF_NES_ERROR_CODE_ROM_CANT_READ;
     }
 
     retVal = cpuPowerUp(nes->cpu);

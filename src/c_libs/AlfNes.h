@@ -5,13 +5,13 @@
 #ifndef ALF_NES_TOOLS_ALFNES_H
 #define ALF_NES_TOOLS_ALFNES_H
 
+#include "common.h"
+
 #include "cpu.h"
 #include "ram.h"
 #include "ppu.h"
 #include "romParser.h"
 #include "saveGame.h"
-
-#include "charOps.h"
 
 
 typedef struct{

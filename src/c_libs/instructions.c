@@ -4,8 +4,9 @@
 
 #include "instructions.h"
 
-struct instruction* initInstruction(const unsigned char* inst, unsigned char bytesAmount, unsigned char type, char cicles, int (*execute)(struct instruction *, struct nesRegisters *, struct nesRam *)) {
-    struct instruction* instData = malloc(sizeof(struct instruction));
+
+Instruction* initInstruction(const unsigned char* inst, unsigned char bytesAmount, unsigned char type, char cicles, int (*execute)(Instruction *, NesCPURegisters *, NesRam *)) {
+    Instruction* instData = malloc(sizeof(struct instruction));
 
     instData->opcode = inst[0];
     instData->byte1 = 0;
@@ -26,7 +27,7 @@ struct instruction* initInstruction(const unsigned char* inst, unsigned char byt
 }
 
 
-struct instruction* control_BRK_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_BRK_Opcodes(unsigned char* inst, char extraCycles){
     // BRK (BReaK)
     //   Affects Flags: B
     // Implied       BRK           $00  1   7
@@ -36,7 +37,7 @@ struct instruction* control_BRK_Opcodes(unsigned char* inst, char extraCycles){
     // go to the address of the BRK +2 so that BRK may be used to replace a
     // two-byte instruction for debugging and the subsequent RTI will be correct.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     if(inst[0] == 0x00){
         // printf("\tBRK (BReaK)\n");
         instData = initInstruction(inst, 1, TYPE_IMPLIED, 7, opcode_00);
@@ -49,7 +50,7 @@ struct instruction* control_BRK_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_STACK_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_STACK_Opcodes(unsigned char* inst, char extraCycles){
     // Stack Instructions
     // These instructions are implied mode, have a length of one byte and require
     // machine cycles as indicated. The "PuLl" operations are known as "POP" on most
@@ -60,7 +61,7 @@ struct instruction* control_STACK_Opcodes(unsigned char* inst, char extraCycles)
     // PLP (PuLl Processor status)     $28  4
     // PHA (PusH Accumulator)          $48  3
     // PLA (PuLl Accumulator)          $68  4
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
 
     switch(inst[0]){
         case 0x08:
@@ -88,7 +89,7 @@ struct instruction* control_STACK_Opcodes(unsigned char* inst, char extraCycles)
     return instData;
 }
 
-struct instruction* control_Branching_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_Branching_Opcodes(unsigned char* inst, char extraCycles){
     // Branch Instructions
     //   Affect Flags: none
     // All branches are relative mode and have a length of two bytes. Syntax is "Bxx
@@ -116,7 +117,7 @@ struct instruction* control_Branching_Opcodes(unsigned char* inst, char extraCyc
     // not taken: 2+
     // taken: 3+
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
 
     switch(inst[0]){
         case 0x10:
@@ -160,7 +161,7 @@ struct instruction* control_Branching_Opcodes(unsigned char* inst, char extraCyc
     return instData;
 }
 
-struct instruction* control_BIT_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_BIT_Opcodes(unsigned char* inst, char extraCycles){
     // BIT (test BITs)
     //   Affects Flags: N V Z
     // Zero Page     BIT $44       $24  2   3
@@ -174,7 +175,7 @@ struct instruction* control_BIT_Opcodes(unsigned char* inst, char extraCycles){
     // may be modified, and the read of the absolute address, if it happens to access an
     // I/O device, may cause an unwanted action.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
 
     switch(inst[0]){
         case 0x24:
@@ -192,7 +193,7 @@ struct instruction* control_BIT_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_Flag_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_Flag_Opcodes(unsigned char* inst, char extraCycles){
     // Flag (Processor Status) Instructions
     //   Affect Flags: as noted
     // These instructions are implied mode, have a length of one byte and require
@@ -229,7 +230,7 @@ struct instruction* control_Flag_Opcodes(unsigned char* inst, char extraCycles){
         // ADC, BIT, CLV, PLP, RTI and SBC affect it. There is no op code to set the
         // overflow but a BIT test on an RTS instruction will do the trick.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
 
     switch(inst[0]){
         case 0x18:
@@ -269,7 +270,7 @@ struct instruction* control_Flag_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_RTI_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_RTI_Opcodes(unsigned char* inst, char extraCycles){
     // RTI (ReTurn from Interrupt)
     //   Affects Flags: all
     // Implied       RTI           $40  1   6
@@ -279,7 +280,7 @@ struct instruction* control_RTI_Opcodes(unsigned char* inst, char extraCycles){
     // Note that unlike RTS, the return address on the stack is the actual address
     // rather than the address-1.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     if(inst[0] == 0x40){
         // printf("\tRTI (ReTurn from Interrupt)\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 6, opcode_40);
@@ -292,7 +293,7 @@ struct instruction* control_RTI_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_JSR_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_JSR_Opcodes(unsigned char* inst, char extraCycles){
     // JSR (Jump to SubRoutine)
     //   Affects Flags: none
     // Absolute      JSR $5597     $20  3   6
@@ -302,7 +303,7 @@ struct instruction* control_JSR_Opcodes(unsigned char* inst, char extraCycles){
     // terminated by a <a href="#RTS">RTS</a> op
     // code.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     if(inst[0] == 0x20){
         // printf("\tJSR (Jump to SubRoutine)\n");
         instData = initInstruction(inst, SIZE_ABSOLUTE, TYPE_ABSOLUTE, 6, opcode_20);
@@ -315,7 +316,7 @@ struct instruction* control_JSR_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_JMP_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_JMP_Opcodes(unsigned char* inst, char extraCycles){
     // JMP (JuMP)
     //   Affects Flags: none
     // Absolute      JMP $5597     $4C  3   3
@@ -331,7 +332,7 @@ struct instruction* control_JMP_Opcodes(unsigned char* inst, char extraCycles){
     // rather than $5080 as you intended i.e. the 6502 took the low byte of the address
     // from $30FF and the high byte from $3000.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
 
     switch(inst[0]){
         case 0x4C:
@@ -349,7 +350,7 @@ struct instruction* control_JMP_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_RTS_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_RTS_Opcodes(unsigned char* inst, char extraCycles){
     // RTS (ReTurn from Subroutine)
     //   Affects Flags: none
     // Implied       RTS           $60  1   6
@@ -359,7 +360,7 @@ struct instruction* control_RTS_Opcodes(unsigned char* inst, char extraCycles){
     // invoked via JSR which
     // pushed the address-1.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     if(inst[0] == 0x60){
         // printf("\tRTS (ReTurn from Subroutine)\n");
         instData = initInstruction(inst, SIZE_IMPLIED, TYPE_IMPLIED, 6, opcode_60);
@@ -372,13 +373,13 @@ struct instruction* control_RTS_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_register_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_register_Opcodes(unsigned char* inst, char extraCycles){
     // Register Instructions
     //   Affect Flags: S Z
     // These instructions are implied mode, have a length of one byte and require
     // two machine cycles.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x88:
             // printf("\tDEY (DEcrement Y)\n");
@@ -409,12 +410,12 @@ struct instruction* control_register_Opcodes(unsigned char* inst, char extraCycl
     return instData;
 }
 
-struct instruction* control_LDY_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_LDY_Opcodes(unsigned char* inst, char extraCycles){
     // LDY (LoaD Y register)
     //   Affects Flags: S Z
     // + add 1 cycle if page boundary crossed
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xA0:
             instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_A0); // Immediate     LDY #$44      $A0  2   2
@@ -440,14 +441,14 @@ struct instruction* control_LDY_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_STY_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_STY_Opcodes(unsigned char* inst, char extraCycles){
     // STY (STore Y register)
     //   Affects Flags: none
     // Zero Page     STY $44       $84  2   3
     // Absolute      STY $4400     $8C  3   4
     // Zero Page,X   STY $44,X     $94  2   4
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x84:
             instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_84);
@@ -467,7 +468,7 @@ struct instruction* control_STY_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_SHY_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_SHY_Opcodes(unsigned char* inst, char extraCycles){
     // http://nesdev.com/undocumented_opcodes.txt
     // SHY ()
     //   Affects Flags: None
@@ -478,7 +479,7 @@ struct instruction* control_SHY_Opcodes(unsigned char* inst, char extraCycles){
 
     // M =3D Y AND HIGH(arg) + 1
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     if(inst[0] == 0x9C){
         instData = initInstruction(inst, 3, TYPE_ABSOLUTE_X, 5, opcode_9C);
     }
@@ -489,7 +490,7 @@ struct instruction* control_SHY_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_CPY_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_CPY_Opcodes(unsigned char* inst, char extraCycles){
     // CPY (ComPare Y register)
     //   Affects Flags: S Z C
     // Immediate     CPY #$44      $C0  2   2
@@ -498,7 +499,7 @@ struct instruction* control_CPY_Opcodes(unsigned char* inst, char extraCycles){
 
     // Operation and flag results are identical to equivalent mode accumulator <a href="#CMP">CMP</a> ops.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xC0:
             instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_C0);
@@ -518,7 +519,7 @@ struct instruction* control_CPY_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_CPX_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* control_CPX_Opcodes(unsigned char* inst, char extraCycles){
     // CPX (ComPare X register)
     //   Affects Flags: S Z C
     // Immediate     CPX #$44      $E0  2   2
@@ -527,7 +528,7 @@ struct instruction* control_CPX_Opcodes(unsigned char* inst, char extraCycles){
 
     // Operation and flag results are identical to equivalent mode accumulator <a href="#CMP">CMP</a> ops.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xE0:
             instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_E0);
@@ -547,8 +548,8 @@ struct instruction* control_CPX_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* control_NOP_Opcodes(unsigned char* inst, char extraCycles){
-    struct instruction* instData = NULL;
+Instruction* control_NOP_Opcodes(unsigned char* inst, char extraCycles){
+    Instruction* instData = NULL;
     unsigned char opcode = inst[0];
 
     if((opcode & 0b11) == 0b00){
@@ -639,12 +640,12 @@ struct instruction* control_NOP_Opcodes(unsigned char* inst, char extraCycles){
 }
 
 //CONTROL
-struct instruction* controlInstructionOpcodes(unsigned char* inst, char extraCycles){
+Instruction* controlInstructionOpcodes(unsigned char* inst, char extraCycles){
     if((inst[0] & 0b11) != 0b00){
         // error
         return NULL;
     }
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
 
     if((inst[0] & 0b00011111) == 0b00010000){ // Branching instructions
         // printf("\tcontrol Branching Instructions\n");
@@ -715,8 +716,8 @@ struct instruction* controlInstructionOpcodes(unsigned char* inst, char extraCyc
 
 
 //ALU
-struct instruction* ALU_ORA_Opcode(unsigned char* inst, char extraCycles){
-    struct instruction* instData = NULL;
+Instruction* ALU_ORA_Opcode(unsigned char* inst, char extraCycles){
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x01:
             instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_01); // Indirect,X    ORA ($44,X)   $01  2   6
@@ -750,8 +751,8 @@ struct instruction* ALU_ORA_Opcode(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* ALU_AND_Opcode(unsigned char* inst, char extraCycles){
-    struct instruction* instData = NULL;
+Instruction* ALU_AND_Opcode(unsigned char* inst, char extraCycles){
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x21:
             instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_21); // Indirect,X    AND ($44,X)   $21  2   6
@@ -785,11 +786,11 @@ struct instruction* ALU_AND_Opcode(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* ALU_EOR_Opcode(unsigned char* inst, char extraCycles){
+Instruction* ALU_EOR_Opcode(unsigned char* inst, char extraCycles){
     // EOR (bitwise Exclusive OR)
     //   Affects Flags: S Z
     // + add 1 cycle if page boundary crossed
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x41:
             instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_41); // Indirect,X    EOR ($44,X)   $41  2   6
@@ -823,7 +824,7 @@ struct instruction* ALU_EOR_Opcode(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCycles){
+Instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCycles){
     // ADC (ADd with Carry)
     //   AAffects Flags: S V Z C
     // + add 1 cycle if page boundary crossed
@@ -833,7 +834,7 @@ struct instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCycles){
 
     // There is no way to add without carry.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x61:
             instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_61); // Indirect,X    ADC ($44,X)   $61  2   6
@@ -867,11 +868,11 @@ struct instruction* ALU_ADC_Opcode(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* ALU_STA_Opcode(unsigned char* inst, char extraCycles){
+Instruction* ALU_STA_Opcode(unsigned char* inst, char extraCycles){
     // STA (STore Accumulator)
     //   Affects Flags: none
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x81:
             instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_81); // Indirect,X    STA ($44,X)   $81  2   6
@@ -905,13 +906,13 @@ struct instruction* ALU_STA_Opcode(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* ALU_LDA_Opcode(unsigned char* inst, char extraCycles){
+Instruction* ALU_LDA_Opcode(unsigned char* inst, char extraCycles){
     // LDA (LoaD Accumulator)>
     //   Affects Flags: S Z
 
     // + add 1 cycle if page boundary crossed
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xA1:
             instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_A1); // Indirect,X    LDA ($44,X)   $A1  2   6
@@ -945,7 +946,7 @@ struct instruction* ALU_LDA_Opcode(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCycles){
+Instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCycles){
     // CMP (CoMPare accumulator)
     //   Affects Flags: S Z C
     // + add 1 cycle if page boundary crossed
@@ -956,7 +957,7 @@ struct instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCycles){
     // thereof and the sign (i.e. A&gt;=$80) of the accumulator.
 
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xC1:
             instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_C1); // Indirect,X    CMP ($44,X)   $C1  2   6
@@ -990,7 +991,7 @@ struct instruction* ALU_CMP_Opcode(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* ALU_SBC_Opcode(unsigned char* inst, char extraCycles){
+Instruction* ALU_SBC_Opcode(unsigned char* inst, char extraCycles){
     // SBC (SuBtract with Carry)
     //   Affects Flags: S V Z C
     // + add 1 cycle if page boundary crossed
@@ -1002,7 +1003,7 @@ struct instruction* ALU_SBC_Opcode(unsigned char* inst, char extraCycles){
     // borrow. i.e, to subtract you set the carry before the operation. If the carry is
     // cleared by the operation, it indicates a borrow occurred.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xE1:
             instData = initInstruction(inst, SIZE_INDIRECT_X, TYPE_INDIRECT_X, 6, opcode_E1); // Indirect,X    SBC ($44,X)   $E1  2   6
@@ -1039,12 +1040,12 @@ struct instruction* ALU_SBC_Opcode(unsigned char* inst, char extraCycles){
 
 
 // ALU
-struct instruction* ALUOpcodes(unsigned char* inst, char extraCycles){
+Instruction* ALUOpcodes(unsigned char* inst, char extraCycles){
     if((inst[0] & 0b11) != 0b01){
         // Error
         return NULL;
     }
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     unsigned char type = (unsigned char)(inst[0] & 0b11100011);
 
     switch(type){
@@ -1091,7 +1092,7 @@ struct instruction* ALUOpcodes(unsigned char* inst, char extraCycles){
 
 
 // RMW
-struct instruction* RMW_ASL_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_ASL_Opcodes(unsigned char* inst, char extraCycles){
     // ASL (Arithmetic Shift Left)
     //   Affects Flags: S Z C
     // Zero Page     ASL $44       $06  2   5
@@ -1103,7 +1104,7 @@ struct instruction* RMW_ASL_Opcodes(unsigned char* inst, char extraCycles){
     // ASL shifts all bits left one position. 0 is shifted into bit 0 and the
     // original bit 7 is shifted into the Carry..
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x06:
             instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_06);
@@ -1128,7 +1129,7 @@ struct instruction* RMW_ASL_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCycles){
     // ROL (ROtate Left)
     //   Affects Flags: S Z C
     // Zero Page     ROL $44       $26  2   5
@@ -1140,7 +1141,7 @@ struct instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCycles){
     // ROL shifts all bits left one position. The Carry is shifted into bit 0 and
     // the original bit 7 is shifted into the Carry.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x26:
             instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_26);
@@ -1165,7 +1166,7 @@ struct instruction* RMW_ROL_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_LSR_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_LSR_Opcodes(unsigned char* inst, char extraCycles){
     // LSR (Logical Shift Right)
     //   Affects Flags: S Z C
     // Zero Page     LSR $44       $46  2   5
@@ -1177,7 +1178,7 @@ struct instruction* RMW_LSR_Opcodes(unsigned char* inst, char extraCycles){
     // LSR shifts all bits right one position. 0 is shifted into bit 7 and the
     // original bit 0 is shifted into the Carry.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x46:
             instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_46);
@@ -1202,12 +1203,12 @@ struct instruction* RMW_LSR_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_ROR_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_ROR_Opcodes(unsigned char* inst, char extraCycles){
     // ROR (ROtate Right)
     //   Affects Flags: S Z C
     // ROR shifts all bits right one position. The Carry is shifted into bit 7
     // and the original bit 0 is shifted into the Carry.
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x66:
             instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_66); // Zero Page     ROR $44       $66  2   5
@@ -1232,11 +1233,11 @@ struct instruction* RMW_ROR_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_LDX_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_LDX_Opcodes(unsigned char* inst, char extraCycles){
     // LDX (LoaD X register)
     //   Affects Flags: S Z
     // + add 1 cycle if page boundary crossed
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xA2:
             instData = initInstruction(inst, SIZE_IMMEDIATE, TYPE_IMMEDIATE, 2, opcode_A2); // Immediate     LDX #$44      $A2  2   2
@@ -1261,11 +1262,11 @@ struct instruction* RMW_LDX_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_STX_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_STX_Opcodes(unsigned char* inst, char extraCycles){
     // STX (STore X register)
     //   Affects Flags: none
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x86:
             instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 3, opcode_86); // Zero Page     STX $44       $86  2   3
@@ -1284,14 +1285,14 @@ struct instruction* RMW_STX_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_STACK_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_STACK_Opcodes(unsigned char* inst, char extraCycles){
     // Stack Instructions
     // These instructions are implied mode, have a length of one byte and require
     // machine cycles as indicated. The "PuLl" operations are known as "POP" on most
     // other microprocessors. With the 6502, the stack is always on page one
     // ($100-$1FF) and works top down.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
 
     switch(inst[0]){
         case 0x9A:
@@ -1311,13 +1312,13 @@ struct instruction* RMW_STACK_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_register_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_register_Opcodes(unsigned char* inst, char extraCycles){
     // Register Instructions
     //   Affect Flags: S Z
     // These instructions are implied mode, have a length of one byte and require
     // two machine cycles.
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0x8A:
             // printf("\tTXA (Transfer X to A)\n");
@@ -1340,11 +1341,11 @@ struct instruction* RMW_register_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_INC_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_INC_Opcodes(unsigned char* inst, char extraCycles){
     // INC (INCrement memory)
     //   Affects Flags: S Z
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xE6:
             instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_E6); // Zero Page     INC $44       $E6  2   5
@@ -1367,7 +1368,7 @@ struct instruction* RMW_INC_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_DEC_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_DEC_Opcodes(unsigned char* inst, char extraCycles){
     // DEC (DECrement memory)
     //   Affects Flags: S Z
     // Zero Page     DEC $44       $C6  2   5
@@ -1375,7 +1376,7 @@ struct instruction* RMW_DEC_Opcodes(unsigned char* inst, char extraCycles){
     // Zero Page,X   DEC $44,X     $D6  2   6
     // Absolute,X    DEC $4400,X   $DE  3   7
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     switch(inst[0]){
         case 0xC6:
             instData = initInstruction(inst, SIZE_ZERO_PAGE, TYPE_ZERO_PAGE, 5, opcode_C6);
@@ -1398,8 +1399,8 @@ struct instruction* RMW_DEC_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_NOP_Opcodes(unsigned char* inst, char extraCycles){
-    struct instruction* instData = NULL;
+Instruction* RMW_NOP_Opcodes(unsigned char* inst, char extraCycles){
+    Instruction* instData = NULL;
     unsigned char opcode = inst[0];
 
     if(opcode == 0xEA){
@@ -1459,7 +1460,7 @@ struct instruction* RMW_NOP_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_STP_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_STP_Opcodes(unsigned char* inst, char extraCycles){
     // http://nesdev.com/undocumented_opcodes.txt
     // STP (KIL (JAM) [HLT])
     // =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
@@ -1480,7 +1481,7 @@ struct instruction* RMW_STP_Opcodes(unsigned char* inst, char extraCycles){
     // Implied     |KIL        |$B2| 1 | -
     // Implied     |KIL        |$D2| 1 | -
     // Implied     |KIL        |$F2| 1 | -
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     unsigned char opcode = inst[0];
 
     if(opcode == 0x02){
@@ -1539,7 +1540,7 @@ struct instruction* RMW_STP_Opcodes(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-struct instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCycles){
     // SXA (SHX) [XAS]
     // =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
     // AND X register with the high byte of the target address of the argument
@@ -1553,7 +1554,7 @@ struct instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCycles){
     // ------------|-----------|---|---|---
     // Absolute,Y  |SXA arg,Y  |$9E| 3 | 5
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     if(inst[0] == 0x9E){
         // printf("\tRMW SHX Opcode\n");
         instData = initInstruction(inst, SIZE_ABSOLUTE_Y, TYPE_ABSOLUTE_Y, 5, opcode_9E);
@@ -1570,13 +1571,13 @@ struct instruction* RMW_SHX_Opcodes(unsigned char* inst, char extraCycles){
 
 
 // RMW
-struct instruction* RMW_Opcodes(unsigned char* inst, char extraCycles){
+Instruction* RMW_Opcodes(unsigned char* inst, char extraCycles){
     if((inst[0] & 0b11) != 0b10){
         // ERROR
         return NULL;
     }
 
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     unsigned char opcode = inst[0];
     if(opcode == 0x06 || opcode == 0x0A || opcode == 0x0E || opcode == 0x16 || opcode == 0x1E){
         // printf("\tASL (Arithmetic Shift Left)\n");
@@ -1640,9 +1641,9 @@ struct instruction* RMW_Opcodes(unsigned char* inst, char extraCycles){
 
 
 
-struct instruction* detectType(unsigned char* inst, char extraCycles){
+Instruction* detectType(unsigned char* inst, char extraCycles){
     unsigned char type = (unsigned char)(inst[0] & 0b11);
-    struct instruction* instData = NULL;
+    Instruction* instData = NULL;
     // printf("opcode: %i\ntype: %i\n", (unsigned int)inst[0], (unsigned int)type);
     // printf("opcode: $");
     // printfCharAsHex(inst[0]);
@@ -1665,7 +1666,7 @@ struct instruction* detectType(unsigned char* inst, char extraCycles){
     return instData;
 }
 
-unsigned short loadAddress(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram){
+unsigned short loadAddress(Instruction* instData, NesCPURegisters* registers, NesRam* ram){
     unsigned short absolulteAddress = instData->byte2<<8 | instData->byte1;
     unsigned short firstAddress;
     unsigned short secondAddress;
@@ -1708,7 +1709,7 @@ unsigned short loadAddress(struct instruction* instData, struct nesRegisters* re
     }
 }
 
-unsigned char loadNumberFromRamOrArg(struct instruction *instData, struct nesRegisters *registers, struct nesRam *ram){
+unsigned char loadNumberFromRamOrArg(Instruction *instData, NesCPURegisters *registers, NesRam *ram){
     unsigned short address = loadAddress(instData, registers, ram);
 
     switch(instData->type){
@@ -1734,31 +1735,7 @@ unsigned char loadNumberFromRamOrArg(struct instruction *instData, struct nesReg
     }
 }
 
-/*
-Return value:
-  -> == 0: Handled correctly.
-  -> != 0: Cannot be handled. Go panic D: .
-*/
-int handleErrorRet(int retVal){
-    switch(retVal){
-        case 0:
-        case -1:
-            printf("Not implemented\n");
-            return -1;
-        case -2:
-            printf("write on read only\n");
-            return retVal;
-        case -3:
-        case -4:
-            printf("Some error\n");
-            return retVal;
-        default:
-            printf("Unknown return value.\n");
-            return retVal;
-    }
-}
-
-void printfOpcodeSyntax(struct instruction* instData){
+void printfOpcodeSyntax(Instruction* instData){
     printfCharAsHex(instData->opcode);
     if(instData->bytesAmount > 1){
         printf(" ");
@@ -1771,7 +1748,7 @@ void printfOpcodeSyntax(struct instruction* instData){
     printf("\n");
 }
 
-void printfInstruction(struct instruction* instData){
+void printfInstruction(Instruction* instData){
     printf("Opcode: ");
     printfOpcodeSyntax(instData);
     printf("Type: %hhu\nCycles: %hi\n", instData->type, instData->cycles);

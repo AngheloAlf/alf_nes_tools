@@ -22,7 +22,7 @@ int loadSaveGameFromFile(NesSaveGame* save, unsigned short SRAMSize, const char*
     if(filePtr == NULL){
         filePtr = fopen(save->fileName, "wb");
         if(filePtr == NULL){
-            return -7;
+            return ALF_NES_ERROR_CODE_SAVE_CANT_READ;
         }
         fwrite(save->saveData, 1, SRAMSize, filePtr);
         fclose(filePtr);
@@ -31,7 +31,7 @@ int loadSaveGameFromFile(NesSaveGame* save, unsigned short SRAMSize, const char*
         size_t readedSize = fread(save->saveData, 1, SRAMSize, filePtr);
         fclose(filePtr);
         if(readedSize != SRAMSize){
-            return -8;
+            return ALF_NES_ERROR_CODE_SAVE_SIZE_LESS_EXPECTED;
         }
     }
 

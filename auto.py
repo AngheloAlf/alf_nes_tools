@@ -1,4 +1,4 @@
-datos = ["void opcode_", "(struct instruction* instData, struct nesRegisters* registers, struct nesRam* ram)"]
+datos = ["void opcode_", "(struct instruction* instData, NesCPURegisters* registers, struct nesRam* ram)"]
 extra = '{\n    printf("\\tinstruction %x not implemented", instData->opcode);\n}\n'
 
 i = 3

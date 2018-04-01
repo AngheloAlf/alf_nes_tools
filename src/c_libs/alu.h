@@ -5,37 +5,34 @@
 #ifndef ALF_NES_TOOLS_ALU_H
 #define ALF_NES_TOOLS_ALU_H
 
-#include "instructions.h"
+
+#include "common.h"
+
+#include "cpu.h"
+#include "ram.h"
 
 /*
 return values:
     retVal == 0: ok
     retVal < 0: error code
-
-errors codes:
-    -1: not implemented
-    -2: writeOnReadOnly
-    -3:
-    -4:
-
 */
 
 // ORA (bitwise OR with Accumulator)
-int ORA(struct nesRegisters *registers, char number);
+int ORA(NesCPURegisters *registers, char number);
 // AND (bitwise AND with accumulator)
-int AND(struct nesRegisters* registers, char number);
+int AND(NesCPURegisters* registers, char number);
 // EOR (bitwise Exclusive OR)
-int EOR(struct nesRegisters* registers, char number);
+int EOR(NesCPURegisters* registers, char number);
 // ADC (ADd with Carry)
-int ADC(struct nesRegisters *registers, char number);
+int ADC(NesCPURegisters *registers, char number);
 // STA (STore Accumulator)
-int STA(struct nesRegisters* registers, unsigned short number, struct nesRam* ram);
+int STA(NesCPURegisters* registers, unsigned short number, NesRam* ram);
 // LDA (LoaD Accumulator)
-int LDA(struct nesRegisters* registers, char number);
+int LDA(NesCPURegisters* registers, char number);
 // CMP (CoMPare accumulator)
-int CMP(struct nesRegisters* registers, char number);
+int CMP(NesCPURegisters* registers, char number);
 // SBC (SuBtract with Carry)
-int SBC(struct nesRegisters* registers, char number);
+int SBC(NesCPURegisters* registers, char number);
 
 
 #endif //ALF_NES_TOOLS_ALU_H
